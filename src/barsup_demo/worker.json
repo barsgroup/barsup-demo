@@ -1,0 +1,76 @@
+{
+    "container": {
+        "controller": {
+            "__default__": {
+                "__realization__": "barsup.controller.DictController"
+            },
+            "IndividualsController": {
+                "service": "IndividualService"
+            },
+            "AutoController": {
+                "service": "AutoService"
+            }
+        },
+        "session": {
+            "default": {
+                "__realization__": "barsup.session.DefaultSession"
+            }
+        },
+        "service": {
+            "__default__": {
+                "__realization__": "barsup.service.Service",
+                "session": "default",
+                "db_mapper": "default"
+            },
+
+            "IndividualService": {
+                "__realization__": "demo.service.IndividualService",
+                "model": "individual"
+            },
+            "AutoService": {
+                "model": "auto"
+            }
+        },
+        "model": {
+            "__default__": {
+                "__realization__": "barsup.mapping.get_model",
+                "db_mapper": "default"
+            },
+            "auto": {
+                "$name": "auto"
+            },
+            "individual": {
+                "$name": "individual"
+            }
+        },
+        "db_mapper": {
+            "default": {
+                "__realization__": "barsup.mapping.DBMapper",
+                "__type__": "singleton",
+                "$apps": [
+                    "demo"
+                ]
+            }
+        }
+    },
+    "routes": {
+        "/BarsUp.model.IndividualModel": {
+            "__controller__": "IndividualsController",
+            "__actions__": ["read", "create", "update", "destroy"],
+            "/{_id:\\d+}": {
+                "__actions__": ["get"]
+            }
+        },
+        "/BarsUp.model.AutoModel": {
+            "__controller__": "AutoController",
+            "__actions__": ["read", "create", "update", "destroy"],
+            "/{_id:\\d+}": {
+                "__actions__": ["get"],
+                "/BarsUp.model.IndividualModel": {
+                    "__controller__": "AutoIndividuals",
+                    "__actions__": ["read"]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,69 @@
+[
+    {
+        "__name__": "auto",
+        "__columns__": [
+            {
+                "__name__": "id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "primary_key": true
+            },
+            {
+                "__name__": "name",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                }
+            }
+        ]
+    },
+    {
+        "__name__": "individual",
+        "__columns__": [
+            {
+                "__name__": "id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "primary_key": true
+            },
+            {
+                "__name__": "fname",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "lname",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "oname",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "auto_id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "__fk__": {
+                    "__name__": "$ForeignKey",
+                    "column": "auto.id"
+                },
+                "nullable": false
+            }
+
+        ]
+    }
+]
