@@ -18,7 +18,6 @@ glob:tests/objectpack_demo/*.sqlt
 *.orig
 \.DS_Store
 \.git
-\.sencha
 \.idea
 \.sass-cache
 glob:src/barsup_demo/static/barsup/ext
