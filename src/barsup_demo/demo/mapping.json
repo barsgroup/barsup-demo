@@ -65,5 +65,179 @@
             }
 
         ]
+    },
+    {
+        "__name__": "author",
+        "__columns__": [
+            {
+                "__name__": "id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "primary_key": true
+            },
+            {
+                "__name__": "fname",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "lname",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            }
+        ]
+    },
+    {
+        "__name__": "book",
+        "__columns__": [
+            {
+                "__name__": "id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "primary_key": true
+            },
+            {
+                "__name__": "name",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "year",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "nullable": false
+            }
+        ]
+    },
+    {
+        "__name__": "author_book",
+        "__columns__": [
+            {
+                "__name__": "id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "primary_key": true
+            },
+            {
+                "__name__": "author_id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "__fk__": {
+                    "__name__": "$ForeignKey",
+                    "column": "author.id"
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "book_id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "__fk__": {
+                    "__name__": "$ForeignKey",
+                    "column": "book.id"
+                },
+                "nullable": false
+            }
+        ]
+    },
+    {
+        "__name__": "user",
+        "__columns__": [
+            {
+                "__name__": "id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "primary_key": true
+            },
+            {
+                "__name__": "name",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "email",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "login",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "password",
+                "__type__": {
+                    "__name__": "$String",
+                    "length": 50
+                },
+                "nullable": false
+            }
+        ]
+    },
+    {
+        "__name__": "user_book",
+        "__columns__": [
+            {
+                "__name__": "id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "primary_key": true
+            },
+            {
+                "__name__": "book_id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "__fk__": {
+                    "__name__": "$ForeignKey",
+                    "column": "book.id"
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "user_id",
+                "__type__": {
+                    "__name__": "$Integer"
+                },
+                "__fk__": {
+                    "__name__": "$ForeignKey",
+                    "column": "user.id"
+                },
+                "nullable": false
+            },
+            {
+                "__name__": "return_date",
+                "__type__": {
+                    "__name__": "$Date"
+                },
+                "nullable": false
+            }
+        ]
     }
 ]

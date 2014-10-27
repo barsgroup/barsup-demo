@@ -7,6 +7,8 @@ from logging.config import fileConfig
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+
+
 config = context.config
 
 # Interpret the config file for Python logging.
@@ -15,8 +17,9 @@ fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from barsup import PrepareBase
-target_metadata = PrepareBase.get_metadata()
+from barsup.mapping import DBMapper
+
+target_metadata = DBMapper(["demo"])._metadata
 # target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
@@ -67,6 +70,7 @@ def run_migrations_online():
             context.run_migrations()
     finally:
         connection.close()
+
 
 if context.is_offline_mode():
     run_migrations_offline()
