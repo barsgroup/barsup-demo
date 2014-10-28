@@ -18,12 +18,8 @@ Ext.application({
     //-------------------------------------------------------------------------
 
     models: [
-        'IndividualModel',
-        'AutoModel'
     ],
     stores: [
-        'IndividualStore',
-        'AutoStore'
     ],
 
 	requires: [

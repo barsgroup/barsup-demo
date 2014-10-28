@@ -27,8 +27,8 @@ Ext.define('BarsUp.view.auto.AutoWindow', {
                 {
                     border: false,
                     xtype: 'grid',
-                    store: 'AutoStore',
-                    controller: 'AutomobileController',
+                    store: Ext.create('BarsUp.store.AutoStore'),
+                    controller: 'AutoController',
                     columns: [
                         {
                             xtype: 'gridcolumn',

@@ -2,10 +2,11 @@ Ext.define('BarsUp.view.auto.AutoEditWindow', {
     extend: 'Ext.window.Window',
 
     requires: [
-        'BarsUp.view.auto.AutoEditController'
+        'BarsUp.view.main.MainEditController',
+        'BarsUp.view.auto.ViewModel'
     ],
-
-    controller: 'AutoEditController',
+    xtype: 'auto-edit-window',
+    controller: 'main.MainEditController',
 
     width: 400,
     height: 300,

@@ -9,6 +9,9 @@
             },
             "AutoController": {
                 "service": "AutoService"
+            },
+            "UserController": {
+                "service": "UserService"
             }
         },
         "session": {
@@ -21,6 +24,10 @@
                 "__realization__": "barsup.service.Service",
                 "session": "default",
                 "db_mapper": "default"
+            },
+
+            "UserService": {
+                "model":  "user"
             },
 
             "IndividualService": {
@@ -41,6 +48,9 @@
             },
             "individual": {
                 "$name": "individual"
+            },
+            "user": {
+                "$name": "user"
             }
         },
         "db_mapper": {

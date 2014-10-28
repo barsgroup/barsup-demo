@@ -31,7 +31,7 @@ Ext.define('BarsUp.view.auto.AutoIndividualWindow', {
                     split: true,
                     border: false,
                     xtype: 'grid',
-                    store: 'AutoStore',
+                    store: Ext.create('BarsUp.store.AutoStore'),
                     controller: 'AutomobileController',
 
                     columns: [
@@ -63,7 +63,7 @@ Ext.define('BarsUp.view.auto.AutoIndividualWindow', {
                     region: 'center',
                     border: false,
                     xtype: 'grid',
-                    store: 'IndividualStore',
+                    store: Ext.create('BarsUp.store.IndividualStore'),
                     controller: 'IndividualController',
                     columns: [
                         {
