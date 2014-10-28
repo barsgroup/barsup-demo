@@ -20,6 +20,11 @@ Ext.application({
     models: [
     ],
     stores: [
+        'IndividualStore',
+        'AutoStore',
+        'User',
+        'Author',
+        'Book'
     ],
 
 	requires: [

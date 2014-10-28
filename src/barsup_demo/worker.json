@@ -12,6 +12,12 @@
             },
             "UserController": {
                 "service": "UserService"
+            },
+            "AuthorController": {
+                "service": "AuthorService"
+            },
+            "BookController": {
+                "service": "BookService"
             }
         },
         "session": {
@@ -27,9 +33,16 @@
             },
 
             "UserService": {
-                "model":  "user"
+                "model": "user"
             },
 
+            "BookService": {
+                "model": "book"
+            },
+
+            "AuthorService": {
+                "model": "author"
+            },
             "IndividualService": {
                 "__realization__": "demo.service.IndividualService",
                 "model": "individual"
@@ -51,6 +64,12 @@
             },
             "user": {
                 "$name": "user"
+            },
+            "author": {
+                "$name": "author"
+            },
+            "book": {
+                "$name": "book"
             }
         },
         "db_mapper": {
@@ -80,6 +99,27 @@
                     "__controller__": "AutoIndividuals",
                     "__actions__": ["read"]
                 }
+            }
+        },
+        "/BarsUp.model.Author": {
+            "__controller__": "AuthorController",
+            "__actions__": ["read", "create", "update", "destroy"],
+            "/{_id:\\d+}": {
+                "__actions__": ["get"]
+            }
+        },
+        "/BarsUp.model.Book": {
+            "__controller__": "BookController",
+            "__actions__": ["read", "create", "update", "destroy"],
+            "/{_id:\\d+}": {
+                "__actions__": ["get"]
+            }
+        },
+        "/BarsUp.model.User": {
+            "__controller__": "UserController",
+            "__actions__": ["read", "create", "update", "destroy"],
+            "/{_id:\\d+}": {
+                "__actions__": ["get"]
             }
         }
     }

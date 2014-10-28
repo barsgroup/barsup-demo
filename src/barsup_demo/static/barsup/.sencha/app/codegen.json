@@ -277,6 +277,30 @@
         "modelNamespace": "BarsUp.model",
         "name": "User"
       }
+    },
+    "app/model/Book.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "BarsUp",
+        "baseClass": "Ext.data.Model",
+        "fields": "id:int:null,name:auto:null,year:auto:null",
+        "modelFileName": "Book",
+        "modelNamespace": "BarsUp.model",
+        "name": "Book"
+      }
+    },
+    "app/model/Author.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "BarsUp",
+        "baseClass": "Ext.data.Model",
+        "fields": "id:int:null,fname:auto:null,lname:auto:null",
+        "modelFileName": "Author",
+        "modelNamespace": "BarsUp.model",
+        "name": "Author"
+      }
     }
   }
 }

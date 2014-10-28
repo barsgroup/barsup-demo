@@ -6,6 +6,5 @@ Ext.define('BarsUp.store.AutoStore', {
     ],
 
     model: 'BarsUp.model.AutoModel',
-    storeId: 'AutoStore',
     autoLoad: true
 });

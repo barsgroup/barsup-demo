@@ -7,6 +7,5 @@ Ext.define('BarsUp.store.IndividualStore', {
     ],
 
     model: 'BarsUp.model.IndividualModel',
-    storeId: 'IndividualStore',
     autoLoad: true
 });

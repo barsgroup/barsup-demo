@@ -28,7 +28,7 @@ Ext.define('BarsUp.view.individual.IndividualWindow', {
                 {
                     border: false,
                     xtype: 'grid',
-                    store: Ext.create('BarsUp.store.IndividualStore'),
+                    store: 'IndividualStore',
                     controller: 'IndividualController',
                     columns: [
                         {
