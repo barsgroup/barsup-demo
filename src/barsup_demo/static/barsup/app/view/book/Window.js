@@ -9,14 +9,14 @@ Ext.define("BarsUp.view.book.Window", {
 
     init: function () {
         this.launcher = {
-            text: 'Авторы',
+            text: 'Книги',
             iconCls: 'icon-grid'
         };
     },
 
     createWindow: function () {
         return this.app.getDesktop().createWindow({
-            title: 'Авторы',
+            title: 'Книги',
             width: 740,
             height: 480,
             iconCls: 'icon-grid',
@@ -33,15 +33,15 @@ Ext.define("BarsUp.view.book.Window", {
                     columns: [
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'fname',
-                            text: 'Имя',
+                            dataIndex: 'name',
+                            text: 'Название',
                             flex: 1
 
                         },
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'lname',
-                            text: 'Фамилия',
+                            dataIndex: 'year',
+                            text: 'Год',
                             flex: 1
                         }
                     ],

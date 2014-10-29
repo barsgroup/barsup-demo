@@ -1,13 +1,13 @@
-Ext.define('BarsUp.view.book.EditWindow', {
+Ext.define('BarsUp.view.user.EditWindow', {
     extend: 'Ext.window.Window',
 
     requires: [
         'BarsUp.view.main.MainEditController',
-        'BarsUp.view.book.WindowModel',
-        'BarsUp.store.Book'
+        'BarsUp.view.user.WindowModel',
+        'BarsUp.store.User'
     ],
 
-    xtype: 'book-edit-window',
+    xtype: 'user-edit-window',
 
     controller: 'main.MainEditController',
 
@@ -16,7 +16,7 @@ Ext.define('BarsUp.view.book.EditWindow', {
     layout: 'fit',
     modal: true,
     bind: {
-        title: 'Редактирование {book.name}'
+        title: 'Редактирование {user.fname}'
     },
 
     defaultType: 'textfield',
@@ -32,15 +32,29 @@ Ext.define('BarsUp.view.book.EditWindow', {
             items: [
                 {
                     name: 'name',
-                    fieldLabel: 'Название',
+                    fieldLabel: 'ФИО',
                     allowBlank: false,
-                    bind: '{book.name}'
+                    bind: '{user.name}'
                 },
                 {
-                    name: 'lname',
-                    fieldLabel: 'Год',
+                    name: 'email',
+                    fieldLabel: 'Эл. Почта',
                     allowBlank: false,
-                    bind: '{book.year}'
+                    bind: '{user.email}',
+                    vtype: 'email'
+                },
+                {
+                    name: 'login',
+                    fieldLabel: 'Логин',
+                    allowBlank: false,
+                    bind: '{user.login}'
+                },
+                {
+                    name: 'password',
+                    fieldLabel: 'Пароль',
+                    inputType:'password',
+                    allowBlank: false,
+                    bind: '{user.password}'
                 }
             ],
             buttons: [
