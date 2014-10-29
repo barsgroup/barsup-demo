@@ -19,9 +19,7 @@ Ext.define('BarsUp.App', {
         'BarsUp.view.user.Window',
         'BarsUp.view.userbook.Window',
         'BarsUp.view.auto.AutoIndividualWindow',
-        'BarsUp.Settings',
-
-        'Ext.form.field.Date'
+        'BarsUp.Settings'
     ],
 
     init: function () {

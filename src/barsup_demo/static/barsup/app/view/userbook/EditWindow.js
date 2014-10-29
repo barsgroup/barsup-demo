@@ -4,8 +4,7 @@ Ext.define('BarsUp.view.userbook.EditWindow', {
     requires: [
         'BarsUp.view.main.MainEditController',
         'BarsUp.view.userbook.WindowModel',
-        'BarsUp.store.UserBook',
-        'Ext.form.field.Date'
+        'BarsUp.store.UserBook'
     ],
 
     xtype: 'userbook-edit-window',
@@ -38,7 +37,8 @@ Ext.define('BarsUp.view.userbook.EditWindow', {
                     store: 'User',
                     displayField: 'name',
                     valueField: 'id',
-                    bind: '{userbook.user_id}'
+                    bind: '{userbook.user_id}',
+                    allowBlank: false
                 },
                 {
                     name: 'book',
@@ -47,7 +47,8 @@ Ext.define('BarsUp.view.userbook.EditWindow', {
                     store: 'Book',
                     displayField: 'name',
                     valueField: 'id',
-                    bind: '{userbook.book_id}'
+                    bind: '{userbook.book_id}',
+                    allowBlank: false
                 },
                 {
                     xtype: 'datefield',

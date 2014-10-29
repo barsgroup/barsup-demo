@@ -5,7 +5,9 @@ Ext.define('BarsUp.model.UserBook', {
         { name: 'id', type: 'int' },
         { name: 'book', reference: 'Book' },
         { name: 'user', reference: 'User' },
-        { name: 'return_date', type: 'date'}
+        { name: 'return_date',
+            type: 'date',
+            format: 'd.m.Y'}
     ],
     proxy: {
         type: 'websocket',

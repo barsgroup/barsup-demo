@@ -71,7 +71,7 @@ Ext.define("BarsUp.view.userbook.Window", {
                             xtype: 'datecolumn',
                             dataIndex: 'return_date',
                             text: 'Дата возврата',
-                            formate: 'd.m.Y',
+                            format: 'd.m.Y',
                             flex: 1
                         }
                     ],
