@@ -18,6 +18,9 @@
             },
             "BookController": {
                 "service": "BookService"
+            },
+            "UserBookController": {
+                "service": "UserBookService"
             }
         },
         "session": {
@@ -49,6 +52,10 @@
             },
             "AutoService": {
                 "model": "auto"
+            },
+            "UserBookService": {
+                 "__realization__": "demo.service.UserBookService",
+                "model": "user_book"
             }
         },
         "model": {
@@ -70,6 +77,9 @@
             },
             "book": {
                 "$name": "book"
+            },
+            "user_book": {
+                "$name": "user_book"
             }
         },
         "db_mapper": {
@@ -117,6 +127,13 @@
         },
         "/BarsUp.model.User": {
             "__controller__": "UserController",
+            "__actions__": ["read", "create", "update", "destroy"],
+            "/{_id:\\d+}": {
+                "__actions__": ["get"]
+            }
+        },
+        "/BarsUp.model.UserBook": {
+            "__controller__": "UserBookController",
             "__actions__": ["read", "create", "update", "destroy"],
             "/{_id:\\d+}": {
                 "__actions__": ["get"]

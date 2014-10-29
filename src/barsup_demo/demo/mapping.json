@@ -236,7 +236,7 @@
                 "__type__": {
                     "__name__": "$Date"
                 },
-                "nullable": false
+                "nullable": true
             }
         ]
     }

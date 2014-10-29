@@ -1,4 +1,5 @@
 # coding: utf-8
+from datetime import date
 
 from barsup.service import Service
 
@@ -8,3 +9,24 @@ class IndividualService(Service):
         self._queryset = self.session.get().query(
             self.model
         ).outerjoin(self.db_mapper.auto)
+
+
+class UserBookService(Service):
+    def query(self, *args):
+        self._queryset = self.session.get().query(
+            self.model
+        ).join(
+            self.db_mapper.user
+        ).join(
+            self.db_mapper.book
+        )
+
+    def create(self, **kwargs):
+        return_date = date.fromtimestamp(float(kwargs.get('return_date')))
+        kwargs['return_date'] = return_date
+        return super(UserBookService, self).create(**kwargs)
+
+    def update(self, *args, **kwargs):
+        return_date = date.fromtimestamp(float(kwargs.get('return_date')))
+        kwargs['return_date'] = return_date
+        return super(UserBookService, self).update(*args, **kwargs)

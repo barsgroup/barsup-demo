@@ -12,5 +12,14 @@ Ext.define('BarsUp.view.auto.AutoController', {
     editWindow: 'auto-edit-window',
     model: 'BarsUp.model.AutoModel',
     bindingType: 'binding.auto',
-    bindingEntity: 'auto'
+    bindingEntity: 'auto',
+
+    onSelect: function (cmp, record, index, eOpts) {
+        var indStore = Ext.getStore('IndividualStore');
+        indStore.load({
+            params: {
+                'filter': {'auto_id': record.id}
+            }
+        });
+    }
 });

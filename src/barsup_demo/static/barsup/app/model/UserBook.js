@@ -1,14 +1,15 @@
-Ext.define('BarsUp.model.Author', {
+Ext.define('BarsUp.model.UserBook', {
     extend: 'Ext.data.Model',
 
     fields: [
         { name: 'id', type: 'int' },
-        { name: 'fname', type: 'auto' },
-        { name: 'lname', type: 'auto' }
+        { name: 'book', reference: 'Book' },
+        { name: 'user', reference: 'User' },
+        { name: 'return_date', type: 'date'}
     ],
     proxy: {
         type: 'websocket',
-        storeId: 'Author',
+        storeId: 'UserBook',
         websocket: BarsUp.Socket.get(),
         reader: {
             type: 'json',

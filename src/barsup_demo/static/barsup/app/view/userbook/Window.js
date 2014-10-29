@@ -1,101 +1,77 @@
-Ext.define('BarsUp.view.auto.AutoIndividualWindow', {
+Ext.define("BarsUp.view.userbook.Window", {
     extend: 'Ext.ux.desktop.Module',
 
     requires: [
-        'BarsUp.store.AutoStore',
-        'BarsUp.store.IndividualStore',
-        'BarsUp.view.auto.AutoController'
+        'BarsUp.model.UserBook',
+        'BarsUp.store.UserBook',
+        'BarsUp.view.userbook.WindowController'
     ],
 
     init: function () {
         this.launcher = {
-            text: 'Автомобили и их владельцы',
+            text: 'Выданные книги',
             iconCls: 'icon-grid'
         };
     },
 
     createWindow: function () {
         return this.app.getDesktop().createWindow({
-            controller: 'AutoController',
-            title: 'Автомобили и их владельцы',
-            width: 780,
+            title: 'Выданные книги',
+            width: 740,
             height: 480,
             iconCls: 'icon-grid',
             animCollapse: false,
             constrainHeader: true,
-            layout: 'border',
+            layout: 'fit',
             forceFit: true,
             items: [
                 {
-                    region: 'west',
-                    width: 200,
-                    split: true,
                     border: false,
                     xtype: 'grid',
-                    store: 'AutoStore',
-
+                    store: 'UserBook',
+                    controller: 'UserBookController',
                     columns: [
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'name',
-                            text: 'Наименование',
-                            flex: 1
-
-                        }
-                    ],
-                    listeners: {
-                        select: 'onSelect'
-                    },
-                    dockedItems: [
-                        {
-                            xtype: 'toolbar',
-                            dock: 'top',
-                            items: [
-                                {
-                                    xtype: 'button',
-                                    text: 'Обновить',
-                                    handler: 'onReload'
-                                }
-                            ]
-                        }
-                    ]},
-                {
-                    region: 'center',
-                    border: false,
-                    xtype: 'grid',
-                    store: 'IndividualStore',
-                    controller: 'IndividualController',
-                    columns: [
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'fname',
-                            text: 'Имя',
-                            flex: 1
-
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'lname',
-                            text: 'Фамилия',
-                            flex: 1
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'oname',
-                            text: 'Отчество',
-                            flex: 1
-                        },
-                        {
-                            xtype: 'gridcolumn',
-//                            mapping: 'auto.text',
-                            dataIndex: 'auto.name',
+                            dataIndex: 'user.name',
                             renderer: function (value, metodata, record) {
-                                if (record.get('auto')) {
-                                    return record.get('auto')['name'];
+                                if (record.get('user')) {
+                                    return record.get('user')['name'];
                                 }
                                 return value;
                             },
-                            text: 'Автомобиль',
+                            text: 'Пользователь',
+                            flex: 1
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'user.login',
+                            renderer: function (value, metodata, record) {
+                                if (record.get('user')) {
+                                    return record.get('user')['login'];
+                                }
+                                return value;
+                            },
+                            text: 'Логин пользователя',
+                            flex: 1
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'book.name',
+                            renderer: function (value, metodata, record) {
+                                if (record.get('book')) {
+                                    return record.get('book')['name'];
+                                }
+                                return value;
+                            },
+                            text: 'Книга',
+                            flex: 1
+                        },
+                        {
+                            xtype: 'datecolumn',
+                            dataIndex: 'return_date',
+                            text: 'Дата возврата',
+                            formate: 'd.m.Y',
                             flex: 1
                         }
                     ],

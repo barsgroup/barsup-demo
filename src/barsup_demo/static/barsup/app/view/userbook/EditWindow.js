@@ -1,13 +1,14 @@
-Ext.define('BarsUp.view.individual.IndividualEditWindow', {
+Ext.define('BarsUp.view.userbook.EditWindow', {
     extend: 'Ext.window.Window',
 
     requires: [
         'BarsUp.view.main.MainEditController',
-        'BarsUp.view.individual.ViewModel',
-        'BarsUp.store.AutoStore'
+        'BarsUp.view.userbook.WindowModel',
+        'BarsUp.store.UserBook',
+        'Ext.form.field.Date'
     ],
 
-    xtype: 'individual-edit-window',
+    xtype: 'userbook-edit-window',
 
     controller: 'main.MainEditController',
 
@@ -16,7 +17,7 @@ Ext.define('BarsUp.view.individual.IndividualEditWindow', {
     layout: 'fit',
     modal: true,
     bind: {
-        title: 'Редактирование {individual.fname}'
+        title: 'Редактирование {userbook.id}'
     },
 
     defaultType: 'textfield',
@@ -31,31 +32,32 @@ Ext.define('BarsUp.view.individual.IndividualEditWindow', {
             },
             items: [
                 {
-                    name: 'fname',
-                    fieldLabel: 'Имя',
-                    allowBlank: false,
-                    bind: '{individual.fname}'
-                },
-                {
-                    name: 'lname',
-                    fieldLabel: 'Фамилия',
-                    allowBlank: false,
-                    bind: '{individual.lname}'
-                },
-                {
-                    name: 'oname',
-                    fieldLabel: 'Отчество',
-                    allowBlank: false,
-                    bind: '{individual.oname}'
-                },
-                {
-                    name: 'auto',
-                    fieldLabel: 'Автомобиль',
+                    name: 'user',
+                    fieldLabel: 'Пользователь',
                     xtype: 'combo',
-                    store: 'AutoStore',
+                    store: 'User',
                     displayField: 'name',
                     valueField: 'id',
-                    bind: '{individual.auto_id}'
+                    bind: '{userbook.user_id}'
+                },
+                {
+                    name: 'book',
+                    fieldLabel: 'Книга',
+                    xtype: 'combo',
+                    store: 'Book',
+                    displayField: 'name',
+                    valueField: 'id',
+                    bind: '{userbook.book_id}'
+                },
+                {
+                    xtype: 'datefield',
+                    name: 'return_date',
+                    fieldLabel: 'Дата возврата',
+                    allowBlank: false,
+                    format: 'd.m.Y',
+                    bind: '{userbook.return_date}',
+                    width: 250,
+                    anchor: null
                 }
             ],
             buttons: [

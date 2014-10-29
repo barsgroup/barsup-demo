@@ -24,7 +24,8 @@ Ext.application({
         'AutoStore',
         'User',
         'Author',
-        'Book'
+        'Book',
+        'UserBook'
     ],
 
 	requires: [
