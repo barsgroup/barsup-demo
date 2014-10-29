@@ -14,6 +14,7 @@ Ext.define('BarsUp.App', {
         'Ext.ux.desktop.ShortcutModel',
         'BarsUp.view.individual.IndividualWindow',
         'BarsUp.view.auto.AutoWindow',
+        'BarsUp.view.author.Window',
         'BarsUp.view.auto.AutoIndividualWindow',
         'BarsUp.Settings'
     ],
@@ -30,7 +31,8 @@ Ext.define('BarsUp.App', {
         return [
             new BarsUp.view.individual.IndividualWindow(),
             new BarsUp.view.auto.AutoWindow(),
-            new BarsUp.view.auto.AutoIndividualWindow()
+            new BarsUp.view.auto.AutoIndividualWindow(),
+            new BarsUp.view.author.Window()
         ];
     },
 
