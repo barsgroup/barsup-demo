@@ -25,7 +25,8 @@ Ext.application({
         'User',
         'Author',
         'Book',
-        'UserBook'
+        'UserBook',
+        'AuthorBook'
     ],
 
 	requires: [

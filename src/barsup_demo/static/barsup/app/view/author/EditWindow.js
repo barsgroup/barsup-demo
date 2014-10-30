@@ -4,7 +4,8 @@ Ext.define('BarsUp.view.author.EditWindow', {
     requires: [
         'BarsUp.view.main.MainEditController',
         'BarsUp.view.author.WindowModel',
-        'BarsUp.store.Author'
+        'BarsUp.store.Author',
+        'BarsUp.view.authorbook.Panel'
     ],
 
     xtype: 'author-edit-window',
@@ -18,44 +19,55 @@ Ext.define('BarsUp.view.author.EditWindow', {
     bind: {
         title: 'Редактирование {author.fname}'
     },
-
-    defaultType: 'textfield',
     items: [
         {
-            xtype: 'form',
-            layout: 'anchor',
-            defaultType: 'textfield',
-            bodyPadding: 5,
-            defaults: {
-                anchor: '100%'
-            },
+            xtype: 'tabpanel',
             items: [
                 {
-                    name: 'fname',
-                    fieldLabel: 'Имя',
-                    allowBlank: false,
-                    bind: '{author.fname}'
+                    title: 'Данные автора',
+                    items: [
+                        {
+                            xtype: 'form',
+                            layout: 'anchor',
+                            defaultType: 'textfield',
+                            bodyPadding: 5,
+                            defaults: {
+                                anchor: '100%'
+                            },
+                            items: [
+                                {
+                                    name: 'fname',
+                                    fieldLabel: 'Имя',
+                                    allowBlank: false,
+                                    bind: '{author.fname}'
+                                },
+                                {
+                                    name: 'lname',
+                                    fieldLabel: 'Фамилия',
+                                    allowBlank: false,
+                                    bind: '{author.lname}'
+                                }
+                            ]
+                        }
+
+                    ]
                 },
                 {
-                    name: 'lname',
-                    fieldLabel: 'Фамилия',
-                    allowBlank: false,
-                    bind: '{author.lname}'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Отмена',
-                    handler: 'onClose'
-                },
-                {
-                    text: 'Сохранить',
-                    formBind: true,
-                    disabled: true,
-                    handler: 'onSave'
+                    xtype: 'author-book-panel'
                 }
             ]
         }
-    ]
 
+    ],
+    buttons: [
+        {
+            text: 'Отмена',
+            handler: 'onClose'
+        },
+        {
+            text: 'Сохранить',
+            formBind: true,
+            handler: 'onSave'
+        }
+    ]
 });
