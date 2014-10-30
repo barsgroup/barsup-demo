@@ -113,11 +113,7 @@
             "__controller__": "AutoController",
             "__actions__": ["read", "create", "update", "destroy"],
             "/{_id:\\d+}": {
-                "__actions__": ["get"],
-                "/BarsUp.model.IndividualModel": {
-                    "__controller__": "AutoIndividuals",
-                    "__actions__": ["read"]
-                }
+                "__actions__": ["get"]
             }
         },
         "/BarsUp.model.Author": {

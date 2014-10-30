@@ -16,7 +16,7 @@ Ext.define('BarsUp.view.authorbook.EditWindow', {
     layout: 'fit',
     modal: true,
     bind: {
-        title: 'Редактирование {authorbook.id}'
+        title: 'Редактирование'
     },
 
     defaultType: 'textfield',
@@ -31,14 +31,21 @@ Ext.define('BarsUp.view.authorbook.EditWindow', {
             },
             items: [
                 {
-                    name: 'user',
-                    fieldLabel: 'Пользователь',
+                    name: 'author',
+                    fieldLabel: 'Автор',
                     xtype: 'combo',
-                    store: 'User',
-                    displayField: 'name',
+                    store: 'Author',
+                    displayField: 'lname',
                     valueField: 'id',
-                    bind: '{authorbook.user_id}',
-                    allowBlank: false
+                    bind: {
+                        value: '{authorbook.author_id}',
+                        authorId: '{authorId}'
+                    },
+                    allowBlank: false,
+                    setAuthorId: function(authorId){
+                        this.setValue(authorId);
+                    },
+                    readOnly: true
                 },
                 {
                     name: 'book',
@@ -49,16 +56,6 @@ Ext.define('BarsUp.view.authorbook.EditWindow', {
                     valueField: 'id',
                     bind: '{authorbook.book_id}',
                     allowBlank: false
-                },
-                {
-                    xtype: 'datefield',
-                    name: 'return_date',
-                    fieldLabel: 'Дата возврата',
-                    allowBlank: false,
-                    format: 'd.m.Y',
-                    bind: '{authorbook.return_date}',
-                    width: 250,
-                    anchor: null
                 }
             ],
             buttons: [

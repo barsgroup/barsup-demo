@@ -5,6 +5,5 @@ Ext.define('BarsUp.store.AuthorBook', {
         'BarsUp.model.AuthorBook'
     ],
 
-    model: 'BarsUp.model.AuthorBook',
-    autoLoad: true
+    model: 'BarsUp.model.AuthorBook'
 });

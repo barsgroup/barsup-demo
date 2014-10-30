@@ -16,7 +16,7 @@ Ext.define('BarsUp.view.userbook.EditWindow', {
     layout: 'fit',
     modal: true,
     bind: {
-        title: 'Редактирование {userbook.id}'
+        title: 'Редактирование'
     },
 
     defaultType: 'textfield',

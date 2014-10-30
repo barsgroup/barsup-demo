@@ -53,7 +53,10 @@ Ext.define('BarsUp.view.author.EditWindow', {
                     ]
                 },
                 {
-                    xtype: 'author-book-panel'
+                    xtype: 'author-book-panel',
+                    bind: {
+                        authorId: '{author.id}'
+                    }
                 }
             ]
         }

@@ -540,6 +540,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
         var me = this ,
             resultSet = me.getReader().read(data);
 
+//        debugger;
         // Server push case: the store is get up-to-date with the incoming data
         if (!me.callbacks[event]) {
 

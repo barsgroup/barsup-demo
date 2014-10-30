@@ -7,6 +7,11 @@ Ext.define("BarsUp.view.authorbook.Panel", {
         'BarsUp.view.authorbook.PanelController'
     ],
 
+    viewModel: {
+        type: 'binding.authorbook'
+    },
+
+    controller: 'AuthorBookController',
     xtype: 'author-book-panel',
     title: 'Книги',
     closable: false,
@@ -15,7 +20,7 @@ Ext.define("BarsUp.view.authorbook.Panel", {
         {
             xtype: 'grid',
             store: 'AuthorBook',
-            controller: 'AuthorBookController',
+
             columns: [
                 {
                     xtype: 'gridcolumn',
@@ -75,7 +80,24 @@ Ext.define("BarsUp.view.authorbook.Panel", {
                 }
             ]
         }
-    ]
+    ],
+    setAuthorId: function (authorId) {
+        // FIXME: Придумать, как проверять новую запись
+        var isCreate = !(typeof authorId === 'number');
 
+        this.setDisabled(isCreate);
+        if (!isCreate) {
+            this.getViewModel().setData({
+                authorId: authorId
+            });
 
+            Ext.getStore('AuthorBook').load({
+                params: {
+                    filter: {
+                        author_id: authorId
+                    }
+                }
+            });
+        }
+    }
 });

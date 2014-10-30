@@ -14,7 +14,8 @@ Ext.define('BarsUp.view.main.MainController', {
             xtype: this.editWindow,
             viewModel: {
                 type: this.bindingType,
-                links: links
+                links: links,
+                data: this.getData()
             }
         });
         this.dialog.on('commit', 'onSave', this);
@@ -35,7 +36,8 @@ Ext.define('BarsUp.view.main.MainController', {
                 xtype: this.editWindow,
                 viewModel: {
                     type: this.bindingType,
-                    links: links
+                    links: links,
+                    data: this.getData()
                 }
             });
             this.dialog.on('commit', 'onSave', this);
@@ -63,6 +65,13 @@ Ext.define('BarsUp.view.main.MainController', {
 
     onReload: function (btn) {
         var store = btn.up('grid').getStore();
-        store.load();
+        store.load(this.getStoreParam());
+    },
+
+    getData: function () {
+        return {};
+    },
+    getStoreParam: function () {
+        return {};
     }
 });

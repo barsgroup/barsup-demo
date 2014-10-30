@@ -12,5 +12,9 @@ Ext.define('BarsUp.view.main.MainEditController', {
         var win = btn.up('window');
         win.fireEvent('commit');
         win.close();
+    },
+
+    onAfterRender: function(){
+        debugger;
     }
 });

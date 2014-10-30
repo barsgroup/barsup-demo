@@ -12,6 +12,19 @@ Ext.define('BarsUp.view.authorbook.PanelController', {
     editWindow: 'authorbook-edit-window',
     model: 'BarsUp.model.AuthorBook',
     bindingType: 'binding.authorbook',
-    bindingEntity: 'authorbook'
-    
+    bindingEntity: 'authorbook',
+
+    getStoreParam: function () {
+        return {
+            params: {
+                filter: {
+                    author_id: this.getViewModel().getData()['authorId']
+                }
+            }
+        };
+    },
+
+    getData: function () {
+        return this.getViewModel().getData();
+    }
 });
