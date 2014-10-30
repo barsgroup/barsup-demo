@@ -4,25 +4,25 @@
             "__default__": {
                 "__realization__": "barsup.controller.DictController"
             },
-            "IndividualsController": {
+            "Individual": {
                 "service": "IndividualService"
             },
-            "AutoController": {
+            "Automobile": {
                 "service": "AutoService"
             },
-            "UserController": {
+            "User": {
                 "service": "UserService"
             },
-            "AuthorController": {
+            "Author": {
                 "service": "AuthorService"
             },
-            "BookController": {
+            "Book": {
                 "service": "BookService"
             },
-            "UserBookController": {
+            "UserBook": {
                 "service": "UserBookService"
             },
-            "AuthorBookController": {
+            "AuthorBook": {
                 "service": "AuthorBookService"
             }
         },
@@ -98,57 +98,6 @@
                 "$apps": [
                     "demo"
                 ]
-            }
-        }
-    },
-    "routes": {
-        "/BarsUp.model.IndividualModel": {
-            "__controller__": "IndividualsController",
-            "__actions__": ["read", "create", "update", "destroy"],
-            "/{_id:\\d+}": {
-                "__actions__": ["get"]
-            }
-        },
-        "/BarsUp.model.AutoModel": {
-            "__controller__": "AutoController",
-            "__actions__": ["read", "create", "update", "destroy"],
-            "/{_id:\\d+}": {
-                "__actions__": ["get"]
-            }
-        },
-        "/BarsUp.model.Author": {
-            "__controller__": "AuthorController",
-            "__actions__": ["read", "create", "update", "destroy"],
-            "/{_id:\\d+}": {
-                "__actions__": ["get"]
-            }
-        },
-        "/BarsUp.model.Book": {
-            "__controller__": "BookController",
-            "__actions__": ["read", "create", "update", "destroy"],
-            "/{_id:\\d+}": {
-                "__actions__": ["get"]
-            }
-        },
-        "/BarsUp.model.User": {
-            "__controller__": "UserController",
-            "__actions__": ["read", "create", "update", "destroy"],
-            "/{_id:\\d+}": {
-                "__actions__": ["get"]
-            }
-        },
-        "/BarsUp.model.UserBook": {
-            "__controller__": "UserBookController",
-            "__actions__": ["read", "create", "update", "destroy"],
-            "/{_id:\\d+}": {
-                "__actions__": ["get"]
-            }
-        },
-        "/BarsUp.model.AuthorBook": {
-            "__controller__": "AuthorBookController",
-            "__actions__": ["read", "create", "update", "destroy"],
-            "/{_id:\\d+}": {
-                "__actions__": ["get"]
             }
         }
     }

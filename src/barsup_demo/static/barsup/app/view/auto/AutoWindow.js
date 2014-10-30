@@ -2,7 +2,7 @@ Ext.define('BarsUp.view.auto.AutoWindow', {
     extend: 'Ext.ux.desktop.Module',
 
     requires: [
-        'BarsUp.store.AutoStore',
+        'BarsUp.store.Automobile',
         'BarsUp.view.auto.AutoController'
     ],
 
@@ -27,7 +27,7 @@ Ext.define('BarsUp.view.auto.AutoWindow', {
                 {
                     border: false,
                     xtype: 'grid',
-                    store: 'AutoStore',
+                    store: 'Automobile',
                     controller: 'AutoController',
                     columns: [
                         {

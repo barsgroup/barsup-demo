@@ -4,7 +4,7 @@ Ext.define('BarsUp.view.individual.IndividualEditWindow', {
     requires: [
         'BarsUp.view.main.MainEditController',
         'BarsUp.view.individual.ViewModel',
-        'BarsUp.store.AutoStore'
+        'BarsUp.store.Automobile'
     ],
 
     xtype: 'individual-edit-window',
@@ -52,7 +52,7 @@ Ext.define('BarsUp.view.individual.IndividualEditWindow', {
                     name: 'auto',
                     fieldLabel: 'Автомобиль',
                     xtype: 'combo',
-                    store: 'AutoStore',
+                    store: 'Automobile',
                     displayField: 'name',
                     valueField: 'id',
                     bind: '{individual.auto_id}'

@@ -20,8 +20,8 @@ Ext.application({
     models: [
     ],
     stores: [
-        'IndividualStore',
-        'AutoStore',
+        'Individual',
+        'Automobile',
         'User',
         'Author',
         'Book',

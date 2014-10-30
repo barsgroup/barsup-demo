@@ -290,19 +290,19 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             return false;
         }
 
-        ws.on(me.url + '/' + me.getApi().create, function (ws, data) {
+        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().create, function (ws, data) {
             me.completeTask('create', me.getApi().create, data);
         });
 
-        ws.on(me.url + '/' + me.getApi().read, function (ws, data) {
+        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().read, function (ws, data) {
             me.completeTask('read', me.getApi().read, data);
         });
 
-        ws.on(me.url + '/' + me.getApi().update, function (ws, data) {
+        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().update, function (ws, data) {
             me.completeTask('update', me.getApi().update, data);
         });
 
-        ws.on(me.url + '/' + me.getApi().destroy, function (ws, data) {
+        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().destroy, function (ws, data) {
             me.completeTask('destroy', me.getApi().destroy, data);
         });
 
@@ -473,7 +473,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             i = 0,
             apiKey = Ext.String.format(
                 '/{0}/{1}',
-                this.model.entityName,
+                this.storeId.toLowerCase(),
                 action),
             initialParams;
 
@@ -505,7 +505,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
 
             apiKey = Ext.String.format(
                 '/{0}/{1}/{2}',
-                this.model.entityName,
+                this.storeId.toLowerCase(),
                 operation.getId(),
                 action);
 

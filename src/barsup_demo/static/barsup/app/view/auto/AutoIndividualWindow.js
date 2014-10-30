@@ -2,8 +2,8 @@ Ext.define('BarsUp.view.auto.AutoIndividualWindow', {
     extend: 'Ext.ux.desktop.Module',
 
     requires: [
-        'BarsUp.store.AutoStore',
-        'BarsUp.store.IndividualStore',
+        'BarsUp.store.Automobile',
+        'BarsUp.store.Individual',
         'BarsUp.view.auto.AutoController'
     ],
 
@@ -32,7 +32,7 @@ Ext.define('BarsUp.view.auto.AutoIndividualWindow', {
                     split: true,
                     border: false,
                     xtype: 'grid',
-                    store: 'AutoStore',
+                    store: 'Automobile',
 
                     columns: [
                         {
@@ -63,7 +63,7 @@ Ext.define('BarsUp.view.auto.AutoIndividualWindow', {
                     region: 'center',
                     border: false,
                     xtype: 'grid',
-                    store: 'IndividualStore',
+                    store: 'Individual',
                     controller: 'IndividualController',
                     columns: [
                         {

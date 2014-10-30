@@ -2,8 +2,8 @@ Ext.define('BarsUp.view.individual.IndividualWindow', {
     extend: 'Ext.ux.desktop.Module',
 
     requires: [
-        'BarsUp.model.IndividualModel',
-        'BarsUp.store.IndividualStore',
+        'BarsUp.model.Individual',
+        'BarsUp.store.Individual',
         'BarsUp.view.individual.IndividualController'
     ],
 
@@ -28,7 +28,7 @@ Ext.define('BarsUp.view.individual.IndividualWindow', {
                 {
                     border: false,
                     xtype: 'grid',
-                    store: 'IndividualStore',
+                    store: 'Individual',
                     controller: 'IndividualController',
                     columns: [
                         {
