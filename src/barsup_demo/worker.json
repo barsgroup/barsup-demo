@@ -95,10 +95,7 @@
         "db_mapper": {
             "default": {
                 "__realization__": "barsup.mapping.DBMapper",
-                "__type__": "singleton",
-                "$apps": [
-                    "demo"
-                ]
+                "__type__": "singleton"
             }
         }
     }
