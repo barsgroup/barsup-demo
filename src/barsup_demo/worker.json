@@ -35,7 +35,8 @@
             "__default__": {
                 "__realization__": "barsup.service.Service",
                 "session": "default",
-                "db_mapper": "default"
+                "db_mapper": "default",
+                "$joins": []
             },
 
             "UserService": {
@@ -50,15 +51,15 @@
                 "model": "author"
             },
             "IndividualService": {
-                "__realization__": "demo.service.IndividualService",
-                "model": "individual"
+                "model": "individual",
+                "$joins": ["outerjoin:auto"]
             },
             "AutoService": {
                 "model": "auto"
             },
             "UserBookService": {
-                "__realization__": "demo.service.UserBookService",
-                "model": "user_book"
+                "model": "user_book",
+                "$joins": ["user", "book"]
             },
             "AuthorBookService": {
                 "model": "author_book"
