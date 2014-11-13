@@ -19,7 +19,7 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 from barsup.mapping import DBMapper
 
-target_metadata = DBMapper(["demo"])._metadata
+target_metadata = DBMapper()._metadata
 # target_metadata = None
 
 # other values from the config, defined by the needs of env.py,

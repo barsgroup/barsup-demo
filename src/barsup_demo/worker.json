@@ -28,7 +28,9 @@
         },
         "session": {
             "default": {
-                "__realization__": "barsup.session.DefaultSession"
+                "__realization__": "barsup.session.DefaultSession",
+                "$connection": "postgresql://barsup:barsup@localhost:5432/barsup",
+                "__type__": "singleton"
             }
         },
         "service": {
