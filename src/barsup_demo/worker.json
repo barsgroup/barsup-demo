@@ -28,14 +28,17 @@
         },
         "session": {
             "default": {
-                "__realization__": "barsup.session.DefaultSession"
+                "__realization__": "barsup.session.DefaultSession",
+                "$connection": "postgresql://barsup:barsup@localhost:5432/barsup",
+                "__type__": "singleton"
             }
         },
         "service": {
             "__default__": {
                 "__realization__": "barsup.service.Service",
                 "session": "default",
-                "db_mapper": "default"
+                "db_mapper": "default",
+                "$joins": []
             },
 
             "UserService": {
@@ -50,15 +53,15 @@
                 "model": "author"
             },
             "IndividualService": {
-                "__realization__": "demo.service.IndividualService",
-                "model": "individual"
+                "model": "individual",
+                "$joins": ["outerjoin:auto"]
             },
             "AutoService": {
                 "model": "auto"
             },
             "UserBookService": {
-                "__realization__": "demo.service.UserBookService",
-                "model": "user_book"
+                "model": "user_book",
+                "$joins": ["user", "book"]
             },
             "AuthorBookService": {
                 "model": "author_book"
@@ -94,10 +97,7 @@
         "db_mapper": {
             "default": {
                 "__realization__": "barsup.mapping.DBMapper",
-                "__type__": "singleton",
-                "$apps": [
-                    "demo"
-                ]
+                "__type__": "singleton"
             }
         }
     }
