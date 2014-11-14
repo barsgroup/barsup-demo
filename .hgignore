@@ -7,6 +7,7 @@ glob:dist/*
 #glob:build/*
 glob:objectpack.egg-info/*
 syntax: glob
+vendor/*
 .vagrant/*
 docs/_build/*
 src/build/*
