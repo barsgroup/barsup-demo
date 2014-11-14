@@ -9,6 +9,6 @@ echo "export BUP_PATH=/vagrant/src/barsup_demo" >> /home/vagrant/.bashrc
 cd /vagrant/src/barsup_demo/static/barsup
 ln -s ../../../../vendor/ext-5.0.1 ext
 
-pip install --upgrade -r REQUIREMENTS
+pip install --upgrade -r /vagrant/REQUIREMENTS
 pip install hg+https://bitbucket.org/barsgroup/barsup-core
 
