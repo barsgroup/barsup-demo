@@ -22,4 +22,4 @@ glob:tests/objectpack_demo/*.sqlt
 \.git
 \.idea
 \.sass-cache
-glob:src/barsup_demo/static/barsup/ext
+glob:src/barsup_demo/static/barsup/ext/ext-*
