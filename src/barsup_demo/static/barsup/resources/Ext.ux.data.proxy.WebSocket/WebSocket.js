@@ -71,8 +71,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             create: 'create',
             read: 'read',
             update: 'update',
-            destroy: 'destroy',
-            get: 'get'
+            destroy: 'destroy'
         },
 
         /**
@@ -516,11 +515,12 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
         else {
             var writer = Ext.StoreManager.lookup(me.getStoreId()).getProxy().getWriter(),
                 records = operation.getRecords(),
-                resultRecords = [];
+                resultRecords = [],
+                record;
 
 
             if (action !== 'create' && records.length === 1 && records[0].id) {
-                var record = writer.getRecordData(records[0]);
+                record = writer.getRecordData(records[0]);
 
                 apiKey = Ext.String.format(
                     '/{0}/{1}/{2}',
@@ -542,12 +542,15 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
 
             } else {
                 for (i = 0; i < records.length; i++) {
-                    resultRecords.push(writer.getRecordData(records[i]));
+                    record = writer.getRecordData(records[i]);
+
+                    if (action === 'create'){
+                        delete record.id; // Сгенерированный ExtJs-ом идентификатор посылать не нужно
+                    }
+                    resultRecords.push(record);
                 }
                 data['records'] = resultRecords;
             }
-
-
         }
 
         ws.send(apiKey, data);
@@ -625,7 +628,6 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
                     }
                 ];
 
-
             } else {
                 // read
                 if (typeof opt.setResultSet === 'function') {
@@ -639,4 +641,3 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
         }
     }
 });
-
