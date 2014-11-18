@@ -270,7 +270,6 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             return false;
         }
 
-        //if (Ext.isEmpty (cfg.websocket)) {
         if (Ext.isEmpty(me.getWebsocket())) {
             me.setWebsocket(Ext.create('Ext.ux.WebSocket', {
                 url: me.getUrl(),
@@ -289,6 +288,10 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             Ext.Error.raise('Ext.ux.WebSocket must use event communication type (set communicationType to event)!');
             return false;
         }
+
+//        var socket = new BarsUp.Socket();
+//        socket.listen(ws, me);
+
 
         ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().create, function (ws, data) {
             me.completeTask('create', me.getApi().create, data);
@@ -436,8 +439,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     read: function (operation) {
-        var method = operation.getId() ? this.getApi().get : this.getApi().read;
-        this.runTask(method, operation);
+        this.runTask(this.getApi().read, operation);
     },
 
     /**
@@ -491,42 +493,61 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
 
             data = Ext.applyIf(initialParams, me.getExtraParams() || {});
 
-            // copy any sorters, filters etc into the params so they can be sent over the wire
-            Ext.applyIf(data, me.getParams(operation));
-        } else if (action === me.getApi().get) {
-            me.callbacks[action] = {
-                operation: operation
-            };
+            if (operation.getId()) {
+                apiKey = Ext.String.format(
+                    '/{0}/{1}/{2}',
+                    this.storeId.toLowerCase(),
+                    action,
+                    operation.getId()
+                );
 
-            initialParams = Ext.apply({}, operation.getParams());
-
-            data = Ext.applyIf(initialParams, me.getExtraParams() || {});
-
-            apiKey = Ext.String.format(
-                '/{0}/{1}/{2}',
-                this.storeId.toLowerCase(),
-                operation.getId(),
-                action);
-
-            // Подписываем 1 раз
-            if (!ws.hasListener(apiKey)) {
-                ws.on(apiKey, function (ws, data) {
-                    me.completeTask('get', me.getApi().get, data);
-                });
+                // Подписываем 1 раз
+                if (!ws.hasListener(apiKey)) {
+                    ws.on(apiKey, function (ws, data) {
+                        me.completeTask(action, me.getApi().read, data);
+                    });
+                }
+            } else {
+                // copy any sorters, filters etc into the params so they can be sent over the wire
+                Ext.applyIf(data, me.getParams(operation));
             }
         }
         // Create, Update, Destroy
         else {
             var writer = Ext.StoreManager.lookup(me.getStoreId()).getProxy().getWriter(),
                 records = operation.getRecords(),
-                resultRecords;
+                resultRecords = [];
 
-            resultRecords = [];
 
-            for (i = 0; i < records.length; i++) {
-                resultRecords.push(writer.getRecordData(records[i]));
+            if (action !== 'create' && records.length === 1 && records[0].id) {
+                var record = writer.getRecordData(records[0]);
+
+                apiKey = Ext.String.format(
+                    '/{0}/{1}/{2}',
+                    this.storeId.toLowerCase(),
+                    action,
+                    record.id
+                );
+
+                // Подписываем 1 раз
+                if (!ws.hasListener(apiKey)) {
+                    ws.on(apiKey, function (ws, data) {
+                        me.completeTask(action, action, data);
+                    });
+                }
+                delete record.id;
+                if (action === 'update') {
+                    data['data'] = record;
+                }
+
+            } else {
+                for (i = 0; i < records.length; i++) {
+                    resultRecords.push(writer.getRecordData(records[i]));
+                }
+                data['records'] = resultRecords;
             }
-            data['params'] = resultRecords;
+
+
         }
 
         ws.send(apiKey, data);
@@ -583,7 +604,6 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
                 store.commitChanges();
             } else {
                 store.loadData(resultSet.records); //true
-
                 store.fireEvent('load', store);
             }
         }
@@ -595,8 +615,8 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             delete me.callbacks[event];
 
             // get
-            if (action === 'get') {
-                opt.setRecords([data]); // ХАК, но пока не понятно как сделать лучше
+            if (opt.getId()) {
+                opt.setRecords([data]); // ХАК, но пока непонятно как сделать лучше
                 opt.extraCalls = [
                     {
                         success: function (obj, operation) {
@@ -619,3 +639,4 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
         }
     }
 });
+

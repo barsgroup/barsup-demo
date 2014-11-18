@@ -1,6 +1,6 @@
 Ext.define('BarsUp.Socket', {
     requires: [
-        'Ext.ux.data.proxy.WebSocket'
+        'Ext.ux.WebSocket'
     ],
 
     statics: {
@@ -16,29 +16,59 @@ Ext.define('BarsUp.Socket', {
          */
         get: function () {
             return BarsUp.Socket._socket;
-        },
-        /**
-         *
-         * @param options
-         *  apiKey
-         *  params
-         *  success
-         *  failure
-         *  scope
-         *  timeout
-         *  isUpload
-         *
-         */
-        send: function (options) {
-            var ws = BarsUp.Socket._socket;
-            if (!ws.hasListeners[options['apiKey'].toLowerCase()]) {
-                ws.on(options['apiKey'],
-                    options['success'],
-                        options['scope'] || ws);
-            }
-
-            ws.send(options['apiKey'],
-                options['params']);
         }
+    },
+
+    constructor: function () {
+        this.callParent(arguments);
+    },
+
+    parseApiKey: function (event) {
+        var array = event.split('/');
+        return {
+            'model': array[1], // Правило парсинга
+            'method': array[2]
+        }
+    },
+
+    buildApiKey: function(storeId, method){
+
+    },
+
+    read: function(ws, data, storeId){
+    },
+
+    create: function(){
+
+    },
+
+    update: function(){
+
+    },
+
+    delete: function(){
+
+    },
+
+    listen: function (ws, proxy) {
+        var model = proxy.storeId,
+            methods = proxy.getApi();
+
+        ws.on('message', function (ws, data) {
+            var event = this.parseApiKey(data['event']);
+
+
+            if (event['model'] === model.toLowerCase() &&
+                proxy.getApi()[event['method']]) {
+
+
+                this[event['method']](ws, data['data'], model);
+            }
+        }, this);
+    },
+
+    run: function(operation){
+
     }
+
 });
