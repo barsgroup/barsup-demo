@@ -6,7 +6,7 @@
  * in the development directory to load properly (i.e., "dev mode").
  */
 @import 'build/production/BarsUp/resources/BarsUp-all.css';
-@import 'ext/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all-debug.css'
+@import 'ext/ext-5.0.1/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all-debug.css';
 
 .ux-notification-window .x-window-body {
 	text-align: center;
