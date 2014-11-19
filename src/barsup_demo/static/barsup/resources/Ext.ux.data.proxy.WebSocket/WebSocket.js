@@ -56,7 +56,10 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
     extend: 'Ext.data.proxy.Proxy',
     alias: 'proxy.websocket',
 
-    requires: ['Ext.ux.WebSocket'],
+    requires: [
+        'Ext.ux.WebSocket',
+        'Ext.ux.window.Notification'
+    ],
 
     config: {
         /**
@@ -288,16 +291,36 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             return false;
         }
 
-        ws.on(me.storeId.toLowerCase() + '|create', this._create, this);
-        ws.on(me.storeId.toLowerCase() + '|read', this._read, this);
-        ws.on(me.storeId.toLowerCase() + '|update', this._update, this);
-        ws.on(me.storeId.toLowerCase() + '|destroy', this._destroy, this);
+        ws.on(this.storeId.toLowerCase() + '|create',
+            Ext.Function.createSequence(this._create, this.logger), this);
+        ws.on(this.storeId.toLowerCase() + '|read',
+            Ext.Function.createSequence(this._read, this.logger), this);
+        ws.on(this.storeId.toLowerCase() + '|update',
+            Ext.Function.createSequence(this._update, this.logger), this);
+        ws.on(this.storeId.toLowerCase() + '|destroy',
+            Ext.Function.createSequence(this._destroy, this.logger), this);
 
         // Allows to define WebSocket proxy both into a model and a store
         me.callParent([cfg]);
 
         return me;
     },
+
+    logger: function (ws, result) {
+        if (result.error) {
+            Ext.create('widget.uxNotification', {
+                title: 'Внимание!',
+                position: 'br',
+                manager: 'demo1',
+                iconCls: 'ux-notification-icon-error',
+                autoCloseDelay: 7000,
+                spacing: 20,
+                html: result.error
+            }).show();
+        }
+        return arguments;
+    },
+
     /**
      * Encodes the array of {@link Ext.util.Sorter} objects into a string to be sent in the request url. By default,
      * this simply JSON-encodes the sorter data

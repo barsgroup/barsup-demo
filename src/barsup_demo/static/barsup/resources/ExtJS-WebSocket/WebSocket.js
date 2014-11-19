@@ -557,9 +557,9 @@ Ext.define('Ext.ux.WebSocket', {
 
         this.fireEvent(struct['model'] + '|' + struct['method'], this, {
             uuid:  msg['uuid'],
+            error: msg['error'],
             data: msg['data']
         });
-
     },
 
     sendRestMessage: function (struct, data) {

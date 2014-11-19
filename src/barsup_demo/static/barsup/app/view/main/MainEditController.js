@@ -15,6 +15,6 @@ Ext.define('BarsUp.view.main.MainEditController', {
     },
 
     onAfterRender: function(){
-        debugger;
+
     }
 });
