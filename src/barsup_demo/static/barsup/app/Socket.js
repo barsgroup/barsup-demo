@@ -8,7 +8,7 @@ Ext.define('BarsUp.Socket', {
         _socket: Ext.create('Ext.ux.WebSocket', {
             url: 'ws://localhost:8000/ws',
             protocol: null,
-            communicationType: 'event'
+            communicationType: 'rest'
         }),
         /**
          *

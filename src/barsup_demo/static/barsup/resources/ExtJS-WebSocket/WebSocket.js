@@ -387,6 +387,10 @@ Ext.define('Ext.ux.WebSocket', {
             me.ws.onmessage = Ext.bind(me.receiveEventMessage, this);
             me.send = Ext.bind(me.sendEventMessage, this);
         }
+        else if (me.getCommunicationType() === 'rest') {
+            me.ws.onmessage = Ext.bind(me.receiveRestMessage, this);
+            me.send = Ext.bind(me.sendRestMessage, this);
+        }
         else {
             me.ws.onmessage = Ext.bind(me.receiveTextMessage, this);
             me.send = Ext.bind(me.sendTextMessage, this);
@@ -545,5 +549,49 @@ Ext.define('Ext.ux.WebSocket', {
         me.safeSend(event);
 
         return me;
+    },
+
+    receiveRestMessage: function (message) {
+        var msg = Ext.JSON.decode(message.data),
+            struct = this.parseApiKey(msg['event']);
+
+        this.fireEvent(struct['model'] + '|' + struct['method'], this, {
+            uuid:  msg['uuid'],
+            data: msg['data']
+        });
+
+    },
+
+    sendRestMessage: function (struct, data) {
+        var apiKey = this.createApiKey(struct),
+            msg = {
+                event: apiKey,
+                uuid: struct['uuid'],
+                data: data
+            };
+
+        this.safeSend(Ext.JSON.encode(msg));
+    },
+    createApiKey: function (struct) {
+        var res = Ext.String.format(
+            '/{0}/{1}', struct.model, struct.method
+        );
+        if (struct['id']) {
+            res = Ext.String.format(
+                '{0}/{1}', res, struct.id
+            )
+        }
+        return res;
+    },
+    parseApiKey: function (apiKey) {
+        var array = apiKey.split('/'),
+            struct = {
+                model: array[1],
+                method: array[2]
+            };
+        if (array[3]) {
+            struct['id'] = array[3];
+        }
+        return struct;
     }
 });

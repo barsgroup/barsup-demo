@@ -273,7 +273,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             me.setWebsocket(Ext.create('Ext.ux.WebSocket', {
                 url: me.getUrl(),
                 protocol: me.getProtocol(),
-                communicationType: 'event',
+                communicationType: 'rest',
                 autoReconnect: me.getAutoReconnect(),
                 autoReconnectInterval: me.getAutoReconnectInterval(),
                 keepUnsentMessages: me.getKeepUnsentMessages()
@@ -282,38 +282,22 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
 
         var ws = me.getWebsocket();
 
-        // Forces the event communication
-        if (ws.getCommunicationType() !== 'event') {
-            Ext.Error.raise('Ext.ux.WebSocket must use event communication type (set communicationType to event)!');
+        // Forces the rest communication
+        if (ws.getCommunicationType() !== 'rest') {
+            Ext.Error.raise('Ext.ux.WebSocket must use rest communication type (set communicationType to event)!');
             return false;
         }
 
-//        var socket = new BarsUp.Socket();
-//        socket.listen(ws, me);
-
-
-        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().create, function (ws, data) {
-            me.completeTask('create', me.getApi().create, data);
-        });
-
-        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().read, function (ws, data) {
-            me.completeTask('read', me.getApi().read, data);
-        });
-
-        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().update, function (ws, data) {
-            me.completeTask('update', me.getApi().update, data);
-        });
-
-        ws.on('/' + me.storeId.toLowerCase() + '/' + me.getApi().destroy, function (ws, data) {
-            me.completeTask('destroy', me.getApi().destroy, data);
-        });
+        ws.on(me.storeId.toLowerCase() + '|create', this._create, this);
+        ws.on(me.storeId.toLowerCase() + '|read', this._read, this);
+        ws.on(me.storeId.toLowerCase() + '|update', this._update, this);
+        ws.on(me.storeId.toLowerCase() + '|destroy', this._destroy, this);
 
         // Allows to define WebSocket proxy both into a model and a store
         me.callParent([cfg]);
 
         return me;
     },
-
     /**
      * Encodes the array of {@link Ext.util.Sorter} objects into a string to be sent in the request url. By default,
      * this simply JSON-encodes the sorter data
@@ -428,7 +412,29 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     create: function (operation) {
-        this.runTask(this.getApi().create, operation);
+        var ws = this.getWebsocket(),
+            writer = Ext.StoreManager.lookup(this.getStoreId()).getProxy().getWriter(),
+            records = operation.getRecords(),
+            resultRecords = [],
+            data = {},
+            i = 0,
+            uuid = this.uuid(),
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'create',
+                uuid: uuid
+            },
+            record;
+
+
+        for (i = 0; i < records.length; i++) {
+            record = writer.getRecordData(records[i]);
+            delete record.id; // Сгенерированный ExtJs-ом идентификатор посылать не нужно
+            resultRecords.push(record);
+        }
+        data['records'] = resultRecords;
+
+        ws.send(apiKey, data);
     },
 
     /**
@@ -438,7 +444,32 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     read: function (operation) {
-        this.runTask(this.getApi().read, operation);
+        var data,
+            ws = this.getWebsocket() ,
+            i = 0,
+            uuid = this.uuid(),
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'read',
+                uuid: uuid
+            },
+            initialParams;
+
+        this.callbacks[uuid] = {
+            operation: operation
+        };
+        initialParams = Ext.apply({}, operation.getParams());
+
+        data = Ext.applyIf(initialParams, this.getExtraParams() || {});
+
+        if (operation.getId()) {
+            apiKey['id'] = operation.getId();
+        } else {
+            // copy any sorters, filters etc into the params so they can be sent over the wire
+            Ext.applyIf(data, this.getParams(operation));
+        }
+
+        ws.send(apiKey, data);
     },
 
     /**
@@ -448,7 +479,39 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     update: function (operation) {
-        this.runTask(this.getApi().update, operation);
+        var ws = this.getWebsocket(),
+            writer = Ext.StoreManager.lookup(this.getStoreId()).getProxy().getWriter(),
+            records = operation.getRecords(),
+            resultRecords = [],
+            data = {},
+            i = 0,
+            uuid = this.uuid(),
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'update',
+                uuid: uuid
+            },
+            record;
+
+        this.callbacks[uuid] = {
+            operation: operation
+        };
+
+        if (records.length === 1 && records[0].id) {
+            record = writer.getRecordData(records[0]);
+            apiKey['id'] = record.id;
+
+            delete record.id;
+            data['data'] = record;
+
+        } else {
+            for (i = 0; i < records.length; i++) {
+                record = writer.getRecordData(records[i]);
+                resultRecords.push(record);
+            }
+            data['records'] = resultRecords;
+        }
+        ws.send(apiKey, data);
     },
 
     /**
@@ -458,168 +521,59 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     erase: function (operation) {
-        this.runTask(this.getApi().destroy, operation);
-    },
-
-    /**
-     * @method runTask
-     * Starts a new operation (pull)
-     * @private
-     */
-    runTask: function (action, operation) {
-
-        var me = this ,
-            data = {} ,
-            ws = me.getWebsocket() ,
+        var ws = this.getWebsocket(),
+            writer = Ext.StoreManager.lookup(this.getStoreId()).getProxy().getWriter(),
+            records = operation.getRecords(),
+            resultRecords = [],
+            data = {},
             i = 0,
-            apiKey = Ext.String.format(
-                '/{0}/{1}',
-                this.storeId.toLowerCase(),
-                action),
-            initialParams;
+            uuid = this.uuid(),
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'destroy',
+                uuid: uuid
+            },
+            record;
 
-        // Callbacks store
-//        me.callbacks[action] = {
-//            operation: operation
-//        };
+        this.callbacks[uuid] = {
+            operation: operation
+        };
 
-        // Treats 'read' as a string event, with no data inside
-        if (action === me.getApi().read) {
-            me.callbacks[action] = {
-                operation: operation
-            };
-            initialParams = Ext.apply({}, operation.getParams());
+        if (records.length === 1 && records[0].id) {
+            record = writer.getRecordData(records[0]);
+            apiKey['id'] = record.id;
 
-            data = Ext.applyIf(initialParams, me.getExtraParams() || {});
-
-            if (operation.getId()) {
-                apiKey = Ext.String.format(
-                    '/{0}/{1}/{2}',
-                    this.storeId.toLowerCase(),
-                    action,
-                    operation.getId()
-                );
-
-                // Подписываем 1 раз
-                if (!ws.hasListener(apiKey)) {
-                    ws.on(apiKey, function (ws, data) {
-                        me.completeTask(action, me.getApi().read, data);
-                    });
-                }
-            } else {
-                // copy any sorters, filters etc into the params so they can be sent over the wire
-                Ext.applyIf(data, me.getParams(operation));
+        } else {
+            for (i = 0; i < records.length; i++) {
+                record = writer.getRecordData(records[i]);
+                resultRecords.push(record.id);
             }
+            data['records'] = resultRecords;
         }
-        // Create, Update, Destroy
-        else {
-            var writer = Ext.StoreManager.lookup(me.getStoreId()).getProxy().getWriter(),
-                records = operation.getRecords(),
-                resultRecords = [],
-                record;
-
-
-            if (action !== 'create' && records.length === 1 && records[0].id) {
-                record = writer.getRecordData(records[0]);
-
-                apiKey = Ext.String.format(
-                    '/{0}/{1}/{2}',
-                    this.storeId.toLowerCase(),
-                    action,
-                    record.id
-                );
-
-                // Подписываем 1 раз
-                if (!ws.hasListener(apiKey)) {
-                    ws.on(apiKey, function (ws, data) {
-                        me.completeTask(action, action, data);
-                    });
-                }
-                delete record.id;
-                if (action === 'update') {
-                    data['data'] = record;
-                }
-
-            } else {
-                for (i = 0; i < records.length; i++) {
-                    record = writer.getRecordData(records[i]);
-
-                    if (action === 'create'){
-                        delete record.id; // Сгенерированный ExtJs-ом идентификатор посылать не нужно
-                    }
-                    resultRecords.push(record);
-                }
-                data['records'] = resultRecords;
-            }
-        }
-
         ws.send(apiKey, data);
     },
+    uuid: function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    },
 
-    /**
-     * @method completeTask
-     * Completes a pending operation (push/pull)
-     * @private
-     */
-    completeTask: function (action, event, data) {
-        var me = this ,
-            resultSet = me.getReader().read(data);
+    _read: function (ws, result) {
+        var uuid = result['uuid'],
+            data = result['data'],
+            resultSet = this.getReader().read(data),
+            callback = this.callbacks[uuid],
+            opt;
 
-        // Server push case: the store is get up-to-date with the incoming data
-        if (!me.callbacks[event]) {
-
-            var store = Ext.StoreManager.lookup(me.getStoreId());
-
-            if (typeof store === 'undefined') {
-                Ext.Error.raise('Unrecognized store: check if the storeId passed into configuration is right.');
-                return false;
-            }
-
-            if (action === 'update') {
-                for (var i = 0; i < resultSet.records.length; i++) {
-                    var record = store.getById(resultSet.records[i].getId());
-
-                    if (record) {
-                        record.set(resultSet.records[i].data);
-                    }
-                }
-
-                store.commitChanges();
-            }
-            else if (action === 'destroy') {
-                Ext.each(resultSet.records, function (record) {
-                    store.remove(record);
-                });
-
-                store.commitChanges();
-            }
-            else if (action === 'create') {
-                for (var i = 0; i < resultSet.records.length; i++) {
-                    var record = store.getById(resultSet.records[i].get('client_id'));
-                    if (record) {
-                        // client create
-                        record.set(resultSet.records[i].data);
-                    } else {
-                        // server sent
-                        store.add(resultSet.records[i].data);
-                    }
-                }
-                store.commitChanges();
-            } else {
-                store.loadData(resultSet.records); //true
-                store.fireEvent('load', store);
-            }
-        }
-        // Client request case: a callback function (operation) has to be called
-        else {
-            var opt = me.callbacks[event].operation ,
-                records = opt.records || data;
-
-            delete me.callbacks[event];
+        // Обрабатывает сообщения read только тот адресат, кто принял запрос
+        if (callback) {
+            opt = this.callbacks[uuid].operation;
+            delete this.callbacks[uuid];
 
             // get
             if (opt.getId()) {
-                opt.setRecords([data]); // ХАК, но пока непонятно как сделать лучше
+                // FIXME: хак, но пока непонятно как сделать лучше
+                opt.setRecords([data]);
                 opt.extraCalls = [
                     {
                         success: function (obj, operation) {
@@ -630,14 +584,65 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
 
             } else {
                 // read
-                if (typeof opt.setResultSet === 'function') {
-                    opt.setResultSet(resultSet);
-                }
-                else {
-                    opt.resultSet = resultSet;
-                }
+                opt.setResultSet(resultSet);
             }
             opt.setSuccessful(true);
         }
+    },
+
+    _destroy: function (ws, result) {
+        var uuid = result['uuid'],
+            data = result['data'],
+            resultSet = this.getReader().read(data),
+            callback = this.callbacks[uuid],
+            opt,
+            store = Ext.StoreManager.lookup(this.getStoreId());
+
+        if (callback) {
+            // Обработка ошибок
+        }
+
+        Ext.each(resultSet.records, function (record) {
+            store.remove(record);
+        });
+
+        store.commitChanges();
+    },
+
+    _update: function (ws, result) {
+        var uuid = result['uuid'],
+            data = result['data'],
+            resultSet = this.getReader().read(data),
+            callback = this.callbacks[uuid],
+            opt,
+            store = Ext.StoreManager.lookup(this.getStoreId());
+
+        if (callback) {
+            // Обработка ошибок
+        }
+
+        for (var i = 0; i < resultSet.records.length; i++) {
+            var record = store.getById(resultSet.records[i].getId());
+
+            if (record) {
+                record.set(resultSet.records[i].data);
+            }
+        }
+
+        store.commitChanges();
+    },
+
+    _create: function (ws, result) {
+        var uuid = result['uuid'],
+            data = result['data'],
+            resultSet = this.getReader().read(data),
+            callback = this.callbacks[uuid],
+            opt,
+            store = Ext.StoreManager.lookup(this.getStoreId());
+
+        Ext.Array.forEach(resultSet.records, function (value) {
+            store.add(value.data);
+        });
+        store.commitChanges();
     }
 });
