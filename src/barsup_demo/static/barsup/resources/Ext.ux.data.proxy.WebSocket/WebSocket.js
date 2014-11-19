@@ -418,11 +418,9 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             resultRecords = [],
             data = {},
             i = 0,
-            uuid = this.uuid(),
             apiKey = {
                 model: this.storeId.toLowerCase(),
-                method: 'create',
-                uuid: uuid
+                method: 'create'
             },
             record;
 
@@ -447,15 +445,13 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
         var data,
             ws = this.getWebsocket() ,
             i = 0,
-            uuid = this.uuid(),
             apiKey = {
                 model: this.storeId.toLowerCase(),
-                method: 'read',
-                uuid: uuid
+                method: 'read'
             },
             initialParams;
 
-        this.callbacks[uuid] = {
+        this.callbacks['read'] = {
             operation: operation
         };
         initialParams = Ext.apply({}, operation.getParams());
@@ -485,17 +481,11 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             resultRecords = [],
             data = {},
             i = 0,
-            uuid = this.uuid(),
             apiKey = {
                 model: this.storeId.toLowerCase(),
-                method: 'update',
-                uuid: uuid
+                method: 'update'
             },
             record;
-
-        this.callbacks[uuid] = {
-            operation: operation
-        };
 
         if (records.length === 1 && records[0].id) {
             record = writer.getRecordData(records[0]);
@@ -527,17 +517,11 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             resultRecords = [],
             data = {},
             i = 0,
-            uuid = this.uuid(),
             apiKey = {
                 model: this.storeId.toLowerCase(),
-                method: 'destroy',
-                uuid: uuid
+                method: 'destroy'
             },
             record;
-
-        this.callbacks[uuid] = {
-            operation: operation
-        };
 
         if (records.length === 1 && records[0].id) {
             record = writer.getRecordData(records[0]);
@@ -552,55 +536,41 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
         }
         ws.send(apiKey, data);
     },
-    uuid: function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    },
 
     _read: function (ws, result) {
-        var uuid = result['uuid'],
-            data = result['data'],
+        var data = result['data'],
             resultSet = this.getReader().read(data),
-            callback = this.callbacks[uuid],
             opt;
 
         // Обрабатывает сообщения read только тот адресат, кто принял запрос
-        if (callback) {
-            opt = this.callbacks[uuid].operation;
-            delete this.callbacks[uuid];
+        opt = this.callbacks['read'].operation;
+        delete this.callbacks['read'];
 
-            // get
-            if (opt.getId()) {
-                // FIXME: хак, но пока непонятно как сделать лучше
-                opt.setRecords([data]);
-                opt.extraCalls = [
-                    {
-                        success: function (obj, operation) {
-                            obj.data = data;
-                        }
+        // get
+        if (opt.getId()) {
+            // FIXME: хак, но пока непонятно как сделать лучше
+            opt.setRecords([data]);
+            opt.extraCalls = [
+                {
+                    success: function (obj, operation) {
+                        obj.data = data;
                     }
-                ];
+                }
+            ];
 
-            } else {
-                // read
-                opt.setResultSet(resultSet);
-            }
-            opt.setSuccessful(true);
+        } else {
+            // read
+            opt.setResultSet(resultSet);
         }
+        opt.setSuccessful(true);
+
     },
 
     _destroy: function (ws, result) {
-        var uuid = result['uuid'],
-            data = result['data'],
+        var data = result['data'],
             resultSet = this.getReader().read(data),
-            callback = this.callbacks[uuid],
             opt,
             store = Ext.StoreManager.lookup(this.getStoreId());
-
-        if (callback) {
-            // Обработка ошибок
-        }
 
         Ext.each(resultSet.records, function (record) {
             store.remove(record);
@@ -610,33 +580,26 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
     },
 
     _update: function (ws, result) {
-        var uuid = result['uuid'],
-            data = result['data'],
+        var data = result['data'],
             resultSet = this.getReader().read(data),
-            callback = this.callbacks[uuid],
             opt,
-            store = Ext.StoreManager.lookup(this.getStoreId());
+            store = Ext.StoreManager.lookup(this.getStoreId()),
+            record;
 
-        if (callback) {
-            // Обработка ошибок
-        }
-
-        for (var i = 0; i < resultSet.records.length; i++) {
-            var record = store.getById(resultSet.records[i].getId());
+        Ext.Array.forEach(resultSet.records, function (value) {
+            record = store.getById(value.getId());
 
             if (record) {
-                record.set(resultSet.records[i].data);
+                record.set(value.data);
             }
-        }
+        });
 
         store.commitChanges();
     },
 
     _create: function (ws, result) {
-        var uuid = result['uuid'],
-            data = result['data'],
+        var data = result['data'],
             resultSet = this.getReader().read(data),
-            callback = this.callbacks[uuid],
             opt,
             store = Ext.StoreManager.lookup(this.getStoreId());
 
