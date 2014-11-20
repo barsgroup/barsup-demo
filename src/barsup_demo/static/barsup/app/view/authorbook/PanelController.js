@@ -14,16 +14,6 @@ Ext.define('BarsUp.view.authorbook.PanelController', {
     bindingType: 'binding.authorbook',
     bindingEntity: 'authorbook',
 
-    getStoreParam: function () {
-        return {
-            params: {
-                filter: {
-                    author_id: this.getViewModel().getData()['authorId']
-                }
-            }
-        };
-    },
-
     getData: function () {
         return this.getViewModel().getData();
     }

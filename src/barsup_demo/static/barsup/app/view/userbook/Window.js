@@ -30,6 +30,7 @@ Ext.define("BarsUp.view.userbook.Window", {
                     xtype: 'grid',
                     store: 'UserBook',
                     controller: 'UserBookController',
+                    plugins: ['gridfilters'],
                     columns: [
                         {
                             xtype: 'gridcolumn',
@@ -41,7 +42,8 @@ Ext.define("BarsUp.view.userbook.Window", {
                                 return value;
                             },
                             text: 'Пользователь',
-                            flex: 1
+                            flex: 1,
+                            filter: 'string'
                         },
                         {
                             xtype: 'gridcolumn',
@@ -53,7 +55,8 @@ Ext.define("BarsUp.view.userbook.Window", {
                                 return value;
                             },
                             text: 'Логин пользователя',
-                            flex: 1
+                            flex: 1,
+                            filter: 'string'
                         },
                         {
                             xtype: 'gridcolumn',
@@ -65,14 +68,16 @@ Ext.define("BarsUp.view.userbook.Window", {
                                 return value;
                             },
                             text: 'Книга',
-                            flex: 1
+                            flex: 1,
+                            filter: 'string'
                         },
                         {
                             xtype: 'datecolumn',
                             dataIndex: 'return_date',
                             text: 'Дата возврата',
-                            format: 'd.m.Y',
-                            flex: 1
+                            flex: 1,
+                            filter: 'date',
+                            format: 'd.m.Y'
                         }
                     ],
 

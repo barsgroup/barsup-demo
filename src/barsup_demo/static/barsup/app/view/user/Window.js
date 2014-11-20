@@ -30,25 +30,29 @@ Ext.define("BarsUp.view.user.Window", {
                     xtype: 'grid',
                     store: 'User',
                     controller: 'UserController',
+                    plugins: ['gridfilters'],
                     columns: [
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'name',
                             text: 'ФИО',
-                            flex: 1
+                            flex: 1,
+                            filter: 'string'
 
                         },
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'email',
                             text: 'Эл. Почта',
-                            flex: 1
+                            flex: 1,
+                            filter: 'string'
                         },
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'login',
                             text: 'Логин',
-                            flex: 1
+                            flex: 1,
+                            filter: 'string'
                         }
                     ],
 

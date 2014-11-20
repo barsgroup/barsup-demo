@@ -93,9 +93,11 @@ Ext.define("BarsUp.view.authorbook.Panel", {
 
             Ext.getStore('AuthorBook').load({
                 params: {
-                    filter: {
-                        author_id: authorId
-                    }
+                    filter: Ext.JSON.encode([{
+                        property: 'author_id',
+                        operator: 'eq',
+                        value: this.getViewModel().getData()['authorId']
+                    }])
                 }
             });
         }

@@ -30,19 +30,22 @@ Ext.define("BarsUp.view.book.Window", {
                     xtype: 'grid',
                     store: 'Book',
                     controller: 'BookController',
+                    plugins: ['gridfilters'],
                     columns: [
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'name',
                             text: 'Название',
-                            flex: 1
+                            flex: 1,
+                            filter: 'string'
 
                         },
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'year',
                             text: 'Год',
-                            flex: 1
+                            flex: 1,
+                            filter: 'number'
                         }
                     ],
 

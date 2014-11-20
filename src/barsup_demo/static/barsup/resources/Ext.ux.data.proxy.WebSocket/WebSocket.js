@@ -466,7 +466,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      */
     read: function (operation) {
         var data,
-            ws = this.getWebsocket() ,
+            ws = this.getWebsocket(),
             i = 0,
             apiKey = {
                 model: this.storeId.toLowerCase(),
@@ -566,27 +566,29 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             opt;
 
         // Обрабатывает сообщения read только тот адресат, кто принял запрос
-        opt = this.callbacks['read'].operation;
-        delete this.callbacks['read'];
+        // FIXME: Если быстро два раза нажали, придумать лучший способ
+        if (this.callbacks['read']) {
+            opt = this.callbacks['read'].operation;
+            delete this.callbacks['read'];
 
-        // get
-        if (opt.getId()) {
-            // FIXME: хак, но пока непонятно как сделать лучше
-            opt.setRecords([data]);
-            opt.extraCalls = [
-                {
-                    success: function (obj, operation) {
-                        obj.data = data;
+            // get
+            if (opt.getId()) {
+                // FIXME: хак, но пока непонятно как сделать лучше
+                opt.setRecords([data]);
+                opt.extraCalls = [
+                    {
+                        success: function (obj, operation) {
+                            obj.data = data;
+                        }
                     }
-                }
-            ];
+                ];
 
-        } else {
-            // read
-            opt.setResultSet(resultSet);
+            } else {
+                // read
+                opt.setResultSet(resultSet);
+            }
+            opt.setSuccessful(true);
         }
-        opt.setSuccessful(true);
-
     },
 
     _destroy: function (ws, result) {
