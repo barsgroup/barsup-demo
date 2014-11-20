@@ -5,5 +5,7 @@ Ext.define('BarsUp.store.AuthorBook', {
         'BarsUp.model.AuthorBook'
     ],
 
-    model: 'BarsUp.model.AuthorBook'
+    model: 'BarsUp.model.AuthorBook',
+    remoteSort: true,
+    remoteFilter: true
 });

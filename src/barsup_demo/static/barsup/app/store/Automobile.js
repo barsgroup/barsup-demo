@@ -6,5 +6,7 @@ Ext.define('BarsUp.store.Automobile', {
     ],
 
     model: 'BarsUp.model.Automobile',
-    autoLoad: true
+    autoLoad: true,
+    remoteSort: true,
+    remoteFilter: true
 });

@@ -6,5 +6,7 @@ Ext.define('BarsUp.store.User', {
     ],
 
     model: 'BarsUp.model.User',
-    autoLoad: true
+    autoLoad: true,
+    remoteSort: true,
+    remoteFilter: true
 });

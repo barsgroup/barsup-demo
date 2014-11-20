@@ -1,4 +1,3 @@
-
 Ext.define('BarsUp.store.Individual', {
     extend: 'Ext.data.Store',
 
@@ -7,5 +6,7 @@ Ext.define('BarsUp.store.Individual', {
     ],
 
     model: 'BarsUp.model.Individual',
-    autoLoad: true
+    autoLoad: true,
+    remoteSort: true,
+    remoteFilter: true
 });
