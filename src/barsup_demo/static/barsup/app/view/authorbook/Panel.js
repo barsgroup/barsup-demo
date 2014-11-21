@@ -20,7 +20,7 @@ Ext.define("BarsUp.view.authorbook.Panel", {
         {
             xtype: 'grid',
             store: 'AuthorBook',
-
+            plugins: ['gridfilters'],
             columns: [
                 {
                     xtype: 'gridcolumn',
@@ -32,7 +32,8 @@ Ext.define("BarsUp.view.authorbook.Panel", {
                         return value;
                     },
                     text: 'Книга',
-                    flex: 1
+                    flex: 1,
+                    filter: 'string'
                 },
                 {
                     xtype: 'gridcolumn',
@@ -44,7 +45,8 @@ Ext.define("BarsUp.view.authorbook.Panel", {
                         return value;
                     },
                     text: 'Год издания',
-                    flex: 1
+                    flex: 1,
+                    filter: 'number'
                 }
             ],
 
@@ -91,15 +93,14 @@ Ext.define("BarsUp.view.authorbook.Panel", {
                 authorId: authorId
             });
 
-            Ext.getStore('AuthorBook').load({
-                params: {
-                    filter: Ext.JSON.encode([{
-                        property: 'author_id',
-                        operator: 'eq',
-                        value: this.getViewModel().getData()['authorId']
-                    }])
-                }
+            var authorStore = Ext.getStore('AuthorBook');
+            authorStore.addFilter({
+                property: 'author_id',
+                operator: 'eq',
+                value: this.getViewModel().getData()['authorId']
             });
+            authorStore.setStatefulFilters(true);
+            authorStore.load();
         }
     }
 });

@@ -8,9 +8,6 @@ Ext.define('BarsUp.model.UserBook', {
         {
             name: 'return_date',
             type: 'date',
-            //convert: function (v) {
-            //    return Ext.Date.format(new Date(v), 'd m Y');
-            //}
             format: 'm-d-Y'
         }
     ],

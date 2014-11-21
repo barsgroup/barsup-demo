@@ -56,7 +56,13 @@ Ext.define("BarsUp.view.userbook.Window", {
                             },
                             text: 'Логин пользователя',
                             flex: 1,
-                            filter: 'string'
+                            filter: {
+                                type: 'list',
+                                optionsStore: Ext.StoreManager.lookup('User'),
+                                labelField: 'login',
+                                idField: 'login'
+
+                            }
                         },
                         {
                             xtype: 'gridcolumn',

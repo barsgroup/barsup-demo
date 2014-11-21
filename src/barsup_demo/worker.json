@@ -64,7 +64,8 @@
                 "$joins": ["user", "book"]
             },
             "AuthorBookService": {
-                "model": "author_book"
+                "model": "author_book",
+                "$joins": ["author", "book"]
             }
         },
         "model": {
