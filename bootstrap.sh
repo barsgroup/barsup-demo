@@ -4,11 +4,17 @@
 locale-gen en_US.UTF-8
 update-locale LANG=en_US.UTF-8 LC_CTYPE="en_US.UTF-8" LC_NUMERIC="en_US.UTF-8" LC_TIME="en_US.UTF-8" LC_COLLATE="en_US.UTF-8" LC_MONETARY="en_US.UTF-8" LC_MESSAGES="en_US.UTF-8"  LC_PAPER="en_US.UTF-8" LC_NAME="en_US.UTF-8" LC_ADDRESS="en_US.UTF-8" LC_TELEPHONE="en_US.UTF-8" LC_MEASUREMENT="en_US.UTF-8" LC_IDENTIFICATION="en_US.UTF-8" LC_ALL=en_US.UTF-8
 
+# Установка python 3.4
+apt-get update
+apt-get install python-software-properties -y --force-yes
+add-apt-repository ppa:fkrull/deadsnakes -y
+
 # package install/upgrade
 echo "Updating & Installing packages"
 apt-get update
-apt-get install -y --force-yes unzip python-dev python-pip mercurial postgresql postgresql-client-9.1 postgresql-server-dev-9.1 python-psycopg2 build-essential
+apt-get install -y --force-yes python3.4 unzip python-dev python-pip mercurial postgresql postgresql-client-9.1 postgresql-server-dev-9.1 python-psycopg2 build-essential
 easy_install -U pip
+
 
 # BUP_PATH for SSH-sessions
 echo "export BUP_PATH=/vagrant/src/barsup_demo" >> /home/vagrant/.bashrc
@@ -16,7 +22,6 @@ echo "export BUP_PATH=/vagrant/src/barsup_demo" >> /home/vagrant/.bashrc
 # project installation
 echo "Installing project dependencies"
 pip install --upgrade -r /vagrant/REQUIREMENTS
-pip install hg+https://bitbucket.org/barsgroup/barsup-core
 
 # Установка ExtJS
 if [ ! -d "/vagrant/src/barsup_demo/static/barsup/ext/ext-5.0.1" ]; then
@@ -39,7 +44,7 @@ echo "Upgrading migrations (don't worry: red color - normal output)"
 cd /vagrant/src/barsup_demo
 alembic upgrade head
 
-# installation/start of daemon confidurations
+# installation/start of daemon configurations
 cp /vagrant/scripts/*.conf /etc/init
 start bup_server
 start bup_worker
