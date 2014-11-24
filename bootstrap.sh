@@ -12,8 +12,11 @@ add-apt-repository ppa:fkrull/deadsnakes -y
 # package install/upgrade
 echo "Updating & Installing packages"
 apt-get update
-apt-get install -y --force-yes python3.4 unzip python-dev python-pip mercurial postgresql postgresql-client-9.1 postgresql-server-dev-9.1 python-psycopg2 build-essential
+apt-get install -y --force-yes python3.4 unzip python3.4-dev python-pip mercurial postgresql postgresql-client-9.1 postgresql-server-dev-9.1 python-psycopg2 build-essential
+
+
 easy_install -U pip
+pip install --upgrade virtualenv
 
 
 # BUP_PATH for SSH-sessions
@@ -21,6 +24,9 @@ echo "export BUP_PATH=/vagrant/src/barsup_demo" >> /home/vagrant/.bashrc
 
 # project installation
 echo "Installing project dependencies"
+virtualenv -p /usr/bin/python3.4 py3env
+source py3env/bin/activate
+
 pip install --upgrade -r /vagrant/REQUIREMENTS
 
 # Установка ExtJS
