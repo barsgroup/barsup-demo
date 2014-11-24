@@ -1,9 +1,1 @@
-tornado>=4.0
-sqlalchemy
-psycopg2
-sockjs-tornado
-routes
-pyzmq
-python-dateutil
-alembic
 hg+https://bitbucket.org/barsgroup/barsup-core@py3.4
