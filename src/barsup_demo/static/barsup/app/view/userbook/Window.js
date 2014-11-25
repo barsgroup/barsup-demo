@@ -35,12 +35,6 @@ Ext.define("BarsUp.view.userbook.Window", {
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'user.name',
-                            renderer: function (value, metodata, record) {
-                                if (record.get('user')) {
-                                    return record.get('user')['name'];
-                                }
-                                return value;
-                            },
                             text: 'Пользователь',
                             flex: 1,
                             filter: 'string'
@@ -48,12 +42,6 @@ Ext.define("BarsUp.view.userbook.Window", {
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'user.login',
-                            renderer: function (value, metodata, record) {
-                                if (record.get('user')) {
-                                    return record.get('user')['login'];
-                                }
-                                return value;
-                            },
                             text: 'Логин пользователя',
                             flex: 1,
                             filter: {
@@ -67,12 +55,6 @@ Ext.define("BarsUp.view.userbook.Window", {
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'book.name',
-                            renderer: function (value, metodata, record) {
-                                if (record.get('book')) {
-                                    return record.get('book')['name'];
-                                }
-                                return value;
-                            },
                             text: 'Книга',
                             flex: 1,
                             filter: 'string'

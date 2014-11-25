@@ -87,14 +87,7 @@ Ext.define('BarsUp.view.auto.AutoIndividualWindow', {
                         },
                         {
                             xtype: 'gridcolumn',
-//                            mapping: 'auto.text',
                             dataIndex: 'auto.name',
-                            renderer: function (value, metodata, record) {
-                                if (record.get('auto')) {
-                                    return record.get('auto')['name'];
-                                }
-                                return value;
-                            },
                             text: 'Автомобиль',
                             flex: 1
                         }

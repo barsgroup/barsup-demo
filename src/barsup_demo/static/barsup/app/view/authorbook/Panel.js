@@ -25,12 +25,6 @@ Ext.define("BarsUp.view.authorbook.Panel", {
                 {
                     xtype: 'gridcolumn',
                     dataIndex: 'book.name',
-                    renderer: function (value, metodata, record) {
-                        if (record.get('book')) {
-                            return record.get('book')['name'];
-                        }
-                        return value;
-                    },
                     text: 'Книга',
                     flex: 1,
                     filter: 'string'
@@ -38,12 +32,6 @@ Ext.define("BarsUp.view.authorbook.Panel", {
                 {
                     xtype: 'gridcolumn',
                     dataIndex: 'book.year',
-                    renderer: function (value, metodata, record) {
-                        if (record.get('book')) {
-                            return record.get('book')['year'];
-                        }
-                        return value;
-                    },
                     text: 'Год издания',
                     flex: 1,
                     filter: 'number'
