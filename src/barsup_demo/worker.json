@@ -100,6 +100,17 @@
                 "__realization__": "barsup.mapping.DBMapper",
                 "__type__": "singleton"
             }
+        },
+        "api_options": {
+            "default": {
+                "__realization__": "builtins.dict",
+                "$middleware": ["log_errors_to_stderr", "check_uid_presence"]
+            }
+        },
+        "middleware": {
+            "__default__": {"__type__": "static"},
+            "log_errors_to_stderr": {"__realization__": "barsup.middleware.log_errors_to_stderr"},
+            "check_uid_presence": {"__realization__": "barsup.middleware.check_uid_presence"}
         }
     }
 }
