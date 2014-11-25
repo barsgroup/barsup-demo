@@ -104,13 +104,26 @@
         "api_options": {
             "default": {
                 "__realization__": "builtins.dict",
-                "$middleware": ["log_errors_to_stderr", "check_uid_presence"]
+                "$middleware": [
+                    "log_errors_to_stderr",
+                    "check_uid_presence",
+                    "transact"
+                ]
             }
         },
         "middleware": {
             "__default__": {"__type__": "static"},
-            "log_errors_to_stderr": {"__realization__": "barsup.middleware.log_errors_to_stderr"},
-            "check_uid_presence": {"__realization__": "barsup.middleware.check_uid_presence"}
+            "log_errors_to_stderr": {
+                "__realization__": "barsup.middleware.log_errors_to_stderr"
+            },
+            "check_uid_presence": {
+                "__realization__": "barsup.middleware.check_uid_presence"
+            },
+            "transact": {
+                "__type__": "singleton",
+                "__realization__": "barsup.middleware.transact",
+                "session": "default"
+            }
         }
     }
 }
