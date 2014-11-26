@@ -15,5 +15,12 @@ Ext.define('BarsUp.Application', {
 
     launch: function () {
         // TODO - Launch the application
+
+        var ws = BarsUp.Socket.get();
+
+        ws.on('isLogin', function () {
+            debugger;
+        });
+        //ws.sendEventMessage('isLogin');
     }
 });

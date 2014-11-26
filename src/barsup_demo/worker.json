@@ -1,129 +1,132 @@
 {
-    "container": {
-        "controller": {
-            "__default__": {
-                "__realization__": "barsup.controller.DictController"
-            },
-            "Individual": {
-                "service": "IndividualService"
-            },
-            "Automobile": {
-                "service": "AutoService"
-            },
-            "User": {
-                "service": "UserService"
-            },
-            "Author": {
-                "service": "AuthorService"
-            },
-            "Book": {
-                "service": "BookService"
-            },
-            "UserBook": {
-                "service": "UserBookService"
-            },
-            "AuthorBook": {
-                "service": "AuthorBookService"
-            }
-        },
-        "session": {
-            "default": {
-                "__realization__": "barsup.session.DefaultSession",
-                "$connection": "postgresql://barsup:barsup@localhost:5432/barsup",
-                "__type__": "singleton"
-            }
-        },
-        "service": {
-            "__default__": {
-                "__realization__": "barsup.service.Service",
-                "session": "default",
-                "db_mapper": "default",
-                "$joins": []
-            },
-
-            "UserService": {
-                "model": "user"
-            },
-
-            "BookService": {
-                "model": "book"
-            },
-
-            "AuthorService": {
-                "model": "author"
-            },
-            "IndividualService": {
-                "model": "individual",
-                "$joins": ["outerjoin:auto"]
-            },
-            "AutoService": {
-                "model": "auto"
-            },
-            "UserBookService": {
-                "model": "user_book",
-                "$joins": ["user", "book"]
-            },
-            "AuthorBookService": {
-                "model": "author_book",
-                "$joins": ["author", "book"]
-            }
-        },
-        "model": {
-            "__default__": {
-                "__realization__": "barsup.mapping.get_model",
-                "db_mapper": "default"
-            },
-            "auto": {
-                "$name": "auto"
-            },
-            "individual": {
-                "$name": "individual"
-            },
-            "user": {
-                "$name": "user"
-            },
-            "author": {
-                "$name": "author"
-            },
-            "book": {
-                "$name": "book"
-            },
-            "user_book": {
-                "$name": "user_book"
-            },
-            "author_book": {
-                "$name": "author_book"
-            }
-        },
-        "db_mapper": {
-            "default": {
-                "__realization__": "barsup.mapping.DBMapper",
-                "__type__": "singleton"
-            }
-        },
-        "api_options": {
-            "default": {
-                "__realization__": "builtins.dict",
-                "$middleware": [
-                    "log_errors_to_stderr",
-                    "check_uid_presence",
-                    "transact"
-                ]
-            }
-        },
-        "middleware": {
-            "__default__": {"__type__": "static"},
-            "log_errors_to_stderr": {
-                "__realization__": "barsup.middleware.log_errors_to_stderr"
-            },
-            "check_uid_presence": {
-                "__realization__": "barsup.middleware.check_uid_presence"
-            },
-            "transact": {
-                "__type__": "singleton",
-                "__realization__": "barsup.middleware.transact",
-                "session": "default"
-            }
-        }
+  "container": {
+    "controller": {
+      "__default__": {
+        "__realization__": "barsup.controller.DictController"
+      },
+      "Individual": {
+        "service": "IndividualService"
+      },
+      "Automobile": {
+        "service": "AutoService"
+      },
+      "User": {
+        "service": "UserService"
+      },
+      "Author": {
+        "service": "AuthorService"
+      },
+      "Book": {
+        "service": "BookService"
+      },
+      "UserBook": {
+        "service": "UserBookService"
+      },
+      "AuthorBook": {
+        "service": "AuthorBookService"
+      }
+    },
+    "session": {
+      "default": {
+        "__realization__": "barsup.session.DefaultSession",
+        "$connection": "postgresql://barsup:barsup@localhost:5432/barsup",
+        "__type__": "singleton"
+      }
+    },
+    "service": {
+      "__default__": {
+        "__realization__": "barsup.service.Service",
+        "session": "default",
+        "db_mapper": "default",
+        "$joins": []
+      },
+      "UserService": {
+        "model": "user"
+      },
+      "BookService": {
+        "model": "book"
+      },
+      "AuthorService": {
+        "model": "author"
+      },
+      "IndividualService": {
+        "model": "individual",
+        "$joins": ["outerjoin:auto"]
+      },
+      "AutoService": {
+        "model": "auto"
+      },
+      "UserBookService": {
+        "model": "user_book",
+        "$joins": [
+          "user",
+          "book"
+        ]
+      },
+      "AuthorBookService": {
+        "model": "author_book",
+        "$joins": [
+          "author",
+          "book"
+        ]
+      }
+    },
+    "model": {
+      "__default__": {
+        "__realization__": "barsup.mapping.get_model",
+        "db_mapper": "default"
+      },
+      "auto": {
+        "$name": "auto"
+      },
+      "individual": {
+        "$name": "individual"
+      },
+      "user": {
+        "$name": "user"
+      },
+      "author": {
+        "$name": "author"
+      },
+      "book": {
+        "$name": "book"
+      },
+      "user_book": {
+        "$name": "user_book"
+      },
+      "author_book": {
+        "$name": "author_book"
+      }
+    },
+    "db_mapper": {
+      "default": {
+        "__realization__": "barsup.mapping.DBMapper",
+        "__type__": "singleton"
+      }
+    },
+    "api_options": {
+      "default": {
+        "__realization__": "builtins.dict",
+        "$middleware": [
+          "log_errors_to_stderr",
+          "check_uid_presence",
+          "transact"
+        ]
+      }
+    },
+    "middleware": {
+      "__default__": {"__type__": "static"},
+      "log_errors_to_stderr": {
+        "__realization__": "barsup.middleware.log_errors_to_stderr"
+      },
+      "check_uid_presence": {
+        "__realization__": "barsup.middleware.check_uid_presence"
+      },
+      "transact": {
+        "__type__": "singleton",
+        "__realization__": "barsup.middleware.transact",
+        "session": "default"
+      }
     }
+  }
 }

@@ -9,8 +9,6 @@ Ext.application({
 
     extend: 'BarsUp.Application',
 
-    // autoCreateViewport: 'BarsUp.view.main.Main'
-
     //-------------------------------------------------------------------------
     // Most customizations should be made to BarsUp.Application. If you need to
     // customize this file, doing so below this section reduces the likelihood
@@ -30,7 +28,9 @@ Ext.application({
     ],
 
 	requires: [
-        'BarsUp.App'
+        'BarsUp.App',
+        'BarsUp.Socket',
+        'Ext.util.Cookies'
     ],
 
     init: function() {

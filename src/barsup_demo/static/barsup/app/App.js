@@ -24,7 +24,6 @@ Ext.define('BarsUp.App', {
 
     init: function () {
         // custom logic before getXYZ methods get called...
-
         this.callParent();
 
         // now ready...
