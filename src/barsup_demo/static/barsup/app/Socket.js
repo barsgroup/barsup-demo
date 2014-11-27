@@ -4,9 +4,10 @@ Ext.define('BarsUp.Socket', {
     ],
 
     singleton: true,
-
     _socket: null,
     _keepMessage: {},
+
+    NEED_LOGIN: 'need_login',
 
     get: function () {
         if (!BarsUp.Socket._socket) {
@@ -28,14 +29,14 @@ Ext.define('BarsUp.Socket', {
         var msg = Ext.JSON.decode(message.data),
             struct = BarsUp.Socket.parseApiKey(msg['event']);
 
-        if (!msg.success && msg['need_login']) {
+        if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
             if (!BarsUp.Socket.isLoginShow) {
                 Ext.getBody().mask();
                 new BarsUp.AuthWindow({}).show();
                 BarsUp.Socket.isLoginShow = true;
             }
-        } else if (!msg.success && msg.error) {
-            BarsUp.Socket.showMessage(msg.error);
+        } else if (!msg.success) {
+            BarsUp.Socket.showMessage(msg.data);
         } else {
             delete BarsUp.Socket._keepMessage[msg['event']];
             this.fireEvent(struct['model'] + '|' + struct['method'], this, msg);
@@ -79,7 +80,6 @@ Ext.define('BarsUp.Socket', {
         Ext.create('widget.uxNotification', {
             title: 'Внимание!',
             position: 'br',
-            manager: 'demo1',
             iconCls: 'ux-notification-icon-error',
             autoCloseDelay: 7000,
             spacing: 20,

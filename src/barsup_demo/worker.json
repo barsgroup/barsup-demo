@@ -46,8 +46,7 @@
       },
       "AuthenticationService": {
         "__realization__": "barsup.auth.service.AuthenticationService",
-        "$session_model": "barsup_session",
-        "$user_model": "user",
+        "model": "barsup_session",
         "$joins": [
           "user"
         ]
@@ -125,7 +124,8 @@
         "$middleware": [
           "log_errors_to_stderr",
           "authentificate",
-          "transact"
+          "transact",
+          "wrap_result"
         ]
       }
     },
@@ -143,6 +143,9 @@
         "__type__": "singleton",
         "__realization__": "barsup.middleware.transact",
         "session": "default"
+      },
+      "wrap_result": {
+        "__realization__": "barsup.middleware.wrap_result"
       }
     }
   }

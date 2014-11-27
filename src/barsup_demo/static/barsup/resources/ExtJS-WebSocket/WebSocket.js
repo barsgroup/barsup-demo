@@ -223,7 +223,7 @@ Ext.define('Ext.ux.WebSocket', {
      */
     constructor: function (cfg) {
         var me = this;
-        
+
         me.messageQueue = (cfg.messageQueue || []).slice();
 
         // Raises an error if no url is given
