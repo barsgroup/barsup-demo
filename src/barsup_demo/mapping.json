@@ -186,7 +186,8 @@
           "__name__": "$String",
           "length": 50
         },
-        "nullable": false
+        "nullable": false,
+        "unique": true
       },
       {
         "__name__": "password",

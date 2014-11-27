@@ -291,34 +291,15 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             return false;
         }
 
-        ws.on(this.storeId.toLowerCase() + '|create',
-            Ext.Function.createSequence(this._create, this.logger), this);
-        ws.on(this.storeId.toLowerCase() + '|read',
-            Ext.Function.createSequence(this._read, this.logger), this);
-        ws.on(this.storeId.toLowerCase() + '|update',
-            Ext.Function.createSequence(this._update, this.logger), this);
-        ws.on(this.storeId.toLowerCase() + '|destroy',
-            Ext.Function.createSequence(this._destroy, this.logger), this);
+        ws.on(this.storeId.toLowerCase() + '|create', this._create, this);
+        ws.on(this.storeId.toLowerCase() + '|read', this._read, this);
+        ws.on(this.storeId.toLowerCase() + '|update', this._update, this);
+        ws.on(this.storeId.toLowerCase() + '|destroy', this._destroy, this);
 
         // Allows to define WebSocket proxy both into a model and a store
         me.callParent([cfg]);
 
         return me;
-    },
-
-    logger: function (ws, result) {
-        if (result.error) {
-            Ext.create('widget.uxNotification', {
-                title: 'Внимание!',
-                position: 'br',
-                manager: 'demo1',
-                iconCls: 'ux-notification-icon-error',
-                autoCloseDelay: 7000,
-                spacing: 20,
-                html: result.error
-            }).show();
-        }
-        return arguments;
     },
 
     /**

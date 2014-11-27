@@ -24,6 +24,10 @@
       },
       "AuthorBook": {
         "service": "AuthorBookService"
+      },
+      "Authentication": {
+        "service": "AuthenticationService",
+        "__realization__": "barsup.auth.controller.Authentication"
       }
     },
     "session": {
@@ -39,6 +43,14 @@
         "session": "default",
         "db_mapper": "default",
         "$joins": []
+      },
+      "AuthenticationService": {
+        "__realization__": "barsup.auth.service.AuthenticationService",
+        "$session_model": "barsup_session",
+        "$user_model": "user",
+        "$joins": [
+          "user"
+        ]
       },
       "UserService": {
         "model": "user"
@@ -96,6 +108,9 @@
       },
       "author_book": {
         "$name": "author_book"
+      },
+      "barsup_session": {
+        "$name": "barsup_session"
       }
     },
     "db_mapper": {
@@ -109,7 +124,7 @@
         "__realization__": "builtins.dict",
         "$middleware": [
           "log_errors_to_stderr",
-          "check_uid_presence",
+          "authentificate",
           "transact"
         ]
       }
@@ -119,8 +134,10 @@
       "log_errors_to_stderr": {
         "__realization__": "barsup.middleware.log_errors_to_stderr"
       },
-      "check_uid_presence": {
-        "__realization__": "barsup.middleware.check_uid_presence"
+      "authentificate": {
+        "__type__": "singleton",
+        "__realization__": "barsup.middleware.authentificate",
+        "controller": "Authentication"
       },
       "transact": {
         "__type__": "singleton",

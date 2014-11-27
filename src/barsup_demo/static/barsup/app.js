@@ -18,19 +18,10 @@ Ext.application({
     models: [
     ],
     stores: [
-        'Individual',
-        'Automobile',
-        'User',
-        'Author',
-        'Book',
-        'UserBook',
-        'AuthorBook'
     ],
 
 	requires: [
-        'BarsUp.App',
-        'BarsUp.Socket',
-        'Ext.util.Cookies'
+        'BarsUp.App'
     ],
 
     init: function() {

@@ -18,7 +18,7 @@ Ext.define('BarsUp.view.auto.AutoController', {
         var indStore = Ext.getStore('Individual');
         indStore.load({
             params: {
-                'filter': {'auto_id': record.id}
+                filter: {auto_id: record.id}
             }
         });
     }

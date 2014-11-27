@@ -10,17 +10,16 @@ Ext.define('BarsUp.Application', {
     name: 'BarsUp',
 
     stores: [
-        // TODO: add global / shared stores here
+        'Individual',
+        'Automobile',
+        'User',
+        'Author',
+        'Book',
+        'UserBook',
+        'AuthorBook'
     ],
 
     launch: function () {
         // TODO - Launch the application
-
-        var ws = BarsUp.Socket.get();
-
-        ws.on('isLogin', function () {
-            debugger;
-        });
-        //ws.sendEventMessage('isLogin');
     }
 });
