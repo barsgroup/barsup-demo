@@ -47,9 +47,7 @@
       "AuthenticationService": {
         "__realization__": "barsup.auth.service.AuthenticationService",
         "model": "barsup_session",
-        "$joins": [
-          "user"
-        ]
+        "user_model:model": "user"
       },
       "UserService": {
         "model": "user"
