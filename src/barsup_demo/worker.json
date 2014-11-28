@@ -28,6 +28,10 @@
       "Authentication": {
         "service": "AuthenticationService",
         "__realization__": "barsup.auth.controller.Authentication"
+      },
+      "Authorization": {
+        "service": "AuthorizationService",
+        "__realization__": "barsup.auth.controller.Authorization"
       }
     },
     "session": {
@@ -42,12 +46,25 @@
         "__realization__": "barsup.service.Service",
         "session": "default",
         "db_mapper": "default",
-        "$joins": []
+        "$joins": {}
       },
       "AuthenticationService": {
         "__realization__": "barsup.auth.service.AuthenticationService",
-        "model": "barsup_session",
+        "web_session_model:model": "barsup_session",
         "user_model:model": "user"
+      },
+      "AuthorizationService": {
+        "__realization__": "barsup.auth.service.AuthorizationService",
+        "web_session_model:model": "barsup_session",
+        "user_model:model": "user",
+        "user_role_model:model": "user_role",
+        "$joins": {
+          "user_role": [
+            "user",
+            "role",
+            "permission"
+          ]
+        }
       },
       "UserService": {
         "model": "user"
@@ -60,24 +77,30 @@
       },
       "IndividualService": {
         "model": "individual",
-        "$joins": ["outerjoin:auto"]
+        "$joins": {
+          "individual": ["outerjoin:auto"]
+        }
       },
       "AutoService": {
         "model": "auto"
       },
       "UserBookService": {
         "model": "user_book",
-        "$joins": [
-          "user",
-          "book"
-        ]
+        "$joins": {
+          "user_book": [
+            "user",
+            "book"
+          ]
+        }
       },
       "AuthorBookService": {
         "model": "author_book",
-        "$joins": [
-          "author",
-          "book"
-        ]
+        "$joins": {
+          "author_book": [
+            "author",
+            "book"
+          ]
+        }
       }
     },
     "model": {
@@ -108,6 +131,15 @@
       },
       "barsup_session": {
         "$name": "barsup_session"
+      },
+      "role": {
+        "$name": "role"
+      },
+      "permission": {
+        "$name": "permission"
+      },
+      "user_role": {
+        "$name": "user_role"
       }
     },
     "db_mapper": {
@@ -121,7 +153,7 @@
         "__realization__": "builtins.dict",
         "$middleware": [
           "log_errors_to_stderr",
-          "authentificate",
+          "access_check",
           "transact",
           "wrap_result"
         ]
@@ -132,9 +164,9 @@
       "log_errors_to_stderr": {
         "__realization__": "barsup.middleware.log_errors_to_stderr"
       },
-      "authentificate": {
+      "access_check": {
         "__type__": "singleton",
-        "__realization__": "barsup.middleware.authentificate",
+        "__realization__": "barsup.middleware.access_check",
         "controller": "Authentication"
       },
       "transact": {

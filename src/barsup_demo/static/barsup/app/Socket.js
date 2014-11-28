@@ -7,7 +7,9 @@ Ext.define('BarsUp.Socket', {
     _socket: null,
     _keepMessage: {},
 
-    NEED_LOGIN: 'need_login',
+    NEED_LOGIN: 'need-login',
+    NOT_PERMIT: 'not-permit',
+    check_controller: 'authorization',
 
     get: function () {
         if (!BarsUp.Socket._socket) {
@@ -35,7 +37,9 @@ Ext.define('BarsUp.Socket', {
                 new BarsUp.AuthWindow({}).show();
                 BarsUp.Socket.isLoginShow = true;
             }
-        } else if (!msg.success) {
+        } else if (!msg.success && msg.data === BarsUp.Socket.NOT_PERMIT){
+            BarsUp.Socket.showMessage('Нет прав на выполнение операции');
+        }else if (!msg.success) {
             BarsUp.Socket.showMessage(msg.data);
         } else {
             delete BarsUp.Socket._keepMessage[msg['event']];
@@ -153,12 +157,12 @@ Ext.define('BarsUp.AuthController', {
         var ws = BarsUp.Socket.get(),
             data = this.getViewModel().getData(),
             apiKey = {
-                model: 'authentication',
+                model: BarsUp.Socket.check_controller,
                 method: 'login'
             };
 
-        if (!ws.hasListener('authentication|login')) {
-            ws.on('authentication|login', this.recieve, this);
+        if (!ws.hasListener(BarsUp.Socket.check_controller + '|login')) {
+            ws.on(BarsUp.Socket.check_controller + '|login', this.recieve, this);
         }
 
         ws.send(apiKey, data);
@@ -167,14 +171,14 @@ Ext.define('BarsUp.AuthController', {
     recieve: function (ws, result) {
         if (result.data) {
             var socket = BarsUp.Socket.get();
-            socket.removeListener('authentication|login', this.recieve, this);
+            socket.removeListener(BarsUp.Socket.check_controller + '|login', this.recieve, this);
 
             Ext.getBody().unmask();
             this.view.close();
             BarsUp.Socket.isLoginShow = false;
 
             // Необходимо обработать стек запросов на отправку
-            Ext.iterate(BarsUp.Socket._keepMessage, function(apiKey, data){
+            Ext.iterate(BarsUp.Socket._keepMessage, function (apiKey, data) {
                 socket.send(BarsUp.Socket.parseApiKey(apiKey), data)
             });
 
