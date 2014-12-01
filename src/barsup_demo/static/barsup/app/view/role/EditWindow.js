@@ -4,7 +4,8 @@ Ext.define('BarsUp.view.role.EditWindow', {
     requires: [
         'BarsUp.view.main.MainEditController',
         'BarsUp.view.role.WindowModel',
-        'BarsUp.store.Role'
+        'BarsUp.store.Role',
+        'BarsUp.view.rolepermission.Panel'
     ],
 
     xtype: 'role-edit-window',
@@ -18,37 +19,52 @@ Ext.define('BarsUp.view.role.EditWindow', {
     bind: {
         title: 'Редактирование {role.name}'
     },
-
-    defaultType: 'textfield',
     items: [
         {
-            xtype: 'form',
-            layout: 'anchor',
-            defaultType: 'textfield',
-            bodyPadding: 5,
-            defaults: {
-                anchor: '100%'
-            },
+            xtype: 'tabpanel',
             items: [
                 {
-                    name: 'name',
-                    fieldLabel: 'Название',
-                    allowBlank: false,
-                    bind: '{role.name}'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Отмена',
-                    handler: 'onClose'
+                    title: 'Данные роли',
+                    items: [
+                        {
+                            xtype: 'form',
+                            layout: 'anchor',
+                            defaultType: 'textfield',
+                            bodyPadding: 5,
+                            defaults: {
+                                anchor: '100%'
+                            },
+                            items: [
+                                {
+                                    name: 'name',
+                                    fieldLabel: 'Имя',
+                                    allowBlank: false,
+                                    bind: '{role.name}'
+                                }
+                            ]
+                        }
+
+                    ]
                 },
                 {
-                    text: 'Сохранить',
-                    formBind: true,
-                    disabled: true,
-                    handler: 'onSave'
+                    xtype: 'role-permission-panel',
+                    bind: {
+                        roleId: '{role.id}'
+                    }
                 }
             ]
+        }
+
+    ],
+    buttons: [
+        {
+            text: 'Отмена',
+            handler: 'onClose'
+        },
+        {
+            text: 'Сохранить',
+            formBind: true,
+            handler: 'onSave'
         }
     ]
 

@@ -28,6 +28,17 @@
       "UserRole": {
         "service": "UserRoleService"
       },
+      "PermissionController": {
+        "__realization__": "barsup.auth.controller.PermissionController",
+        "methods:runtime": "actions"
+      },
+      "PermissionAction": {
+        "__realization__": "barsup.auth.controller.PermissionAction",
+        "methods:runtime": "actions"
+      },
+      "RolePermission": {
+        "service": "RolePermissionService"
+      },
       "AuthorBook": {
         "service": "AuthorBookService"
       },
@@ -53,6 +64,12 @@
         "session": "default",
         "db_mapper": "default",
         "$joins": {}
+      },
+      "RolePermissionService": {
+        "model": "permission",
+        "$joins": {
+          "permission": ["role"]
+        }
       },
       "AuthenticationService": {
         "__realization__": "barsup.auth.service.AuthenticationService",
@@ -188,6 +205,12 @@
       },
       "wrap_result": {
         "__realization__": "barsup.middleware.wrap_result"
+      }
+    },
+    "runtime": {
+      "__default__": {"__type__": "static"},
+      "actions": {
+        "__realization__": "barsup.runtime.ACTIONS"
       }
     }
   }
