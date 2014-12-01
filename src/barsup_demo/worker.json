@@ -81,6 +81,7 @@
         "web_session_model:model": "barsup_session",
         "user_model:model": "user",
         "user_role_model:model": "user_role",
+        "role_model:model": "role",
         "$joins": {
           "user_role": [
             "user",
@@ -96,7 +97,10 @@
         "model": "role"
       },
       "UserRoleService": {
-        "model": "user_role"
+        "model": "user_role",
+        "$joins": {
+          "user_role": ["user"]
+        }
       },
       "BookService": {
         "model": "book"
@@ -196,7 +200,7 @@
       "access_check": {
         "__type__": "singleton",
         "__realization__": "barsup.middleware.access_check",
-        "controller": "Authentication"
+        "controller": "Authorization"
       },
       "transact": {
         "__type__": "singleton",

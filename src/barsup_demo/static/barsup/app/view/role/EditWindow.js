@@ -40,6 +40,13 @@ Ext.define('BarsUp.view.role.EditWindow', {
                                     fieldLabel: 'Имя',
                                     allowBlank: false,
                                     bind: '{role.name}'
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    name: 'is_super',
+                                    fieldLabel: 'Супер права',
+                                    allowBlank: false,
+                                    bind: '{role.is_super}'
                                 }
                             ]
                         }

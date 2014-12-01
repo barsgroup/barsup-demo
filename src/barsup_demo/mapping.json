@@ -289,6 +289,14 @@
           "length": 100
         },
         "nullable": false
+      },
+      {
+        "__name__": "is_super",
+        "__type__": {
+          "__name__": "$Boolean"
+        },
+        "nullable": false,
+        "default": false
       }
     ]
   },

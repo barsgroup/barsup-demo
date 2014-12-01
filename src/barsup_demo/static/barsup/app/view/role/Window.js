@@ -39,6 +39,14 @@ Ext.define("BarsUp.view.role.Window", {
                             flex: 1,
                             filter: 'string'
 
+                        },
+                        {
+                            xtype: 'booleancolumn',
+                            dataIndex: 'is_super',
+                            text: 'Признак супер прав',
+                            flex: 1,
+                            filter: 'string'
+
                         }
                     ],
 
@@ -72,7 +80,8 @@ Ext.define("BarsUp.view.role.Window", {
                                 }
                             ]
                         }
-                    ]}
+                    ]
+                }
             ]
         });
     }
