@@ -19,6 +19,7 @@ Ext.define('BarsUp.App', {
         'BarsUp.view.user.Window',
         'BarsUp.view.userbook.Window',
         'BarsUp.view.auto.AutoIndividualWindow',
+        'BarsUp.view.role.Window',
         'BarsUp.Settings'
     ],
 
@@ -37,7 +38,8 @@ Ext.define('BarsUp.App', {
             new BarsUp.view.author.Window(),
             new BarsUp.view.book.Window(),
             new BarsUp.view.user.Window(),
-            new BarsUp.view.userbook.Window()
+            new BarsUp.view.userbook.Window(),
+            new BarsUp.view.role.Window()
         ];
     },
 

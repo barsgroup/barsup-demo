@@ -4,7 +4,8 @@ Ext.define('BarsUp.view.user.EditWindow', {
     requires: [
         'BarsUp.view.main.MainEditController',
         'BarsUp.view.user.WindowModel',
-        'BarsUp.store.User'
+        'BarsUp.store.User',
+        'BarsUp.view.userrole.Panel'
     ],
 
     xtype: 'user-edit-window',
@@ -22,54 +23,73 @@ Ext.define('BarsUp.view.user.EditWindow', {
     defaultType: 'textfield',
     items: [
         {
-            xtype: 'form',
-            layout: 'anchor',
-            defaultType: 'textfield',
-            bodyPadding: 5,
-            defaults: {
-                anchor: '100%'
-            },
+            xtype: 'tabpanel',
             items: [
                 {
-                    name: 'name',
-                    fieldLabel: 'ФИО',
-                    allowBlank: false,
-                    bind: '{user.name}'
+                    title: 'Данные пользователя',
+                    items: [
+                        {
+                            xtype: 'form',
+                            layout: 'anchor',
+                            defaultType: 'textfield',
+                            bodyPadding: 5,
+                            defaults: {
+                                anchor: '100%'
+                            },
+                            items: [
+                                {
+                                    name: 'name',
+                                    fieldLabel: 'ФИО',
+                                    allowBlank: false,
+                                    bind: '{user.name}'
+                                },
+                                {
+                                    name: 'email',
+                                    fieldLabel: 'Эл. Почта',
+                                    allowBlank: false,
+                                    bind: '{user.email}',
+                                    vtype: 'email'
+                                },
+                                {
+                                    name: 'login',
+                                    fieldLabel: 'Логин',
+                                    allowBlank: false,
+                                    bind: '{user.login}'
+                                },
+                                {
+                                    name: 'password',
+                                    fieldLabel: 'Пароль',
+                                    inputType: 'password',
+                                    allowBlank: false,
+                                    bind: '{user.password}'
+                                }
+                            ]
+                        }
+
+                    ]
                 },
                 {
-                    name: 'email',
-                    fieldLabel: 'Эл. Почта',
-                    allowBlank: false,
-                    bind: '{user.email}',
-                    vtype: 'email'
-                },
-                {
-                    name: 'login',
-                    fieldLabel: 'Логин',
-                    allowBlank: false,
-                    bind: '{user.login}'
-                },
-                {
-                    name: 'password',
-                    fieldLabel: 'Пароль',
-                    inputType:'password',
-                    allowBlank: false,
-                    bind: '{user.password}'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Отмена',
-                    handler: 'onClose'
-                },
-                {
-                    text: 'Сохранить',
-                    formBind: true,
-                    disabled: true,
-                    handler: 'onSave'
+                    xtype: 'user-role-panel',
+                    bind: {
+                        userId: '{user.id}'
+                    }
                 }
             ]
+        }
+
+    ],
+    buttons: [
+        {
+            text: 'Отмена',
+            handler: 'onClose'
+        },
+        {
+            text: 'Сохранить',
+            formBind: true,
+            handler: 'onSave'
         }
     ]
 
 });
+
+

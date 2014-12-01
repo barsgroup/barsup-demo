@@ -13,6 +13,9 @@
       "User": {
         "service": "UserService"
       },
+      "Role": {
+        "service": "RoleService"
+      },
       "Author": {
         "service": "AuthorService"
       },
@@ -21,6 +24,9 @@
       },
       "UserBook": {
         "service": "UserBookService"
+      },
+      "UserRole": {
+        "service": "UserRoleService"
       },
       "AuthorBook": {
         "service": "AuthorBookService"
@@ -68,6 +74,12 @@
       },
       "UserService": {
         "model": "user"
+      },
+      "RoleService": {
+        "model": "role"
+      },
+      "UserRoleService": {
+        "model": "user_role"
       },
       "BookService": {
         "model": "book"

@@ -16,7 +16,9 @@ Ext.define('BarsUp.Application', {
         'Author',
         'Book',
         'UserBook',
-        'AuthorBook'
+        'AuthorBook',
+        'Role',
+        'UserRole'
     ],
 
     launch: function () {
