@@ -53,8 +53,10 @@
     },
     "session": {
       "default": {
-        "__realization__": "barsup.session.DefaultSession",
-        "$connection": "postgresql://barsup:barsup@localhost:5432/barsup",
+        "__realization__": "barsup.session.PostgreSQLSession",
+        "$login": "barsup",
+        "$password": "barsup",
+        "$database": "barsup",
         "__type__": "singleton"
       }
     },

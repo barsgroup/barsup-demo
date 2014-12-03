@@ -124,7 +124,7 @@
                 "AuthorBook": {"service": "AuthorBookService"}
             },
             "session": {  // Описание уровня сессий
-                "default": {"__realization__": "barsup.session.DefaultSession"}
+                "default": {"__realization__": "barsup.session.PostgreSQLSession"}
             },
             "service": {  // Описание уровня сервисов
                 "__default__": {
