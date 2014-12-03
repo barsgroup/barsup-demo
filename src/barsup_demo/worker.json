@@ -62,14 +62,10 @@
       "__default__": {
         "__realization__": "barsup.service.Service",
         "session": "default",
-        "db_mapper": "default",
-        "$joins": {}
+        "db_mapper": "default"
       },
       "RolePermissionService": {
-        "model": "permission",
-        "$joins": {
-          "permission": ["role"]
-        }
+        "model": "permission"
       },
       "AuthenticationService": {
         "__realization__": "barsup.auth.service.AuthenticationService",
@@ -79,16 +75,21 @@
       "AuthorizationService": {
         "__realization__": "barsup.auth.service.AuthorizationService",
         "web_session_model:model": "barsup_session",
+
         "user_model:model": "user",
-        "user_role_model:model": "user_role",
         "role_model:model": "role",
-        "$joins": {
-          "user_role": [
-            "user",
-            "role",
-            "permission"
-          ]
-        }
+        "user_role_model:model": "user_role",
+        "permission_model:model": "permission",
+
+        "$joins":
+          {"default": ["user_role_model",
+            ["user_id", "==", "id", ["user_model", []]],
+            ["role_id", "==", "id", ["role_model", []]],
+            ["role_id", "==", "role_id", ["permission_model", []]]
+          ],
+          "role": ["user_role_model",
+            ["role_id", "==", "id", ["role_model", []]]
+          ]}
       },
       "UserService": {
         "model": "user"
@@ -97,10 +98,7 @@
         "model": "role"
       },
       "UserRoleService": {
-        "model": "user_role",
-        "$joins": {
-          "user_role": ["user"]
-        }
+        "model": "user_role"
       },
       "BookService": {
         "model": "book"
@@ -109,31 +107,16 @@
         "model": "author"
       },
       "IndividualService": {
-        "model": "individual",
-        "$joins": {
-          "individual": ["outerjoin:auto"]
-        }
+        "model": "individual"
       },
       "AutoService": {
         "model": "auto"
       },
       "UserBookService": {
-        "model": "user_book",
-        "$joins": {
-          "user_book": [
-            "user",
-            "book"
-          ]
-        }
+        "model": "user_book"
       },
       "AuthorBookService": {
-        "model": "author_book",
-        "$joins": {
-          "author_book": [
-            "author",
-            "book"
-          ]
-        }
+        "model": "author_book"
       }
     },
     "model": {
@@ -183,8 +166,7 @@
     },
     "api_options": {
       "default": {
-        "__realization__": "builtins.dict",
-        "$middleware": [
+        "middleware": [
           "log_errors_to_stderr",
           "access_check",
           "transact",
