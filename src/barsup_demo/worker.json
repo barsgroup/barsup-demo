@@ -48,16 +48,17 @@
       },
       "Authorization": {
         "service": "AuthorizationService",
+        "authentication:controller": "Authentication",
         "__realization__": "barsup.auth.controller.Authorization"
       }
     },
     "session": {
       "default": {
+        "__type__": "singleton",
         "__realization__": "barsup.session.PostgreSQLSession",
         "$login": "barsup",
         "$password": "barsup",
-        "$database": "barsup",
-        "__type__": "singleton"
+        "$database": "barsup"
       }
     },
     "service": {
@@ -71,16 +72,14 @@
       },
       "AuthenticationService": {
         "__realization__": "barsup.auth.service.AuthenticationService",
-        "web_session_model:model": "barsup_session",
+        "model": "barsup_session",
         "user_model:model": "user"
       },
       "AuthorizationService": {
         "__realization__": "barsup.auth.service.AuthorizationService",
-        "web_session_model:model": "barsup_session",
 
-        "user_model:model": "user",
         "role_model:model": "role",
-        "user_role_model:model": "user_role",
+        "model": "user_role",
         "permission_model:model": "permission",
 
         "$joins":
