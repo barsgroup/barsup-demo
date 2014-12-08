@@ -77,9 +77,8 @@
       },
       "AuthorizationService": {
         "__realization__": "barsup.auth.service.AuthorizationService",
-
-        "role_model:model": "role",
         "model": "user_role",
+        "role_model:model": "role",
         "permission_model:model": "permission",
 
         "$joins":
@@ -183,7 +182,8 @@
       "access_check": {
         "__type__": "singleton",
         "__realization__": "barsup.middleware.access_check",
-        "controller": "Authorization"
+
+        "authentication:controller": "Authentication"
       },
       "transact": {
         "__type__": "singleton",
