@@ -18,7 +18,10 @@ Ext.define('BarsUp.Application', {
         'UserBook',
         'AuthorBook',
         'Role',
-        'UserRole'
+        'UserRole',
+        'RolePermission',
+        'PermissionController',
+        'PermissionAction'
     ],
 
     launch: function () {

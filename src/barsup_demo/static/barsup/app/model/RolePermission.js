@@ -1,14 +1,12 @@
-Ext.define('BarsUp.model.Role', {
+Ext.define('BarsUp.model.RolePermission', {
     extend: 'Ext.data.Model',
 
     fields: [
-        {name: 'id', type: 'int'},
-        {name: 'name', type: 'auto'},
-        {name: 'is_super', type: 'boolean', defaultValue: false}
+        { name: 'id', type: 'int' }
     ],
     proxy: {
         type: 'websocket',
-        storeId: 'Role',
+        storeId: 'RolePermission',
         websocket: BarsUp.Socket.get(),
         reader: {
             type: 'json',

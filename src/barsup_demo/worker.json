@@ -28,6 +28,17 @@
       "UserRole": {
         "service": "UserRoleService"
       },
+      "PermissionController": {
+        "__realization__": "barsup.auth.controller.PermissionController",
+        "methods:runtime": "actions"
+      },
+      "PermissionAction": {
+        "__realization__": "barsup.auth.controller.PermissionAction",
+        "methods:runtime": "actions"
+      },
+      "RolePermission": {
+        "service": "RolePermissionService"
+      },
       "AuthorBook": {
         "service": "AuthorBookService"
       },
@@ -37,40 +48,49 @@
       },
       "Authorization": {
         "service": "AuthorizationService",
+        "authentication:controller": "Authentication",
         "__realization__": "barsup.auth.controller.Authorization"
       }
     },
     "session": {
       "default": {
-        "__realization__": "barsup.session.DefaultSession",
-        "$connection": "postgresql://barsup:barsup@localhost:5432/barsup",
-        "__type__": "singleton"
+        "__type__": "singleton",
+        "__realization__": "barsup.session.PostgreSQLSession",
+        "$login": "barsup",
+        "$password": "barsup",
+        "$database": "barsup"
       }
     },
     "service": {
       "__default__": {
         "__realization__": "barsup.service.Service",
         "session": "default",
-        "db_mapper": "default",
-        "$joins": {}
+        "db_mapper": "default"
+      },
+      "RolePermissionService": {
+        "model": "permission"
       },
       "AuthenticationService": {
         "__realization__": "barsup.auth.service.AuthenticationService",
-        "web_session_model:model": "barsup_session",
+        "model": "barsup_session",
         "user_model:model": "user"
       },
       "AuthorizationService": {
         "__realization__": "barsup.auth.service.AuthorizationService",
-        "web_session_model:model": "barsup_session",
-        "user_model:model": "user",
-        "user_role_model:model": "user_role",
-        "$joins": {
-          "user_role": [
-            "user",
-            "role",
-            "permission"
-          ]
-        }
+
+        "role_model:model": "role",
+        "model": "user_role",
+        "permission_model:model": "permission",
+
+        "$joins":
+          {"default": ["user_role_model",
+            ["user_id", "==", "id", ["user_model", []]],
+            ["role_id", "==", "id", ["role_model", []]],
+            ["role_id", "==", "role_id", ["permission_model", []]]
+          ],
+          "role": ["user_role_model",
+            ["role_id", "==", "id", ["role_model", []]]
+          ]}
       },
       "UserService": {
         "model": "user"
@@ -88,31 +108,16 @@
         "model": "author"
       },
       "IndividualService": {
-        "model": "individual",
-        "$joins": {
-          "individual": ["outerjoin:auto"]
-        }
+        "model": "individual"
       },
       "AutoService": {
         "model": "auto"
       },
       "UserBookService": {
-        "model": "user_book",
-        "$joins": {
-          "user_book": [
-            "user",
-            "book"
-          ]
-        }
+        "model": "user_book"
       },
       "AuthorBookService": {
-        "model": "author_book",
-        "$joins": {
-          "author_book": [
-            "author",
-            "book"
-          ]
-        }
+        "model": "author_book"
       }
     },
     "model": {
@@ -162,8 +167,7 @@
     },
     "api_options": {
       "default": {
-        "__realization__": "builtins.dict",
-        "$middleware": [
+        "middleware": [
           "log_errors_to_stderr",
           "access_check",
           "transact",
@@ -179,7 +183,7 @@
       "access_check": {
         "__type__": "singleton",
         "__realization__": "barsup.middleware.access_check",
-        "controller": "Authentication"
+        "controller": "Authorization"
       },
       "transact": {
         "__type__": "singleton",
@@ -188,6 +192,12 @@
       },
       "wrap_result": {
         "__realization__": "barsup.middleware.wrap_result"
+      }
+    },
+    "runtime": {
+      "__default__": {"__type__": "static"},
+      "actions": {
+        "__realization__": "barsup.runtime.ACTIONS"
       }
     }
   }
