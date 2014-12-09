@@ -15,7 +15,7 @@ Ext.define('BarsUp.Socket', {
     get: function () {
         if (!BarsUp.Socket._socket) {
             var socket = BarsUp.Socket._socket = Ext.create('Ext.ux.WebSocket', {
-                url: 'ws://localhost:8000/ws',
+                url: 'ws://localhost:8000/v1',
                 protocol: null,
                 communicationType: 'rest'
             });
