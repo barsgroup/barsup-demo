@@ -9,7 +9,7 @@ Ext.define('BarsUp.model.Author', {
 
     // for web sockets:
     proxy: {
-        //type: 'websocket',
+        type: 'websocket',
         storeId: 'Author',
         websocket: BarsUp.Socket.get(),
         reader: {
@@ -23,17 +23,4 @@ Ext.define('BarsUp.model.Author', {
             destroy: '/author/destroy'
         }
     }
-
-    //proxy: {
-    //    api: {
-    //        create: '/author/create',
-    //        read: '/author/read',
-    //        update: '/author/update',
-    //        destroy: '/author/destroy'
-    //    },
-    //    reader: {
-    //        type: 'json',
-    //        rootProperty: 'data'
-    //    }
-    //}
 });
