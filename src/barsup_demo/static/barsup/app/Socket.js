@@ -9,7 +9,7 @@ Ext.define('BarsUp.Socket', {
 
     NEED_LOGIN: 'need-login',
     NOT_PERMIT: 'not-permit',
-    check_controller: 'authorization',
+    check_controller: 'authentication',
 
     get: function () {
         if (!BarsUp.Socket._socket) {

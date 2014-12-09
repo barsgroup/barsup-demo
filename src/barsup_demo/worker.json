@@ -48,7 +48,6 @@
       },
       "Authorization": {
         "service": "AuthorizationService",
-        "authentication:controller": "Authentication",
         "__realization__": "barsup.auth.controller.Authorization"
       }
     },
