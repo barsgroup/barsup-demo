@@ -1,6 +1,7 @@
 Ext.define('BarsUp.Socket', {
     requires: [
-        'Ext.ux.WebSocket'
+        'Ext.ux.data.proxy.WebSocket',
+        'Ext.ux.window.Notification'
     ],
 
     singleton: true,

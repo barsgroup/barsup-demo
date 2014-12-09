@@ -57,8 +57,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
     alias: 'proxy.websocket',
 
     requires: [
-        'Ext.ux.WebSocket',
-        'Ext.ux.window.Notification'
+        'Ext.ux.WebSocket'
     ],
 
     config: {

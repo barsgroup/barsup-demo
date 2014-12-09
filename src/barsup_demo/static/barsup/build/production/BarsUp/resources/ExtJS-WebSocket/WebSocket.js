@@ -94,7 +94,10 @@ Ext.define('Ext.ux.WebSocket', {
         observable: 'Ext.util.Observable'
     },
 
-    requires: ['Ext.util.TaskManager', 'Ext.util.Memento'],
+    requires: [
+        'Ext.util.TaskManager',
+        'Ext.util.Memento'
+    ],
 
     /**
      * @event open

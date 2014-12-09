@@ -6,24 +6,4 @@
  * in the development directory to load properly (i.e., "dev mode").
  */
 @import 'build/production/BarsUp/resources/BarsUp-all.css';
-@import 'ext/ext-5.0.1/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all-debug.css';
 
-.ux-notification-window .x-window-body {
-	text-align: center;
-	padding: 15px 5px 15px 5px;
-}
-
-.ux-notification-light .x-window-header {
-	background-color: transparent;
-}
-
-body .ux-notification-light {
-	background-image: url('resources/images/fader.png');
-}
-
-.ux-notification-light .x-window-body {
-	text-align: center;
-	padding: 15px 5px 20px 5px;
-	background-color: transparent;
-	border: 0px solid white;
-}

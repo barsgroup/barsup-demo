@@ -56,7 +56,9 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
     extend: 'Ext.data.proxy.Proxy',
     alias: 'proxy.websocket',
 
-    requires: ['Ext.ux.WebSocket'],
+    requires: [
+        'Ext.ux.WebSocket'
+    ],
 
     config: {
         /**
@@ -71,8 +73,7 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             create: 'create',
             read: 'read',
             update: 'update',
-            destroy: 'destroy',
-            get: 'get'
+            destroy: 'destroy'
         },
 
         /**
@@ -270,12 +271,11 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             return false;
         }
 
-        //if (Ext.isEmpty (cfg.websocket)) {
         if (Ext.isEmpty(me.getWebsocket())) {
             me.setWebsocket(Ext.create('Ext.ux.WebSocket', {
                 url: me.getUrl(),
                 protocol: me.getProtocol(),
-                communicationType: 'event',
+                communicationType: 'rest',
                 autoReconnect: me.getAutoReconnect(),
                 autoReconnectInterval: me.getAutoReconnectInterval(),
                 keepUnsentMessages: me.getKeepUnsentMessages()
@@ -284,27 +284,16 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
 
         var ws = me.getWebsocket();
 
-        // Forces the event communication
-        if (ws.getCommunicationType() !== 'event') {
-            Ext.Error.raise('Ext.ux.WebSocket must use event communication type (set communicationType to event)!');
+        // Forces the rest communication
+        if (ws.getCommunicationType() !== 'rest') {
+            Ext.Error.raise('Ext.ux.WebSocket must use rest communication type (set communicationType to event)!');
             return false;
         }
 
-        ws.on(me.url + '/' + me.getApi().create, function (ws, data) {
-            me.completeTask('create', me.getApi().create, data);
-        });
-
-        ws.on(me.url + '/' + me.getApi().read, function (ws, data) {
-            me.completeTask('read', me.getApi().read, data);
-        });
-
-        ws.on(me.url + '/' + me.getApi().update, function (ws, data) {
-            me.completeTask('update', me.getApi().update, data);
-        });
-
-        ws.on(me.url + '/' + me.getApi().destroy, function (ws, data) {
-            me.completeTask('destroy', me.getApi().destroy, data);
-        });
+        ws.on(this.storeId.toLowerCase() + '|create', this._create, this);
+        ws.on(this.storeId.toLowerCase() + '|read', this._read, this);
+        ws.on(this.storeId.toLowerCase() + '|update', this._update, this);
+        ws.on(this.storeId.toLowerCase() + '|destroy', this._destroy, this);
 
         // Allows to define WebSocket proxy both into a model and a store
         me.callParent([cfg]);
@@ -426,7 +415,27 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     create: function (operation) {
-        this.runTask(this.getApi().create, operation);
+        var ws = this.getWebsocket(),
+            writer = Ext.StoreManager.lookup(this.getStoreId()).getProxy().getWriter(),
+            records = operation.getRecords(),
+            resultRecords = [],
+            data = {},
+            i = 0,
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'create'
+            },
+            record;
+
+
+        for (i = 0; i < records.length; i++) {
+            record = writer.getRecordData(records[i]);
+            delete record.id; // Сгенерированный ExtJs-ом идентификатор посылать не нужно
+            resultRecords.push(record);
+        }
+        data['records'] = resultRecords;
+
+        ws.send(apiKey, data);
     },
 
     /**
@@ -436,8 +445,30 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     read: function (operation) {
-        var method = operation.getId() ? this.getApi().get : this.getApi().read;
-        this.runTask(method, operation);
+        var data,
+            ws = this.getWebsocket(),
+            i = 0,
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'read'
+            },
+            initialParams;
+
+        this.callbacks['read'] = {
+            operation: operation
+        };
+        initialParams = Ext.apply({}, operation.getParams());
+
+        data = Ext.applyIf(initialParams, this.getExtraParams() || {});
+
+        if (operation.getId()) {
+            apiKey['id'] = operation.getId();
+        } else {
+            // copy any sorters, filters etc into the params so they can be sent over the wire
+            Ext.applyIf(data, this.getParams(operation));
+        }
+
+        ws.send(apiKey, data);
     },
 
     /**
@@ -447,7 +478,33 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     update: function (operation) {
-        this.runTask(this.getApi().update, operation);
+        var ws = this.getWebsocket(),
+            writer = Ext.StoreManager.lookup(this.getStoreId()).getProxy().getWriter(),
+            records = operation.getRecords(),
+            resultRecords = [],
+            data = {},
+            i = 0,
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'update'
+            },
+            record;
+
+        if (records.length === 1 && records[0].id) {
+            record = writer.getRecordData(records[0]);
+            apiKey['id'] = record.id;
+
+            delete record.id;
+            data['data'] = record;
+
+        } else {
+            for (i = 0; i < records.length; i++) {
+                record = writer.getRecordData(records[i]);
+                resultRecords.push(record);
+            }
+            data['records'] = resultRecords;
+        }
+        ws.send(apiKey, data);
     },
 
     /**
@@ -457,145 +514,47 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
      * Use api config instead
      */
     erase: function (operation) {
-        this.runTask(this.getApi().destroy, operation);
-    },
-
-    /**
-     * @method runTask
-     * Starts a new operation (pull)
-     * @private
-     */
-    runTask: function (action, operation) {
-
-        var me = this ,
-            data = {} ,
-            ws = me.getWebsocket() ,
+        var ws = this.getWebsocket(),
+            writer = Ext.StoreManager.lookup(this.getStoreId()).getProxy().getWriter(),
+            records = operation.getRecords(),
+            resultRecords = [],
+            data = {},
             i = 0,
-            apiKey = Ext.String.format(
-                '/{0}/{1}',
-                this.model.entityName,
-                action),
-            initialParams;
+            apiKey = {
+                model: this.storeId.toLowerCase(),
+                method: 'destroy'
+            },
+            record;
 
-        // Callbacks store
-//        debugger;
-//        me.callbacks[action] = {
-//            operation: operation
-//        };
+        if (records.length === 1 && records[0].id) {
+            record = writer.getRecordData(records[0]);
+            apiKey['id'] = record.id;
 
-        // Treats 'read' as a string event, with no data inside
-        if (action === me.getApi().read) {
-            me.callbacks[action] = {
-                operation: operation
-            };
-            initialParams = Ext.apply({}, operation.getParams());
-
-            data = Ext.applyIf(initialParams, me.getExtraParams() || {});
-
-            // copy any sorters, filters etc into the params so they can be sent over the wire
-            Ext.applyIf(data, me.getParams(operation));
-        } else if (action === me.getApi().get) {
-            me.callbacks[action] = {
-                operation: operation
-            };
-
-            initialParams = Ext.apply({}, operation.getParams());
-
-            data = Ext.applyIf(initialParams, me.getExtraParams() || {});
-
-            apiKey = Ext.String.format(
-                '/{0}/{1}/{2}',
-                this.model.entityName,
-                operation.getId(),
-                action);
-
-            // Подписываем 1 раз
-            if (!ws.hasListener(apiKey)) {
-                ws.on(apiKey, function (ws, data) {
-                    me.completeTask('get', me.getApi().get, data);
-                });
-            }
-        }
-        // Create, Update, Destroy
-        else {
-            var writer = Ext.StoreManager.lookup(me.getStoreId()).getProxy().getWriter(),
-                records = operation.getRecords();
-
-            data = [];
-
+        } else {
             for (i = 0; i < records.length; i++) {
-                data.push(writer.getRecordData(records[i]));
+                record = writer.getRecordData(records[i]);
+                resultRecords.push(record.id);
             }
+            data['records'] = resultRecords;
         }
-
         ws.send(apiKey, data);
     },
 
-    /**
-     * @method completeTask
-     * Completes a pending operation (push/pull)
-     * @private
-     */
-    completeTask: function (action, event, data) {
-        var me = this ,
-            resultSet = me.getReader().read(data);
+    _read: function (ws, result) {
+        var data = result['data'],
+            resultSet = this.getReader().read(data),
+            opt;
 
-        // Server push case: the store is get up-to-date with the incoming data
-        if (!me.callbacks[event]) {
-
-            var store = Ext.StoreManager.lookup(me.getStoreId());
-
-            if (typeof store === 'undefined') {
-                Ext.Error.raise('Unrecognized store: check if the storeId passed into configuration is right.');
-                return false;
-            }
-
-            if (action === 'update') {
-                for (var i = 0; i < resultSet.records.length; i++) {
-                    var record = store.getById(resultSet.records[i].getId());
-
-                    if (record) {
-                        record.set(resultSet.records[i].data);
-                    }
-                }
-
-                store.commitChanges();
-            }
-            else if (action === 'destroy') {
-                Ext.each(resultSet.records, function (record) {
-                    store.remove(record);
-                });
-
-                store.commitChanges();
-            }
-            else if (action === 'create') {
-                for (var i = 0; i < resultSet.records.length; i++) {
-                    var record = store.getById(resultSet.records[i].get('client_id'));
-                    if (record) {
-                        // client create
-                        record.set(resultSet.records[i].data);
-                    } else {
-                        // server sent
-                        store.add(resultSet.records[i].data);
-                    }
-                }
-                store.commitChanges();
-            } else {
-                store.loadData(resultSet.records); //true
-
-                store.fireEvent('load', store);
-            }
-        }
-        // Client request case: a callback function (operation) has to be called
-        else {
-            var opt = me.callbacks[event].operation ,
-                records = opt.records || data;
-
-            delete me.callbacks[event];
+        // Обрабатывает сообщения read только тот адресат, кто принял запрос
+        // FIXME: Если быстро два раза нажали, придумать лучший способ
+        if (this.callbacks['read']) {
+            opt = this.callbacks['read'].operation;
+            delete this.callbacks['read'];
 
             // get
-            if (action === 'get') {
-                opt.setRecords([data]); // ХАК, но пока не понятно как сделать лучше
+            if (opt.getId()) {
+                // FIXME: хак, но пока непонятно как сделать лучше
+                opt.setRecords([data]);
                 opt.extraCalls = [
                     {
                         success: function (obj, operation) {
@@ -604,17 +563,54 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
                     }
                 ];
 
-
             } else {
                 // read
-                if (typeof opt.setResultSet === 'function') {
-                    opt.setResultSet(resultSet);
-                }
-                else {
-                    opt.resultSet = resultSet;
-                }
+                opt.setResultSet(resultSet);
             }
             opt.setSuccessful(true);
         }
+    },
+
+    _destroy: function (ws, result) {
+        var data = result['data'],
+            resultSet = this.getReader().read(data),
+            opt,
+            store = Ext.StoreManager.lookup(this.getStoreId());
+
+        Ext.each(resultSet.records, function (record) {
+            store.remove(record);
+        });
+
+        store.commitChanges();
+    },
+
+    _update: function (ws, result) {
+        var data = result['data'],
+            resultSet = this.getReader().read(data),
+            opt,
+            store = Ext.StoreManager.lookup(this.getStoreId()),
+            record;
+
+        Ext.Array.forEach(resultSet.records, function (value) {
+            record = store.getById(value.getId());
+
+            if (record) {
+                record.set(value.data);
+            }
+        });
+
+        store.commitChanges();
+    },
+
+    _create: function (ws, result) {
+        var data = result['data'],
+            resultSet = this.getReader().read(data),
+            opt,
+            store = Ext.StoreManager.lookup(this.getStoreId());
+
+        Ext.Array.forEach(resultSet.records, function (value) {
+            store.add(value.data);
+        });
+        store.commitChanges();
     }
 });
