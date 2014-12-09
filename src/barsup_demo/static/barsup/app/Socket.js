@@ -44,7 +44,8 @@ Ext.define('BarsUp.Socket', {
             BarsUp.Socket.showMessage(msg.data);
         } else {
             delete BarsUp.Socket._keepMessage[msg['event']];
-            this.fireEvent(struct['model'] + '|' + struct['method'], this, msg);
+            this.fireEvent(Ext.String.format(
+                '/{0}/{1}', struct['model'], struct['method']), this, msg);
         }
     },
 

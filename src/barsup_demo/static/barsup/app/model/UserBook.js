@@ -18,6 +18,12 @@ Ext.define('BarsUp.model.UserBook', {
         reader: {
             type: 'json',
             rootProperty: 'data'
+        },
+        api: {
+            create: '/userbook/create',
+            read: '/userbook/read',
+            update: '/userbook/update',
+            destroy: '/userbook/destroy'
         }
     }
 });

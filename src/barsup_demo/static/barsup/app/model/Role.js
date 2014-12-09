@@ -13,6 +13,12 @@ Ext.define('BarsUp.model.Role', {
         reader: {
             type: 'json',
             rootProperty: 'data'
+        },
+        api: {
+            create: '/role/create',
+            read: '/role/read',
+            update: '/role/update',
+            destroy: '/role/destroy'
         }
     }
 });

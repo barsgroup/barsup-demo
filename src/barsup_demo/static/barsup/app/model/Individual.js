@@ -17,6 +17,12 @@ Ext.define('BarsUp.model.Individual', {
         reader: {
             type: 'json',
             rootProperty: 'data'
+        },
+        api: {
+            create: '/individual/create',
+            read: '/individual/read',
+            update: '/individual/update',
+            destroy: '/individual/destroy'
         }
     }
 });

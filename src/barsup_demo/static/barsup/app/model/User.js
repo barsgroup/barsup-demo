@@ -4,10 +4,10 @@ Ext.define('BarsUp.model.User', {
         'BarsUp.Socket'
     ],
     fields: [
-        { name: 'id', type: 'int' },
-        { name: 'name', type: 'auto' },
-        { name: 'email', type: 'auto' },
-        { name: 'login', type: 'auto' }
+        {name: 'id', type: 'int'},
+        {name: 'name', type: 'auto'},
+        {name: 'email', type: 'auto'},
+        {name: 'login', type: 'auto'}
 
     ],
     proxy: {
@@ -17,6 +17,12 @@ Ext.define('BarsUp.model.User', {
         reader: {
             type: 'json',
             rootProperty: 'data'
+        },
+        api: {
+            create: '/user/create',
+            read: '/user/read',
+            update: '/user/update',
+            destroy: '/user/destroy'
         }
     }
 });

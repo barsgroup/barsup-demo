@@ -2,7 +2,7 @@ Ext.define('BarsUp.model.RolePermission', {
     extend: 'Ext.data.Model',
 
     fields: [
-        { name: 'id', type: 'int' }
+        {name: 'id', type: 'int'}
     ],
     proxy: {
         type: 'websocket',
@@ -12,5 +12,11 @@ Ext.define('BarsUp.model.RolePermission', {
             type: 'json',
             rootProperty: 'data'
         }
+    },
+    api: {
+        create: '/rolepermission/create',
+        read: '/rolepermission/read',
+        update: '/rolepermission/update',
+        destroy: '/rolepermission/destroy'
     }
 });

@@ -290,10 +290,10 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             return false;
         }
 
-        ws.on(this.storeId.toLowerCase() + '|create', this._create, this);
-        ws.on(this.storeId.toLowerCase() + '|read', this._read, this);
-        ws.on(this.storeId.toLowerCase() + '|update', this._update, this);
-        ws.on(this.storeId.toLowerCase() + '|destroy', this._destroy, this);
+        ws.on(this.getApi().create, this._create, this);
+        ws.on(this.getApi().read, this._read, this);
+        ws.on(this.getApi().update, this._update, this);
+        ws.on(this.getApi().destroy, this._destroy, this);
 
         // Allows to define WebSocket proxy both into a model and a store
         me.callParent([cfg]);
