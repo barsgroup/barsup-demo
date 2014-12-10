@@ -587,7 +587,6 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
     _update: function (ws, result) {
         var data = result['data'],
             resultSet = this.getReader().read(data),
-            opt,
             store = Ext.StoreManager.lookup(this.getStoreId()),
             record;
 

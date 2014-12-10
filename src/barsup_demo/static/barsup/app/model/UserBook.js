@@ -1,6 +1,10 @@
 Ext.define('BarsUp.model.UserBook', {
     extend: 'Ext.data.Model',
-
+    requires: [
+        'BarsUp.Proxy',
+        'BarsUp.ProxyConfig',
+        'BarsUp.Socket'
+    ],
     fields: [
         {name: 'id', type: 'int'},
         {name: 'book', reference: 'Book'},
@@ -11,10 +15,8 @@ Ext.define('BarsUp.model.UserBook', {
             format: 'm-d-Y'
         }
     ],
-    proxy: {
-        type: 'websocket',
+    proxy: Ext.applyIf({
         storeId: 'UserBook',
-        websocket: BarsUp.Socket.get(),
         reader: {
             type: 'json',
             rootProperty: 'data'
@@ -25,5 +27,5 @@ Ext.define('BarsUp.model.UserBook', {
             update: '/userbook/update',
             destroy: '/userbook/destroy'
         }
-    }
+    }, BarsUp.ProxyConfig.config)
 });

@@ -1,22 +1,24 @@
 Ext.define('BarsUp.model.RolePermission', {
     extend: 'Ext.data.Model',
-
+    requires: [
+        'BarsUp.Proxy',
+        'BarsUp.ProxyConfig',
+        'BarsUp.Socket'
+    ],
     fields: [
         {name: 'id', type: 'int'}
     ],
-    proxy: {
-        type: 'websocket',
+    proxy: Ext.applyIf({
         storeId: 'RolePermission',
-        websocket: BarsUp.Socket.get(),
         reader: {
             type: 'json',
             rootProperty: 'data'
+        },
+        api: {
+            create: '/rolepermission/create',
+            read: '/rolepermission/read',
+            update: '/rolepermission/update',
+            destroy: '/rolepermission/destroy'
         }
-    },
-    api: {
-        create: '/rolepermission/create',
-        read: '/rolepermission/read',
-        update: '/rolepermission/update',
-        destroy: '/rolepermission/destroy'
-    }
+    }, BarsUp.ProxyConfig.config)
 });

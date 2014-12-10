@@ -1,6 +1,8 @@
 Ext.define('BarsUp.model.User', {
     extend: 'Ext.data.Model',
     requires: [
+        'BarsUp.Proxy',
+        'BarsUp.ProxyConfig',
         'BarsUp.Socket'
     ],
     fields: [
@@ -10,10 +12,8 @@ Ext.define('BarsUp.model.User', {
         {name: 'login', type: 'auto'}
 
     ],
-    proxy: {
-        type: 'websocket',
+    proxy: Ext.applyIf({
         storeId: 'User',
-        websocket: BarsUp.Socket.get(),
         reader: {
             type: 'json',
             rootProperty: 'data'
@@ -24,5 +24,5 @@ Ext.define('BarsUp.model.User', {
             update: '/user/update',
             destroy: '/user/destroy'
         }
-    }
+    }, BarsUp.ProxyConfig.config)
 });

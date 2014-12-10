@@ -15,16 +15,14 @@ Ext.application({
     // of merge conflicts when upgrading to new versions of Sencha Cmd.
     //-------------------------------------------------------------------------
 
-    models: [
-    ],
-    stores: [
-    ],
+    models: [],
+    stores: [],
 
-	requires: [
+    requires: [
         'BarsUp.App'
     ],
 
-    init: function() {
+    init: function () {
         var app = new BarsUp.App();
     }
 

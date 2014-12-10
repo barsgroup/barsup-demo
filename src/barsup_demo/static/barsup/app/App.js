@@ -5,7 +5,6 @@
  * http://www.sencha.com/license
  */
 
-
 Ext.define('BarsUp.App', {
     extend: 'Ext.ux.desktop.App',
 

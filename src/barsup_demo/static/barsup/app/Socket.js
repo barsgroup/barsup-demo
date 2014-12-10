@@ -1,7 +1,8 @@
 Ext.define('BarsUp.Socket', {
     requires: [
         'Ext.ux.data.proxy.WebSocket',
-        'Ext.ux.window.Notification'
+        'Ext.ux.window.Notification',
+        'BarsUp.main.AuthWindow'
     ],
 
     singleton: true,
@@ -35,7 +36,7 @@ Ext.define('BarsUp.Socket', {
         if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
             if (!BarsUp.Socket.isLoginShow) {
                 Ext.getBody().mask();
-                new BarsUp.AuthWindow({}).show();
+                new BarsUp.main.AuthWindow({}).show();
                 BarsUp.Socket.isLoginShow = true;
             }
         } else if (!msg.success && msg.data === BarsUp.Socket.NOT_PERMIT){
@@ -91,102 +92,6 @@ Ext.define('BarsUp.Socket', {
             spacing: 20,
             html: message
         }).show();
-    }
-});
-
-
-Ext.define('BarsUp.AuthWindow', {
-    extend: 'Ext.window.Window',
-    requires: [
-        'BarsUp.AuthController'
-    ],
-
-    width: 320,
-    height: 150,
-    closable: false,
-    draggable: false,
-    title: 'Авторизация',
-    layout: 'fit',
-    controller: 'AuthController',
-
-    viewModel: {
-        data: {
-            login: null,
-            password: null
-        }
-    },
-
-    items: [
-        {
-            xtype: 'form',
-            bodyPadding: 5,
-            layout: 'anchor',
-            defaultType: 'textfield',
-            defaults: {
-                anchor: '100%'
-            },
-            items: [{
-                allowBlank: false,
-                fieldLabel: 'Пользователь',
-                name: 'login',
-                tabIndex: 1,
-                bind: '{login}'
-            }, {
-                allowBlank: true,
-                fieldLabel: 'Пароль',
-                name: 'pass',
-                inputType: 'password',
-                tabIndex: 2,
-                bind: '{password}'
-            }],
-
-            buttons: [
-                {
-                    text: 'Вход',
-                    tabIndex: 3,
-                    handler: 'click'
-                }
-            ]
-        }
-    ]
-});
-
-Ext.define('BarsUp.AuthController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.AuthController',
-
-    click: function () {
-        var ws = BarsUp.Socket.get(),
-            data = this.getViewModel().getData(),
-            apiKey = {
-                model: BarsUp.Socket.check_controller,
-                method: 'login'
-            };
-
-        if (!ws.hasListener(BarsUp.Socket.check_controller + '|login')) {
-            ws.on(BarsUp.Socket.check_controller + '|login', this.recieve, this);
-        }
-
-        ws.send(apiKey, data);
-    },
-
-    recieve: function (ws, result) {
-        if (result.data) {
-            var socket = BarsUp.Socket.get();
-            socket.removeListener(BarsUp.Socket.check_controller + '|login', this.recieve, this);
-
-            Ext.getBody().unmask();
-            this.view.close();
-            BarsUp.Socket.isLoginShow = false;
-
-            // Необходимо обработать стек запросов на отправку
-            Ext.iterate(BarsUp.Socket._keepMessage, function (apiKey, data) {
-                socket.send(BarsUp.Socket.parseApiKey(apiKey), data)
-            });
-
-        } else {
-            BarsUp.Socket.showMessage('Логин или пароль указан неверно');
-        }
     }
 });
 

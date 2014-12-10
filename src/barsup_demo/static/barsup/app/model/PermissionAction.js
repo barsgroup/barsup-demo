@@ -1,15 +1,17 @@
 Ext.define('BarsUp.model.PermissionAction', {
     extend: 'Ext.data.Model',
-
+    requires: [
+        'BarsUp.Proxy',
+        'BarsUp.ProxyConfig',
+        'BarsUp.Socket'
+    ],
     fields: [
         {name: 'id', type: 'int'},
         {name: 'controller'},
         {name: 'action'}
     ],
-    proxy: {
-        type: 'websocket',
+    proxy: Ext.applyIf({
         storeId: 'PermissionAction',
-        websocket: BarsUp.Socket.get(),
         reader: {
             type: 'json',
             rootProperty: 'data'
@@ -20,5 +22,5 @@ Ext.define('BarsUp.model.PermissionAction', {
             update: '/permissionaction/update',
             destroy: '/permissionaction/destroy'
         }
-    }
+    }, BarsUp.ProxyConfig.config)
 });

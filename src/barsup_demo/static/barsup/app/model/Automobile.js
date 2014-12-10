@@ -2,18 +2,17 @@ Ext.define('BarsUp.model.Automobile', {
     extend: 'Ext.data.Model',
 
     requires: [
+        'BarsUp.Proxy',
+        'BarsUp.ProxyConfig',
         'BarsUp.Socket'
     ],
-
     fields: [
         {
             name: 'name'
         }
     ],
-    proxy: {
-        type: 'websocket',
+    proxy: Ext.applyIf({
         storeId: 'Automobile',
-        websocket: BarsUp.Socket.get(),
         reader: {
             type: 'json',
             rootProperty: 'data'
@@ -24,6 +23,6 @@ Ext.define('BarsUp.model.Automobile', {
             update: '/automobile/update',
             destroy: '/automobile/destroy'
         }
-    }
+    }, BarsUp.ProxyConfig.config)
 });
 

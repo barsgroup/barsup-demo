@@ -181,7 +181,7 @@
       "access_check": {
         "__type__": "singleton",
         "__realization__": "barsup.middleware.access_check",
-
+        "$pass_by": true,
         "authentication:controller": "Authentication"
       },
       "transact": {
