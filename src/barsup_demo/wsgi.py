@@ -1,8 +1,4 @@
 # coding:utf-8
-import os
-
-os.environ['BUP_CONFIG'] = os.environ.get('BUP_CONFIG') or 'worker.json'
-os.environ['BUP_PATH'] = os.environ.get('BUP_PATH') or '.'
 
 from barsup.wsgi import application
 
