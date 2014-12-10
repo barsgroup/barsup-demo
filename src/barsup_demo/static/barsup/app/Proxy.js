@@ -138,7 +138,7 @@ Ext.define('BarsUp.Proxy', {
             resultSet = request.getOperation().getResultSet(),
             store = Ext.StoreManager.lookup(this.getStoreId()),
             record;
-        
+
         if (action !== 'read') {
             if (action === 'update') {
                 Ext.Array.forEach(resultSet.records, function (value) {

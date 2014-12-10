@@ -1,9 +1,7 @@
 Ext.define('BarsUp.model.User', {
     extend: 'Ext.data.Model',
     requires: [
-        'BarsUp.Proxy',
-        'BarsUp.ProxyConfig',
-        'BarsUp.Socket'
+        'BarsUp.ProxyConfig'
     ],
     fields: [
         {name: 'id', type: 'int'},

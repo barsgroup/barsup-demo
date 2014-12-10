@@ -433,9 +433,14 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             delete record.id; // Сгенерированный ExtJs-ом идентификатор посылать не нужно
             resultRecords.push(record);
         }
-        data['records'] = resultRecords;
 
-        ws.send(apiKey, data);
+        // TODO: Множественное добавление пока не поддерживается
+        if (resultRecords.length === 1) {
+            data['data'] = resultRecords[0];
+
+            ws.send(apiKey, data);
+        }
+
     },
 
     /**
@@ -607,9 +612,14 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             opt,
             store = Ext.StoreManager.lookup(this.getStoreId());
 
-        Ext.Array.forEach(resultSet.records, function (value) {
-            store.add(value.data);
-        });
+        if (resultSet.records.length > 0) {
+            Ext.Array.forEach(resultSet.records, function (value) {
+                store.add(value.data);
+            });
+        } else {
+             store.add(data);
+        }
+
         store.commitChanges();
     }
 });
