@@ -7,7 +7,6 @@ Ext.define('BarsUp.Socket', {
 
     singleton: true,
     _socket: null,
-    _keepMessage: {},
 
     NEED_LOGIN: 'need-login',
     NOT_PERMIT: 'not-permit',
@@ -20,7 +19,6 @@ Ext.define('BarsUp.Socket', {
                 protocol: null,
                 communicationType: 'rest'
             });
-            BarsUp.Socket._socket = socket;
 
             socket.ws.onmessage = Ext.bind(BarsUp.Socket.receive, socket);
             socket.send = Ext.bind(BarsUp.Socket.send, socket);
@@ -34,15 +32,15 @@ Ext.define('BarsUp.Socket', {
             struct = BarsUp.Socket.parseApiKey(msg['event']);
 
         if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
-            new BarsUp.main.AuthWindow({}).show();
+            if (!Ext.WindowManager.get('barsup-auth-window')) {
+                new BarsUp.main.AuthWindow().show();
+            }
         } else if (!msg.success && msg.data === BarsUp.Socket.NOT_PERMIT) {
             BarsUp.main.NotificationWindow.show('Нет прав на выполнение операции');
         } else if (!msg.success) {
             BarsUp.Socket.showMessage(msg.data);
         } else {
-            delete BarsUp.Socket._keepMessage[msg['event']];
-            this.fireEvent(Ext.String.format(
-                '/{0}/{1}', struct['model'], struct['method']), this, msg);
+            this.fireEvent(Ext.String.format('/{0}/{1}', struct['model'], struct['method']), this, msg);
         }
     },
 
@@ -53,7 +51,6 @@ Ext.define('BarsUp.Socket', {
                 data: data
             };
 
-        BarsUp.Socket._keepMessage[apiKey] = data;
         this.safeSend(Ext.JSON.encode(msg));
     },
     createApiKey: function (struct) {
