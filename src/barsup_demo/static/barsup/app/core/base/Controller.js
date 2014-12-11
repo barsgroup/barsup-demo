@@ -1,6 +1,6 @@
-Ext.define('BarsUp.view.main.MainController', {
+Ext.define('BarsUp.core.base.Controller', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.MainController',
+    alias: 'controller.core.base.Controller',
 
     onAdd: function (btn) {
         var view = this.getView(),

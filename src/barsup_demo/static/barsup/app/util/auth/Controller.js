@@ -1,9 +1,9 @@
-Ext.define('BarsUp.main.AuthController', {
+Ext.define('BarsUp.util.auth.Controller', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.AuthController',
+    alias: 'controller.util.auth.Controller',
 
     requires: [
-        'BarsUp.main.NotificationWindow',
+        'BarsUp.util.notification.Window',
         'BarsUp.main.Transport'
     ],
 
@@ -23,7 +23,7 @@ Ext.define('BarsUp.main.AuthController', {
                 if (result.data){
                     this.view.close();
                 } else {
-                    BarsUp.main.NotificationWindow.show('Логин или пароль указан неверно');
+                    BarsUp.util.notification.Window.show('Логин или пароль указан неверно');
                 }
             },
             scope: this

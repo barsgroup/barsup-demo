@@ -2,14 +2,14 @@ Ext.define('BarsUp.view.individual.IndividualEditWindow', {
     extend: 'Ext.window.Window',
 
     requires: [
-        'BarsUp.view.main.MainEditController',
+        'BarsUp.core.base.EditController',
         'BarsUp.view.individual.ViewModel',
         'BarsUp.store.Automobile'
     ],
 
     xtype: 'individual-edit-window',
 
-    controller: 'main.MainEditController',
+    controller: 'core.base.EditController',
 
     width: 400,
     height: 300,

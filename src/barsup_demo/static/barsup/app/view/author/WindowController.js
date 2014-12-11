@@ -1,8 +1,8 @@
 Ext.define('BarsUp.view.author.WindowController', {
-    extend: 'BarsUp.view.main.MainController',
+    extend: 'BarsUp.core.base.Controller',
 
     requires: [
-        'BarsUp.view.main.MainController',
+        'BarsUp.core.base.Controller',
         'BarsUp.view.author.EditWindow',
         'BarsUp.model.Author',
         'BarsUp.store.Author'

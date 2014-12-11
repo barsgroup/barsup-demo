@@ -1,7 +1,7 @@
-Ext.define('BarsUp.main.AuthWindow', {
+Ext.define('BarsUp.util.auth.Window', {
     extend: 'Ext.window.Window',
     requires: [
-        'BarsUp.main.AuthController'
+        'BarsUp.util.auth.Controller'
     ],
 
     id: 'barsup-auth-window',
@@ -11,7 +11,7 @@ Ext.define('BarsUp.main.AuthWindow', {
     draggable: false,
     title: 'Авторизация',
     layout: 'fit',
-    controller: 'AuthController',
+    controller: 'util.auth.Controller',
 
     viewModel: {
         data: {

@@ -1,8 +1,8 @@
 Ext.define('BarsUp.view.auto.AutoController', {
-    extend: 'BarsUp.view.main.MainController',
+    extend: 'BarsUp.core.base.Controller',
 
     requires: [
-        'BarsUp.view.main.MainController',
+        'BarsUp.core.base.Controller',
         'BarsUp.view.auto.AutoEditWindow',
         'BarsUp.store.Automobile',
         'BarsUp.model.Automobile'

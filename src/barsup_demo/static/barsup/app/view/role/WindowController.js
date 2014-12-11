@@ -1,8 +1,8 @@
 Ext.define('BarsUp.view.role.WindowController', {
-    extend: 'BarsUp.view.main.MainController',
+    extend: 'BarsUp.core.base.Controller',
 
     requires: [
-        'BarsUp.view.main.MainController',
+        'BarsUp.core.base.Controller',
         'BarsUp.view.role.EditWindow',
         'BarsUp.model.Role',
         'BarsUp.store.Role'

@@ -2,7 +2,7 @@ Ext.define('BarsUp.view.role.EditWindow', {
     extend: 'Ext.window.Window',
 
     requires: [
-        'BarsUp.view.main.MainEditController',
+        'BarsUp.core.base.EditController',
         'BarsUp.view.role.WindowModel',
         'BarsUp.store.Role',
         'BarsUp.view.rolepermission.Panel'
@@ -10,7 +10,7 @@ Ext.define('BarsUp.view.role.EditWindow', {
 
     xtype: 'role-edit-window',
 
-    controller: 'main.MainEditController',
+    controller: 'core.base.EditController',
 
     width: 400,
     height: 300,

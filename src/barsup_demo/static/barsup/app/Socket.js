@@ -1,8 +1,7 @@
 Ext.define('BarsUp.Socket', {
     requires: [
         'Ext.ux.data.proxy.WebSocket',
-        'BarsUp.main.NotificationWindow'
-        //'BarsUp.main.AuthWindow'
+        'BarsUp.util.notification.Window'
     ],
 
     singleton: true,
@@ -10,7 +9,6 @@ Ext.define('BarsUp.Socket', {
 
     NEED_LOGIN: 'need-login',
     NOT_PERMIT: 'not-permit',
-    check_controller: 'authentication',
 
     get: function () {
         if (!BarsUp.Socket._socket) {
@@ -33,12 +31,12 @@ Ext.define('BarsUp.Socket', {
 
         if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
             if (!Ext.WindowManager.get('barsup-auth-window')) {
-                new BarsUp.main.AuthWindow().show();
+                new BarsUp.util.auth.Window().show();
             }
         } else if (!msg.success && msg.data === BarsUp.Socket.NOT_PERMIT) {
-            BarsUp.main.NotificationWindow.show('Нет прав на выполнение операции');
+            BarsUp.util.notification.Window.show('Нет прав на выполнение операции');
         } else if (!msg.success) {
-            BarsUp.Socket.showMessage(msg.data);
+            BarsUp.util.notification.Window.show(msg.data);
         } else {
             this.fireEvent(Ext.String.format('/{0}/{1}', struct['model'], struct['method']), this, msg);
         }

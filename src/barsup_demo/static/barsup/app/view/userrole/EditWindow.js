@@ -2,14 +2,14 @@ Ext.define('BarsUp.view.userrole.EditWindow', {
     extend: 'Ext.window.Window',
 
     requires: [
-        'BarsUp.view.main.MainEditController',
+        'BarsUp.core.base.EditController',
         'BarsUp.view.userrole.PanelModel',
         'BarsUp.store.UserRole'
     ],
 
     xtype: 'userrole-edit-window',
 
-    controller: 'main.MainEditController',
+    controller: 'core.base.EditController',
 
     width: 400,
     height: 300,

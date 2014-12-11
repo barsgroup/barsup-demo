@@ -2,14 +2,14 @@ Ext.define('BarsUp.view.authorbook.EditWindow', {
     extend: 'Ext.window.Window',
 
     requires: [
-        'BarsUp.view.main.MainEditController',
+        'BarsUp.core.base.EditController',
         'BarsUp.view.authorbook.PanelModel',
         'BarsUp.store.AuthorBook'
     ],
 
     xtype: 'authorbook-edit-window',
 
-    controller: 'main.MainEditController',
+    controller: 'core.base.EditController',
 
     width: 400,
     height: 300,

@@ -1,8 +1,8 @@
 Ext.define('BarsUp.view.individual.IndividualController', {
-    extend: 'BarsUp.view.main.MainController',
+    extend: 'BarsUp.core.base.Controller',
 
     requires: [
-        'BarsUp.view.main.MainController',
+        'BarsUp.core.base.Controller',
         'BarsUp.view.individual.IndividualEditWindow',
         'BarsUp.model.Individual',
         'BarsUp.store.Individual'

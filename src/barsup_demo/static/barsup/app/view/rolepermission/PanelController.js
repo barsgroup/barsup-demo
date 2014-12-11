@@ -1,8 +1,8 @@
 Ext.define('BarsUp.view.rolepermission.PanelController', {
-    extend: 'BarsUp.view.main.MainController',
+    extend: 'BarsUp.core.base.Controller',
 
     requires: [
-        'BarsUp.view.main.MainController',
+        'BarsUp.core.base.Controller',
         'BarsUp.view.rolepermission.EditWindow',
         'BarsUp.model.RolePermission',
         'BarsUp.store.RolePermission'

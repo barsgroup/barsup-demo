@@ -1,7 +1,7 @@
-Ext.define('BarsUp.view.main.MainEditController', {
+Ext.define('BarsUp.core.base.EditController', {
     extend: 'Ext.app.ViewController',
 
-    alias: 'controller.main.MainEditController',
+    alias: 'controller.core.base.EditController',
 
     onClose: function(btn){
         var win = btn.up('window');

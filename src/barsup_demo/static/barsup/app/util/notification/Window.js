@@ -1,4 +1,4 @@
-Ext.define('BarsUp.main.NotificationWindow', {
+Ext.define('BarsUp.util.notification.Window', {
     singleton: true,
 
     requires: [

@@ -1,7 +1,7 @@
 Ext.define('BarsUp.Proxy', {
 
     requires: [
-        'BarsUp.main.AuthWindow'
+        'BarsUp.util.auth.Window'
     ],
 
     extend: 'Ext.data.proxy.Ajax',
@@ -149,7 +149,7 @@ Ext.define('BarsUp.Proxy', {
 
             if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
                 if (!Ext.WindowManager.get('barsup-auth-window')) {
-                    new BarsUp.main.AuthWindow().show();
+                    new BarsUp.util.auth.Window().show();
                 }
             }
 
