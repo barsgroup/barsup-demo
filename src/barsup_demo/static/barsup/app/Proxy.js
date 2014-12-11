@@ -1,7 +1,11 @@
 Ext.define('BarsUp.Proxy', {
 
+    requires: [
+        'BarsUp.main.AuthWindow'
+    ],
+
     extend: 'Ext.data.proxy.Ajax',
-    alias: 'proxy.barsup',
+    alias: 'proxy.ux.ajax',
     noCache: false,
     paramsAsJson: true,
 
@@ -135,11 +139,21 @@ Ext.define('BarsUp.Proxy', {
 
     afterRequest: function (request, success) {
         var action = request.getAction(),
-            resultSet = request.getOperation().getResultSet(),
+            op = request.getOperation(),
+            resultSet = op.getResultSet(),
             store = Ext.StoreManager.lookup(this.getStoreId()),
-            record;
+            record, msg;
 
-        if (action !== 'read') {
+        if (!op.success && op.getResponse()) {
+            msg = Ext.decode(op.getResponse().responseText);
+
+            if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
+                if (!Ext.WindowManager.get('barsup-auth-window')) {
+                    new BarsUp.main.AuthWindow().show();
+                }
+            }
+
+        } else if (action !== 'read') {
             if (action === 'update') {
                 Ext.Array.forEach(resultSet.records, function (value) {
                     record = store.getById(value['id']);

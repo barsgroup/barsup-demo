@@ -1,7 +1,7 @@
 Ext.define('BarsUp.model.PermissionAction', {
     extend: 'Ext.data.Model',
     requires: [
-        'BarsUp.ProxyConfig'
+        'BarsUp.Config'
     ],
     fields: [
         {name: 'id', type: 'int'},
@@ -20,5 +20,5 @@ Ext.define('BarsUp.model.PermissionAction', {
             update: '/permissionaction/update',
             destroy: '/permissionaction/destroy'
         }
-    }, BarsUp.ProxyConfig.config)
+    }, BarsUp.Config.proxyConfig)
 });

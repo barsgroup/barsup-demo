@@ -1,7 +1,7 @@
 Ext.define('BarsUp.model.Role', {
     extend: 'Ext.data.Model',
     requires: [
-        'BarsUp.ProxyConfig'
+        'BarsUp.Config'
     ],
     fields: [
         {name: 'id', type: 'int'},
@@ -20,5 +20,5 @@ Ext.define('BarsUp.model.Role', {
             update: '/role/update',
             destroy: '/role/destroy'
         }
-    }, BarsUp.ProxyConfig.config)
+    }, BarsUp.Config.proxyConfig)
 });

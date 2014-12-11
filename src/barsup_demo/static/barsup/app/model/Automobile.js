@@ -2,7 +2,7 @@ Ext.define('BarsUp.model.Automobile', {
     extend: 'Ext.data.Model',
 
     requires: [
-        'BarsUp.ProxyConfig'
+        'BarsUp.Config'
     ],
     fields: [
         {
@@ -21,6 +21,6 @@ Ext.define('BarsUp.model.Automobile', {
             update: '/automobile/update',
             destroy: '/automobile/destroy'
         }
-    }, BarsUp.ProxyConfig.config)
+    }, BarsUp.Config.proxyConfig)
 });
 

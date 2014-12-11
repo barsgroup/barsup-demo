@@ -1,7 +1,7 @@
 Ext.define('BarsUp.model.Book', {
     extend: 'Ext.data.Model',
     requires: [
-        'BarsUp.ProxyConfig'
+        'BarsUp.Config'
     ],
     fields: [
         {name: 'id', type: 'int'},
@@ -21,5 +21,5 @@ Ext.define('BarsUp.model.Book', {
             update: '/book/update',
             destroy: '/book/destroy'
         }
-    }, BarsUp.ProxyConfig.config)
+    }, BarsUp.Config.proxyConfig)
 });

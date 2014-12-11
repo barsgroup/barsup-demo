@@ -1,8 +1,8 @@
 Ext.define('BarsUp.Socket', {
     requires: [
         'Ext.ux.data.proxy.WebSocket',
-        'Ext.ux.window.Notification',
-        'BarsUp.main.AuthWindow'
+        'BarsUp.main.NotificationWindow'
+        //'BarsUp.main.AuthWindow'
     ],
 
     singleton: true,
@@ -34,14 +34,10 @@ Ext.define('BarsUp.Socket', {
             struct = BarsUp.Socket.parseApiKey(msg['event']);
 
         if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
-            if (!BarsUp.Socket.isLoginShow) {
-                Ext.getBody().mask();
-                new BarsUp.main.AuthWindow({}).show();
-                BarsUp.Socket.isLoginShow = true;
-            }
-        } else if (!msg.success && msg.data === BarsUp.Socket.NOT_PERMIT){
-            BarsUp.Socket.showMessage('Нет прав на выполнение операции');
-        }else if (!msg.success) {
+            new BarsUp.main.AuthWindow({}).show();
+        } else if (!msg.success && msg.data === BarsUp.Socket.NOT_PERMIT) {
+            BarsUp.main.NotificationWindow.show('Нет прав на выполнение операции');
+        } else if (!msg.success) {
             BarsUp.Socket.showMessage(msg.data);
         } else {
             delete BarsUp.Socket._keepMessage[msg['event']];
@@ -81,17 +77,6 @@ Ext.define('BarsUp.Socket', {
             struct['id'] = array[3];
         }
         return struct;
-    },
-
-    showMessage: function (message) {
-        Ext.create('widget.uxNotification', {
-            title: 'Внимание!',
-            position: 'br',
-            iconCls: 'ux-notification-icon-error',
-            autoCloseDelay: 7000,
-            spacing: 20,
-            html: message
-        }).show();
     }
 });
 

@@ -2,7 +2,7 @@ Ext.define('BarsUp.model.Author', {
     extend: 'Ext.data.Model',
 
     requires: [
-        'BarsUp.ProxyConfig'
+        'BarsUp.Config'
     ],
 
     fields: [
@@ -24,5 +24,5 @@ Ext.define('BarsUp.model.Author', {
             update: '/author/update',
             destroy: '/author/destroy'
         }
-    }, BarsUp.ProxyConfig.config)
+    }, BarsUp.Config.proxyConfig)
 });

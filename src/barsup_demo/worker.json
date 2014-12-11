@@ -166,10 +166,10 @@
     "api_options": {
       "default": {
         "middleware": [
+          "wrap_result",
           "log_errors_to_stderr",
           "access_check",
-          "transact",
-          "wrap_result"
+          "transact"
         ]
       }
     },
@@ -181,8 +181,8 @@
       "access_check": {
         "__type__": "singleton",
         "__realization__": "barsup.middleware.access_check",
-        "$pass_by": true,
-        "authentication:controller": "Authentication"
+        "$authentication": "Authentication",
+        "$authorization": "Authorization"
       },
       "transact": {
         "__type__": "singleton",
