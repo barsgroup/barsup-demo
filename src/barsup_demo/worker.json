@@ -63,8 +63,7 @@
     "service": {
       "__default__": {
         "__realization__": "barsup.service.Service",
-        "session": "default",
-        "db_mapper": "default"
+        "session": "default"
       },
       "RolePermissionService": {
         "model": "permission"
@@ -76,19 +75,8 @@
       },
       "AuthorizationService": {
         "__realization__": "barsup.auth.service.AuthorizationService",
-        "model": "user_role",
-        "role_model:model": "role",
-        "permission_model:model": "permission",
-
-        "$joins":
-          {"default": ["user_role_model",
-            ["user_id", "==", "id", ["user_model", []]],
-            ["role_id", "==", "id", ["role_model", []]],
-            ["role_id", "==", "role_id", ["permission_model", []]]
-          ],
-          "role": ["user_role_model",
-            ["role_id", "==", "id", ["role_model", []]]
-          ]}
+        "model": "user_role_joined",
+        "user_role:model": "user_role"
       },
       "UserService": {
         "model": "user"
@@ -120,8 +108,9 @@
     },
     "model": {
       "__default__": {
-        "__realization__": "barsup.mapping.get_model",
-        "db_mapper": "default"
+        "__realization__": "barsup.mapping.Model",
+        "db_mapper": "default",
+        "session": "default"
       },
       "auto": {
         "$name": "auto"
@@ -139,7 +128,11 @@
         "$name": "book"
       },
       "user_book": {
-        "$name": "user_book"
+        "$name": "user_book",
+        "$joins":[
+          ["user_id", "==", "id", ["user", []]],
+          ["book_id", "==", "id", ["book", []]]
+        ]
       },
       "author_book": {
         "$name": "author_book"
@@ -155,6 +148,14 @@
       },
       "user_role": {
         "$name": "user_role"
+      },
+      "user_role_joined": {
+        "$name": "user_role",
+        "$joins":[
+          ["user_id", "==", "id", ["user", []]],
+          ["role_id", "==", "id", ["role", []]],
+          ["role_id", "==", "role_id", ["permission", []]]
+        ]
       }
     },
     "db_mapper": {
@@ -180,7 +181,7 @@
       },
       "access_check": {
         "__type__": "singleton",
-        "__realization__": "barsup.middleware.access_check",
+        "__realization__": "barsup.auth.middleware.access_check",
         "$authentication": "Authentication",
         "$authorization": "Authorization"
       },
