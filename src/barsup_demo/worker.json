@@ -75,7 +75,7 @@
       },
       "AuthorizationService": {
         "__realization__": "barsup.auth.service.AuthorizationService",
-        "model": "user_role_joined",
+        "model": "user_role_permission",
         "user_role:model": "user_role"
       },
       "UserService": {
@@ -110,7 +110,8 @@
       "__default__": {
         "__realization__": "barsup.mapping.Model",
         "db_mapper": "default",
-        "session": "default"
+        "session": "default",
+        "$select": "*"
       },
       "auto": {
         "$name": "auto"
@@ -135,7 +136,11 @@
         ]
       },
       "author_book": {
-        "$name": "author_book"
+        "$name": "author_book",
+        "$joins":[
+          ["author_id", "==", "id", ["author", []]],
+          ["book_id", "==", "id", ["book", []]]
+        ]
       },
       "barsup_session": {
         "$name": "barsup_session"
@@ -147,9 +152,13 @@
         "$name": "permission"
       },
       "user_role": {
-        "$name": "user_role"
+        "$name": "user_role",
+        "$joins":[
+          ["user_id", "==", "id", ["user", []]],
+          ["role_id", "==", "id", ["role", []]]
+        ]
       },
-      "user_role_joined": {
+      "user_role_permission": {
         "$name": "user_role",
         "$joins":[
           ["user_id", "==", "id", ["user", []]],
