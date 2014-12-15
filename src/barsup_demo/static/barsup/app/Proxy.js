@@ -153,7 +153,7 @@ Ext.define('BarsUp.Proxy', {
                 }
             }
 
-        } else if (action !== 'read') {
+        } else if (action !== 'read' && resultSet) {
             if (action === 'update') {
                 Ext.Array.forEach(resultSet.records, function (value) {
                     record = store.getById(value['id']);

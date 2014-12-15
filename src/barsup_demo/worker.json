@@ -110,8 +110,7 @@
       "__default__": {
         "__realization__": "barsup.mapping.Model",
         "db_mapper": "default",
-        "session": "default",
-        "$select": "*"
+        "session": "default"
       },
       "auto": {
         "$name": "auto"
@@ -133,6 +132,15 @@
         "$joins":[
           ["user_id", "==", "id", ["user", []]],
           ["book_id", "==", "id", ["book", []]]
+        ],
+        "$select": [
+          "id",
+          "book_id",
+          "book.name",
+          "user_id",
+          "user.name",
+          "user.login",
+          "return_date"
         ]
       },
       "author_book": {
@@ -140,6 +148,12 @@
         "$joins":[
           ["author_id", "==", "id", ["author", []]],
           ["book_id", "==", "id", ["book", []]]
+        ],
+        "$select": [
+          "id",
+          "book_id",
+          "book.name",
+          "book.year"
         ]
       },
       "barsup_session": {
