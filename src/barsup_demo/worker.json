@@ -62,8 +62,7 @@
     },
     "service": {
       "__default__": {
-        "__realization__": "barsup.service.Service",
-        "session": "default"
+        "__realization__": "barsup.service.Service"
       },
       "RolePermissionService": {
         "model": "permission"
