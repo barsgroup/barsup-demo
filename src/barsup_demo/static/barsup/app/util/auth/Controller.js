@@ -7,10 +7,10 @@ Ext.define('BarsUp.util.auth.Controller', {
         'BarsUp.main.Transport'
     ],
 
-    onShow: function(){
+    onShow: function () {
         Ext.getBody().mask();
     },
-    onClose: function(){
+    onClose: function () {
         Ext.getBody().unmask();
     },
 
@@ -19,11 +19,13 @@ Ext.define('BarsUp.util.auth.Controller', {
             controller: 'authentication',
             action: 'login',
             params: this.getViewModel().getData(),
-            success: function(result){
-                if (result.data){
-                    this.view.close();
-                } else {
+            success: function (result) {
+                this.view.close();
+            }, failure: function (res, op) {
+                if (res.status === 404) {
                     BarsUp.util.notification.Window.show('Логин или пароль указан неверно');
+                } else {
+                    BarsUp.util.notification.Window.show('Произошла непредвиденная ошибка');
                 }
             },
             scope: this

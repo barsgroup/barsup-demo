@@ -189,7 +189,6 @@
     "api_options": {
       "default": {
         "middleware": [
-          "wrap_result",
           "log_errors_to_stderr",
           "access_check",
           "transact"
@@ -211,9 +210,6 @@
         "__type__": "singleton",
         "__realization__": "barsup.middleware.transact",
         "session": "default"
-      },
-      "wrap_result": {
-        "__realization__": "barsup.middleware.wrap_result"
       }
     },
     "runtime": {

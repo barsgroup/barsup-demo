@@ -140,17 +140,19 @@ Ext.define('BarsUp.Proxy', {
     afterRequest: function (request, success) {
         var action = request.getAction(),
             op = request.getOperation(),
+            error = op.error,
             resultSet = op.getResultSet(),
             store = Ext.StoreManager.lookup(this.getStoreId()),
             record, msg;
 
-        if (!op.success && op.getResponse()) {
-            msg = Ext.decode(op.getResponse().responseText);
 
-            if (!msg.success && msg.data === BarsUp.Socket.NEED_LOGIN) {
+        if (!op.success && !Ext.Object.isEmpty(error)) {
+            if (error.status === 401) {
                 if (!Ext.WindowManager.get('barsup-auth-window')) {
                     new BarsUp.util.auth.Window().show();
                 }
+            } else if (error.status === 403) {
+                BarsUp.util.notification.Window.show('Нет прав доступа');
             }
 
         } else if (action !== 'read' && resultSet) {

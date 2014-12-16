@@ -46,6 +46,7 @@ Ext.define('BarsUp.util.auth.Window', {
         buttons: [{
             text: 'Вход',
             tabIndex: 3,
+            formBind: true,
             handler: 'click'
         }]
     }],
