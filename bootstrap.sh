@@ -6,7 +6,7 @@ update-locale LANG=en_US.UTF-8 LC_CTYPE="en_US.UTF-8" LC_NUMERIC="en_US.UTF-8" L
 
 # Установка python 3.4
 apt-get update
-apt-get install python-software-properties -y --force-yes
+apt-get install -y --force-yes software-properties-common python-software-properties
 add-apt-repository ppa:fkrull/deadsnakes -y
 
 # package install/upgrade
