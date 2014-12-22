@@ -35,7 +35,7 @@ Ext.define('BarsUp.view.authorbook.EditWindow', {
                     fieldLabel: 'Автор',
                     xtype: 'combo',
                     store: 'Author',
-                    displayField: 'lname',
+                    displayField: 'full_name',
                     valueField: 'id',
                     bind: {
                         value: '{authorbook.author_id}',

@@ -62,7 +62,8 @@
     },
     "service": {
       "__default__": {
-        "__realization__": "barsup.service.Service"
+        "__realization__": "barsup.service.Service",
+        "$view": {}
       },
       "RolePermissionService": {
         "model": "permission"
@@ -90,7 +91,12 @@
         "model": "book"
       },
       "AuthorService": {
-        "model": "author"
+        "model": "author",
+        "$view": {
+          "adapters":[
+            ["Splitter", "full_name", ["fname", "lname"], {}]
+          ]
+      }
       },
       "IndividualService": {
         "model": "individual"
