@@ -29,12 +29,10 @@
         "service": "UserRoleService"
       },
       "PermissionController": {
-        "__realization__": "barsup.auth.controller.PermissionController",
-        "methods:runtime": "actions"
+        "__realization__": "barsup.auth.controller.PermissionController"
       },
       "PermissionAction": {
-        "__realization__": "barsup.auth.controller.PermissionAction",
-        "methods:runtime": "actions"
+        "__realization__": "barsup.auth.controller.PermissionAction"
       },
       "RolePermission": {
         "service": "RolePermissionService"
@@ -63,7 +61,7 @@
     "service": {
       "__default__": {
         "__realization__": "barsup.service.Service",
-        "$view": {}
+        "adapters": []
       },
       "RolePermissionService": {
         "model": "permission"
@@ -92,11 +90,9 @@
       },
       "AuthorService": {
         "model": "author",
-        "$view": {
-          "adapters":[
-            ["Splitter", "full_name", ["fname", "lname"], {}]
-          ]
-      }
+        "adapters": [
+            "FioSplitter"
+        ]
       },
       "IndividualService": {
         "model": "individual"
@@ -110,6 +106,13 @@
       "AuthorBookService": {
         "model": "author_book"
       }
+    },
+    "adapters": {
+        "FioSplitter": {
+            "__realization__": "barsup.adapters.Splitter",
+            "$to_name": "full_name",
+            "$from_names": ["fname", "lname"]
+        }
     },
     "model": {
       "__default__": {
@@ -194,11 +197,20 @@
     },
     "api_options": {
       "default": {
+        "initware": [
+          "list_actions"
+        ],
         "middleware": [
           "log_errors_to_stderr",
           "access_check",
           "transact"
         ]
+      }
+    },
+    "initware": {
+      "list_actions": {
+        "__type__": "static",
+        "__realization__": "barsup.auth.list_actions"
       }
     },
     "middleware": {
@@ -216,12 +228,6 @@
         "__type__": "singleton",
         "__realization__": "barsup.middleware.transact",
         "session": "default"
-      }
-    },
-    "runtime": {
-      "__default__": {"__type__": "static"},
-      "actions": {
-        "__realization__": "barsup.runtime.ACTIONS"
       }
     }
   }
