@@ -1,0 +1,10 @@
+{
+    "api_options": {
+        "default": {
+            "middleware": [
+                "log_errors_to_stderr",
+                "transact"
+            ]
+        }
+    }
+}
