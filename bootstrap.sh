@@ -14,13 +14,18 @@ echo "Updating & Installing packages"
 apt-get update
 apt-get install -y --force-yes python3.4 unzip python3.4-dev python-pip mercurial postgresql postgresql-client-9.1 postgresql-server-dev-9.1 python-psycopg2 build-essential
 
-
 easy_install -U pip
 pip install --upgrade virtualenv
 
 
 # BUP_PATH for SSH-sessions
+export BUP_PATH=/vagrant/src/barsup_demo
+export BUP_CONFIG=/vagrant/src/barsup_demo/container.json
+export BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json
+
 echo "export BUP_PATH=/vagrant/src/barsup_demo" >> /home/vagrant/.bashrc
+echo "export BUP_CONFIG=/vagrant/src/barsup_demo/container.json" >> /home/vagrant/.bashrc
+echo "export BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json" >> /home/vagrant/.bashrc
 
 # project installation
 echo "Installing project dependencies"
@@ -50,7 +55,20 @@ echo "Upgrading migrations (don't worry: red color - normal output)"
 cd /vagrant/src/barsup_demo
 alembic upgrade head
 
+# Создание пользователя и роли для администратора
+sudo -u postgres psql -d barsup -c "
+BEGIN TRANSACTION;
+
+INSERT INTO barsup.public.user (name, email, login, password) VALUES ('Administrator', 'adm@adm.ru', 'admin', 'admin');
+INSERT INTO barsup.public.role (name, is_super) VALUES ('Everything', true);
+INSERT INTO barsup.public.user_role (user_id, role_id) VALUES (1, 1);
+
+COMMIT;
+"
+echo 'For access use login "admin" and password "admin"'
+
 # installation/start of daemon configurations
-cp /vagrant/scripts/*.conf /etc/init
-start bup_server
-start bup_worker
+uwsgi wsgi.ini
+
+
+

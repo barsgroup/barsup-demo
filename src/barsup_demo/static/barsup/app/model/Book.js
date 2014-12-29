@@ -6,7 +6,7 @@ Ext.define('BarsUp.model.Book', {
     fields: [
         {name: 'id', type: 'int'},
         {name: 'name', type: 'auto'},
-        {name: 'year', type: 'auto'}
+        {name: 'year', type: 'int'}
 
     ],
     proxy: Ext.applyIf({
