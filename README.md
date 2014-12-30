@@ -1,5 +1,5 @@
-![Container](https://img.shields.io/badge/schema-yes-green.svg?style=flat)
-![Schema](https://img.shields.io/badge/container-yes-green.svg?style=flat)
+![Container](https://img.shields.io/badge/schema-ok-green.svg?style=flat)
+![Schema](https://img.shields.io/badge/container-ok-green.svg?style=flat)
 
 # Demo
 
