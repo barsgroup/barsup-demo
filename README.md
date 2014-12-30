@@ -1,3 +1,6 @@
+![Container](https://img.shields.io/badge/schema-yes-green.svg?style=flat)
+![Schema](https://img.shields.io/badge/container-yes-green.svg?style=flat)
+
 # Demo
 
 Демо представляет собой проект с декларативном описанием набора сущностей вида:
