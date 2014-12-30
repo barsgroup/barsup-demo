@@ -30,7 +30,7 @@
 * [Подробное описание формата](https://bitbucket.org/barsgroup/barsup-core/wiki/Home#markdown-header-description)
 * [Пример из demo](https://bitbucket.org/barsgroup/barsup-demo/src/2bf5ee34eb5ff65114d35045a4393139569145bc/src/barsup_demo/container.json?at=default)
 
-### Описание миграций
+### Работа с миграциями
 
 Для запуска миграций:
 ```bash
