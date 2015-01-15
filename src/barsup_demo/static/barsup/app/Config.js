@@ -5,12 +5,12 @@ Ext.define('BarsUp.Config', {
         'BarsUp.Socket'
     ],
     proxyConfig: {
-        websocket: BarsUp.Socket.get(),
-        type: 'websocket'
-        //type: 'ux.ajax'
+        //websocket: BarsUp.Socket.get(),
+        //type: 'websocket'
+        type: 'ux.ajax'
     },
     transportConfig: {
-        alias: 'transport.websocket'
-        //alias: 'transport.ux.ajax'
+        //alias: 'transport.websocket'
+        alias: 'transport.ux.ajax'
     }
 });
