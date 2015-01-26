@@ -41,8 +41,8 @@ if [ ! -d "/vagrant/src/barsup_demo/static/barsup/ext/ext-5.0.1" ]; then
     wget -q -o /dev/null http://cdn.sencha.com/ext/gpl/ext-5.0.1-gpl.zip
 
     echo "Installing ExtJS 5.0.1..."
-    unzip -qq ext-5.0.1-trial.zip
-    rm ext-5.0.1-trial.zip
+    unzip -qq ext-5.0.1-gpl.zip
+    rm ext-5.0.1-gpl.zip
 fi
 
 # Создание бд и пользователи
