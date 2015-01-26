@@ -43,7 +43,7 @@ Ext.define('BarsUp.view.message.MessageUserController', {
                 region: 'center',
                 columns: [{
                     xtype: 'gridcolumn',
-                    dataIndex: 'name',
+                    dataIndex: 'user.name',
                     text: 'От кого',
                     flex: 1,
                     filter: 'string'

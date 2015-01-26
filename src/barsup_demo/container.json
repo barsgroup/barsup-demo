@@ -131,7 +131,10 @@
       "session": "default"
     },
     "message": {
-      "$name": "message"
+      "$name": "message",
+      "$joins":[
+        ["to_user_id", "==", "id", ["user", []]]
+      ]
     },
     "auto": {
       "$name": "auto"
