@@ -3,6 +3,14 @@
     "__default__": {
       "__realization__": "barsup.controller.DictController"
     },
+    "MsgUsers": {
+      "__realization__": "barsup_demo.msg.controller.MsgUsers",
+      "user_service:service": "UserService"
+    },
+    "Message": {
+      "__realization__": "barsup_demo.msg.controller.Message",
+      "service": "MessageService"
+    },
     "Individual": {
       "service": "IndividualService"
     },
@@ -62,6 +70,9 @@
       "__realization__": "barsup.service.Service",
       "adapters": []
     },
+    "MessageService": {
+      "model": "message"
+    },
     "RolePermissionService": {
       "model": "permission"
     },
@@ -118,6 +129,9 @@
       "__realization__": "barsup.schema.Model",
       "db_mapper": "default",
       "session": "default"
+    },
+    "message": {
+      "$name": "message"
     },
     "auto": {
       "$name": "auto"
@@ -221,7 +235,11 @@
       "__type__": "singleton",
       "__realization__": "barsup.auth.middleware.access_check",
       "$authentication": "Authentication",
-      "$authorization": "Authorization"
+      "$authorization": "Authorization",
+      "$preserve_user": [
+        "MsgUsers",
+        "Message"
+      ]
     },
     "transact": {
       "__type__": "singleton",
