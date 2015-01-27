@@ -1,8 +1,8 @@
 # coding:utf-8
 
-from barsup.wsgi import application as _application
+from barsup.wsgi import make_application
 
-application = _application()
+application = make_application()
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
