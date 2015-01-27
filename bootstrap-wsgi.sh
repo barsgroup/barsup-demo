@@ -20,7 +20,7 @@ python3.4 /tmp/get-pip.py
 pip3.4 install --upgrade pip
 
 # installing virtualenv
-pip3.4 install --upgrade virtualenv
+# pip3.4 install --upgrade virtualenv
 
 # BUP_PATH for SSH-sessions
 export BUP_PATH=/vagrant/src/barsup_demo
@@ -33,10 +33,10 @@ echo "BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json" >> /etc/environment
 
 # project installation
 echo "Installing project dependencies"
-virtualenv -p /usr/bin/python3.4 py3env
-source py3env/bin/activate
+# virtualenv -p /usr/bin/python3.4 py3env
+# source py3env/bin/activate
 
-pip install --upgrade -r /vagrant/REQUIREMENTS
+pip3.4 install --upgrade -r /vagrant/REQUIREMENTS
 
 # Установка ExtJS
 if [ ! -d "/vagrant/src/barsup_demo/static/barsup/ext/ext-5.0.1" ]; then
@@ -72,5 +72,8 @@ COMMIT;
 echo 'For access use login "admin" and password "admin"'
 
 # installation/start of daemon configurations
-env PYTHONPATH=/vagrant/src:$PYTHONPATH uwsgi wsgi.ini
+export PYTHONPATH=/vagrant/src:$PYTHONPATH
+export PYTHONPATH=/usr/lib/python3.4/site-packages:$PYTHONPATH
 
+# uwsgi --uid=vagrant --daemonize =/tmp/uwsgi.log wsgi.ini
+python3.4 wsgi.py
