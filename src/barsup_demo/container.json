@@ -1,242 +1,242 @@
 {
-    "CONTROLLER": {
-        "__default__": {
-            "__realization__": "barsup.controller.DictController"
-        },
-        "Message": {
-            "__realization__": "barsup.controller.ModuleController",
-            "module": "message"
-        },
-        "Individual": {
-            "service": "IndividualService"
-        },
-        "Automobile": {
-            "service": "AutoService"
-        },
-        "User": {
-            "service": "UserService"
-        },
-        "Role": {
-            "service": "RoleService"
-        },
-        "Author": {
-            "service": "AuthorService"
-        },
-        "Book": {
-            "service": "BookService"
-        },
-        "UserBook": {
-            "service": "UserBookService"
-        },
-        "UserRole": {
-            "service": "UserRoleService"
-        },
-        "PermissionController": {
-            "__realization__": "barsup.auth.controller.PermissionController"
-        },
-        "PermissionAction": {
-            "__realization__": "barsup.auth.controller.PermissionAction"
-        },
-        "RolePermission": {
-            "service": "RolePermissionService"
-        },
-        "AuthorBook": {
-            "service": "AuthorBookService"
-        },
-        "Authentication": {
-            "service": "AuthenticationService",
-            "__realization__": "barsup.auth.controller.Authentication"
-        },
-        "Authorization": {
-            "service": "AuthorizationService",
-            "__realization__": "barsup.auth.controller.Authorization"
-        }
+  "controller": {
+    "__default__": {
+      "__realization__": "barsup.controller.DictController"
     },
-    "session": {
-        "default": {
-            "__type__": "singleton",
-            "__realization__": "barsup.session.PostgreSQLSession",
-            "$login": "barsup",
-            "$password": "barsup",
-            "$database": "barsup"
-        }
+      "Message": {
+          "__realization__": "barsup.controller.ModuleController",
+          "module": "message"
+      },
+    "Individual": {
+      "service": "IndividualService"
     },
-    "service": {
-        "__default__": {
-            "__realization__": "barsup.service.Service",
-            "adapters": []
-        },
-        "RolePermissionService": {
-            "model": "permission"
-        },
-        "AuthenticationService": {
-            "__realization__": "barsup.auth.service.AuthenticationService",
-            "model": "barsup_session",
-            "user_model:model": "user"
-        },
-        "AuthorizationService": {
-            "__realization__": "barsup.auth.service.AuthorizationService",
-            "model": "user_role_permission",
-            "user_role:model": "user_role"
-        },
-        "UserService": {
-            "model": "user"
-        },
-        "RoleService": {
-            "model": "role"
-        },
-        "UserRoleService": {
-            "model": "user_role"
-        },
-        "BookService": {
-            "model": "book"
-        },
-        "AuthorService": {
-            "model": "author",
-            "adapters": [
-                "FioSplitter"
-            ]
-        },
-        "IndividualService": {
-            "model": "individual"
-        },
-        "AutoService": {
-            "model": "auto"
-        },
-        "UserBookService": {
-            "model": "user_book"
-        },
-        "AuthorBookService": {
-            "model": "author_book"
-        }
+    "Automobile": {
+      "service": "AutoService"
     },
-    "adapters": {
-        "FioSplitter": {
-            "__realization__": "barsup.adapters.Splitter",
-            "$to_name": "full_name",
-            "$from_names": ["fname", "lname"]
-        }
+    "User": {
+      "service": "UserService"
     },
-    "model": {
-        "__default__": {
-            "__realization__": "barsup.schema.Model",
-            "db_mapper": "default",
-            "session": "default"
-        },
-        "auto": {
-            "$name": "auto"
-        },
-        "individual": {
-            "$name": "individual"
-        },
-        "user": {
-            "$name": "user"
-        },
-        "author": {
-            "$name": "author"
-        },
-        "book": {
-            "$name": "book"
-        },
-        "user_book": {
-            "$name": "user_book",
-            "$joins":[
-                ["user_id", "==", "id", ["user", []]],
-                ["book_id", "==", "id", ["book", []]]
-            ],
-            "$select": [
-                "id",
-                "book_id",
-                "book.name",
-                "user_id",
-                "user.name",
-                "user.login",
-                "return_date"
-            ]
-        },
-        "author_book": {
-            "$name": "author_book",
-            "$joins":[
-                ["author_id", "==", "id", ["author", []]],
-                ["book_id", "==", "id", ["book", []]]
-            ],
-            "$select": [
-                "id",
-                "book_id",
-                "book.name",
-                "book.year"
-            ]
-        },
-        "barsup_session": {
-            "$name": "barsup_session"
-        },
-        "role": {
-            "$name": "role"
-        },
-        "permission": {
-            "$name": "permission"
-        },
-        "user_role": {
-            "$name": "user_role",
-            "$joins":[
-                ["user_id", "==", "id", ["user", []]],
-                ["role_id", "==", "id", ["role", []]]
-            ]
-        },
-        "user_role_permission": {
-            "$name": "user_role",
-            "$joins":[
-                ["user_id", "==", "id", ["user", []]],
-                ["role_id", "==", "id", ["role", []]],
-                ["role_id", "==", "role_id", ["permission", []]]
-            ]
-        }
+    "Role": {
+      "service": "RoleService"
     },
-    "db_mapper": {
-        "default": {
-            "__realization__": "barsup.schema.DBMapper",
-            "__type__": "singleton"
-        }
+    "Author": {
+      "service": "AuthorService"
     },
-    "api_options": {
-        "default": {
-            "initware": [
-                "list_actions"
-            ],
-            "middleware": [
-                "log_errors_to_stderr",
-                "access_check",
-                "transact"
-            ]
-        }
+    "Book": {
+      "service": "BookService"
     },
-    "initware": {
-        "list_actions": {
-            "__type__": "static",
-            "__realization__": "barsup.auth.list_actions"
-        }
+    "UserBook": {
+      "service": "UserBookService"
     },
-    "middleware": {
-        "__default__": {"__type__": "static"},
-        "log_errors_to_stderr": {
-            "__realization__": "barsup.middleware.log_errors_to_stderr"
-        },
-        "access_check": {
-            "__type__": "singleton",
-            "__realization__": "barsup.auth.middleware.access_check",
-            "$authentication": "Authentication",
-            "$authorization": "Authorization",
-            "$preserve_user": [
-                "MsgUsers",
-                "Message"
-            ]
-        },
-        "transact": {
-            "__type__": "singleton",
-            "__realization__": "barsup.middleware.transact",
-            "session": "default"
-        }
+    "UserRole": {
+      "service": "UserRoleService"
     },
+    "PermissionController": {
+      "__realization__": "barsup.auth.controller.PermissionController"
+    },
+    "PermissionAction": {
+      "__realization__": "barsup.auth.controller.PermissionAction"
+    },
+    "RolePermission": {
+        "service": "RolePermissionService"
+    },
+    "AuthorBook": {
+      "service": "AuthorBookService"
+    },
+    "Authentication": {
+      "service": "AuthenticationService",
+      "__realization__": "barsup.auth.controller.Authentication"
+    },
+    "Authorization": {
+      "service": "AuthorizationService",
+      "__realization__": "barsup.auth.controller.Authorization"
+    }
+  },
+  "session": {
+    "default": {
+      "__type__": "singleton",
+      "__realization__": "barsup.session.PostgreSQLSession",
+      "$login": "barsup",
+      "$password": "barsup",
+      "$database": "barsup"
+    }
+  },
+  "service": {
+    "__default__": {
+      "__realization__": "barsup.service.Service",
+      "adapters": []
+    },
+    "RolePermissionService": {
+      "model": "permission"
+    },
+    "AuthenticationService": {
+      "__realization__": "barsup.auth.service.AuthenticationService",
+      "model": "barsup_session",
+      "user_model:model": "user"
+    },
+    "AuthorizationService": {
+      "__realization__": "barsup.auth.service.AuthorizationService",
+      "model": "user_role_permission",
+      "user_role:model": "user_role"
+    },
+    "UserService": {
+      "model": "user"
+    },
+    "RoleService": {
+      "model": "role"
+    },
+    "UserRoleService": {
+      "model": "user_role"
+    },
+    "BookService": {
+      "model": "book"
+    },
+    "AuthorService": {
+      "model": "author",
+      "adapters": [
+          "FioSplitter"
+      ]
+    },
+    "IndividualService": {
+      "model": "individual"
+    },
+    "AutoService": {
+      "model": "auto"
+    },
+    "UserBookService": {
+      "model": "user_book"
+    },
+    "AuthorBookService": {
+      "model": "author_book"
+    }
+  },
+  "adapters": {
+    "FioSplitter": {
+      "__realization__": "barsup.adapters.Splitter",
+      "$to_name": "full_name",
+      "$from_names": ["fname", "lname"]
+    }
+  },
+  "model": {
+    "__default__": {
+      "__realization__": "barsup.schema.Model",
+      "db_mapper": "default",
+      "session": "default"
+    },
+    "auto": {
+      "$name": "auto"
+    },
+    "individual": {
+      "$name": "individual"
+    },
+    "user": {
+      "$name": "user"
+    },
+    "author": {
+      "$name": "author"
+    },
+    "book": {
+      "$name": "book"
+    },
+    "user_book": {
+      "$name": "user_book",
+      "$joins":[
+        ["user_id", "==", "id", ["user", []]],
+        ["book_id", "==", "id", ["book", []]]
+      ],
+      "$select": [
+        "id",
+        "book_id",
+        "book.name",
+        "user_id",
+        "user.name",
+        "user.login",
+        "return_date"
+      ]
+    },
+    "author_book": {
+      "$name": "author_book",
+      "$joins":[
+        ["author_id", "==", "id", ["author", []]],
+        ["book_id", "==", "id", ["book", []]]
+      ],
+      "$select": [
+        "id",
+        "book_id",
+        "book.name",
+        "book.year"
+      ]
+    },
+    "barsup_session": {
+      "$name": "barsup_session"
+    },
+    "role": {
+      "$name": "role"
+    },
+    "permission": {
+      "$name": "permission"
+    },
+    "user_role": {
+      "$name": "user_role",
+      "$joins":[
+        ["user_id", "==", "id", ["user", []]],
+        ["role_id", "==", "id", ["role", []]]
+      ]
+    },
+    "user_role_permission": {
+      "$name": "user_role",
+      "$joins":[
+        ["user_id", "==", "id", ["user", []]],
+        ["role_id", "==", "id", ["role", []]],
+        ["role_id", "==", "role_id", ["permission", []]]
+      ]
+    }
+  },
+  "db_mapper": {
+    "default": {
+      "__realization__": "barsup.schema.DBMapper",
+      "__type__": "singleton"
+    }
+  },
+  "api_options": {
+    "default": {
+      "initware": [
+        "list_actions"
+      ],
+      "middleware": [
+        "log_errors_to_stderr",
+        "access_check",
+        "transact"
+      ]
+    }
+  },
+  "initware": {
+    "list_actions": {
+      "__type__": "static",
+      "__realization__": "barsup.auth.list_actions"
+    }
+  },
+  "middleware": {
+    "__default__": {"__type__": "static"},
+    "log_errors_to_stderr": {
+      "__realization__": "barsup.middleware.log_errors_to_stderr"
+    },
+    "access_check": {
+      "__type__": "singleton",
+      "__realization__": "barsup.auth.middleware.access_check",
+      "$authentication": "Authentication",
+      "$authorization": "Authorization",
+      "$preserve_user": [
+        "MsgUsers",
+        "Message"
+      ]
+    },
+    "transact": {
+      "__type__": "singleton",
+      "__realization__": "barsup.middleware.transact",
+      "session": "default"
+    }
+  },
     "module": {
         "message": {
             "$config": "$BUP_PATH/message.json"

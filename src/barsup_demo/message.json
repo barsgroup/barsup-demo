@@ -24,8 +24,8 @@
     "model": {
         "__default__": {
             "__realization__": "barsup.schema.Model",
-            "db_mapper": "default",
-            "session": "default"
+            "db_mapper": "../default",
+            "session": "../default"
         },
         "message": {
             "$name": "message",
