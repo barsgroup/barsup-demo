@@ -1,0 +1,49 @@
+{
+    "controller": {
+        "__default__": {
+            "__realization__": "barsup.controller.DictController"
+        },
+        "MsgUsers": {
+            "__realization__": "barsup_demo.msg.controller.MsgUsers",
+            "user_service:service": "../UserService"
+        },
+        "Message": {
+            "__realization__": "barsup_demo.msg.controller.Message",
+            "service": "MessageService"
+        }
+    },
+    "service": {
+        "__default__": {
+            "__realization__": "barsup.service.Service",
+            "adapters": []
+        },
+        "MessageService": {
+            "model": "message"
+        }
+    },
+    "model": {
+        "__default__": {
+            "__realization__": "barsup.schema.Model",
+            "db_mapper": "default",
+            "session": "default"
+        },
+        "message": {
+            "$name": "message",
+            "$joins":[
+                ["to_user_id", "==", "id", ["user", []]]
+            ]
+        }
+    },
+    "api_options": {
+        "default": {
+            "initware": [
+                "../list_actions"
+            ],
+            "middleware": [
+                "../log_errors_to_stderr",
+                "../access_check",
+                "../transact"
+            ]
+        }
+    }
+}
