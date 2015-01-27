@@ -17,9 +17,8 @@ Ext.define('BarsUp.model.Message', {
             rootProperty: 'data'
         },
         api: {
-            read: '/message/read',
-            create: '/message/create'
+            read: '/message/message/read',
+            create: '/message/message/create'
         }
     }, BarsUp.Config.proxyConfig)
 });
-

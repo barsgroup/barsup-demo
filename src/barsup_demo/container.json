@@ -3,7 +3,7 @@
         "__default__": {
             "__realization__": "barsup.controller.DictController"
         },
-        "MessageModuleController": {
+        "Message": {
             "__realization__": "barsup.controller.ModuleController",
             "module": "message"
         },

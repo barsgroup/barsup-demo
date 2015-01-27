@@ -15,8 +15,7 @@ Ext.define('BarsUp.model.MessageUser', {
             rootProperty: 'data'
         },
         api: {
-            read: '/msgusers/read'
+            read: '/message/msgusers/read'
         }
     }, BarsUp.Config.proxyConfig)
 });
-
