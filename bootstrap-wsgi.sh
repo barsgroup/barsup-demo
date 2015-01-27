@@ -12,20 +12,24 @@ add-apt-repository ppa:fkrull/deadsnakes -y
 # package install/upgrade
 echo "Updating & Installing packages"
 apt-get update
-apt-get install -y --force-yes python3.4 unzip python3.4-dev python-pip mercurial postgresql postgresql-client-9.1 postgresql-server-dev-9.1 python-psycopg2 build-essential
+apt-get install -y --force-yes unzip python3.4 python3.4-dev python-pip mercurial postgresql postgresql-client postgresql-server-dev-all python-psycopg2 build-essential
 
-easy_install -U pip
-pip install --upgrade virtualenv
+# installing pip
+wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
+python3.4 /tmp/get-pip.py
+pip3.4 install --upgrade pip
 
+# installing virtualenv
+pip3.4 install --upgrade virtualenv
 
 # BUP_PATH for SSH-sessions
 export BUP_PATH=/vagrant/src/barsup_demo
 export BUP_CONFIG=/vagrant/src/barsup_demo/container.json
 export BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json
 
-echo "export BUP_PATH=/vagrant/src/barsup_demo" >> /home/vagrant/.bashrc
-echo "export BUP_CONFIG=/vagrant/src/barsup_demo/container.json" >> /home/vagrant/.bashrc
-echo "export BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json" >> /home/vagrant/.bashrc
+echo "BUP_PATH=/vagrant/src/barsup_demo" >> /etc/environment
+echo "BUP_CONFIG=/vagrant/src/barsup_demo/container.json" >> /etc/environment
+echo "BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json" >> /etc/environment
 
 # project installation
 echo "Installing project dependencies"
@@ -69,6 +73,4 @@ echo 'For access use login "admin" and password "admin"'
 
 # installation/start of daemon configurations
 uwsgi wsgi.ini
-
-
 
