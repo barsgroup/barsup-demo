@@ -72,5 +72,5 @@ COMMIT;
 echo 'For access use login "admin" and password "admin"'
 
 # installation/start of daemon configurations
-uwsgi wsgi.ini
+env PYTHONPATH=/vagrant/src:$PYTHONPATH uwsgi wsgi.ini
 
