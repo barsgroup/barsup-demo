@@ -195,7 +195,8 @@
   "db_mapper": {
     "default": {
       "__realization__": "barsup.schema.DBMapper",
-      "__type__": "singleton"
+      "__type__": "singleton",
+      "$config": "$BUP_PATH/schema.json"
     }
   },
   "api_options": {
