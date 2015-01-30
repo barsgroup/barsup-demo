@@ -64,6 +64,12 @@ INSERT INTO barsup.public.user_role (user_id, role_id) VALUES (1, 1);
 
 COMMIT;
 "
+
 echo 'For access use login "admin" and password "admin"'
+echo 'Usage:
+$ vagrant ssh wsgi
+vagrant$ cd /vagrant/src/barsup_demo/
+vagrant$ uwsgi wsgi.ini
+'
 
 
