@@ -40,9 +40,7 @@
                 "../list_actions"
             ],
             "middleware": [
-                "../log_errors_to_stderr",
-                "../transact",
-                "../access_check"
+                "../authorization"
             ]
         }
     }
