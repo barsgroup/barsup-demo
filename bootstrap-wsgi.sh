@@ -33,6 +33,10 @@ echo "Installing project dependencies"
 
 pip3.4 install --upgrade -r /vagrant/REQUIREMENTS
 
+# enable bash autocompleteon
+echo "complete -C \"bup_cli --complete\" bup_cli" >> $HOME/.bashrc
+echo "complete -C \"bup_manage --complete\" bup_manage" >> $HOME/.bashrc
+
 # Установка ExtJS
 if [ ! -d "/vagrant/src/barsup_demo/static/barsup/ext/ext-5.0.1" ]; then
     cd /vagrant/src/barsup_demo/static/barsup/ext
