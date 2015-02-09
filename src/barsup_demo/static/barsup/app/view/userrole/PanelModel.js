@@ -4,9 +4,5 @@ Ext.define('BarsUp.view.userrole.PanelModel', {
 
     data: {
         userId: null
-    },
-
-    stores: {
-        books: 'BarsUp.store.UserRole'
     }
 });

@@ -4,9 +4,5 @@ Ext.define('BarsUp.view.authorbook.PanelModel', {
 
     data: {
         authorId: null
-    },
-
-    stores: {
-        books: 'BarsUp.store.AuthorBook'
     }
 });
