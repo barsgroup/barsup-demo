@@ -7,13 +7,6 @@ Ext.define('BarsUp.util.auth.Controller', {
         'BarsUp.main.Transport'
     ],
 
-    onShow: function () {
-        Ext.getBody().mask();
-    },
-    onClose: function () {
-        Ext.getBody().unmask();
-    },
-
     click: function () {
         new BarsUp.main.Transport({
             controller: 'authentication',

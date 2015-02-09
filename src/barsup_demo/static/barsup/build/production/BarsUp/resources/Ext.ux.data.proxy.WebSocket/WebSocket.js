@@ -290,10 +290,10 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             return false;
         }
 
-        ws.on(this.storeId.toLowerCase() + '|create', this._create, this);
-        ws.on(this.storeId.toLowerCase() + '|read', this._read, this);
-        ws.on(this.storeId.toLowerCase() + '|update', this._update, this);
-        ws.on(this.storeId.toLowerCase() + '|destroy', this._destroy, this);
+        ws.on(this.getApi().create, this._create, this);
+        ws.on(this.getApi().read, this._read, this);
+        ws.on(this.getApi().update, this._update, this);
+        ws.on(this.getApi().destroy, this._destroy, this);
 
         // Allows to define WebSocket proxy both into a model and a store
         me.callParent([cfg]);
@@ -433,9 +433,14 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             delete record.id; // Сгенерированный ExtJs-ом идентификатор посылать не нужно
             resultRecords.push(record);
         }
-        data['records'] = resultRecords;
 
-        ws.send(apiKey, data);
+        // TODO: Множественное добавление пока не поддерживается
+        if (resultRecords.length === 1) {
+            data['data'] = resultRecords[0];
+
+            ws.send(apiKey, data);
+        }
+
     },
 
     /**
@@ -587,7 +592,6 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
     _update: function (ws, result) {
         var data = result['data'],
             resultSet = this.getReader().read(data),
-            opt,
             store = Ext.StoreManager.lookup(this.getStoreId()),
             record;
 
@@ -608,9 +612,14 @@ Ext.define('Ext.ux.data.proxy.WebSocket', {
             opt,
             store = Ext.StoreManager.lookup(this.getStoreId());
 
-        Ext.Array.forEach(resultSet.records, function (value) {
-            store.add(value.data);
-        });
+        if (resultSet.records.length > 0) {
+            Ext.Array.forEach(resultSet.records, function (value) {
+                store.add(value.data);
+            });
+        } else {
+             store.add(data);
+        }
+
         store.commitChanges();
     }
 });

@@ -19,7 +19,8 @@ Ext.define('BarsUp.util.auth.Window', {
             password: null
         }
     },
-
+    modal: true,
+    defaultFocus: 'login',
     items: [{
         xtype: 'form',
         bodyPadding: 5,
@@ -32,27 +33,25 @@ Ext.define('BarsUp.util.auth.Window', {
             allowBlank: false,
             fieldLabel: 'Пользователь',
             name: 'login',
-            tabIndex: 1,
+            itemId: 'login',
+
             bind: '{login}'
         }, {
             allowBlank: true,
             fieldLabel: 'Пароль',
             name: 'pass',
             inputType: 'password',
-            tabIndex: 2,
+
             bind: '{password}'
         }],
 
         buttons: [{
             text: 'Вход',
-            tabIndex: 3,
+
+            itemId: 'enter',
             formBind: true,
             handler: 'click'
         }]
-    }],
-    listeners: {
-        show: 'onShow',
-        close: 'onClose'
-    }
+    }]
 });
 

@@ -120,7 +120,7 @@
       "session": "default"
     },
     "auto": {
-      "$name": "auto"
+      "$auto": "auto"
     },
     "individual": {
       "$name": "individual"
@@ -249,5 +249,14 @@
         "message": {
             "$config": "$BUP_PATH/message.json"
         }
+    },
+    "management": {
+      "create_user_role": {
+        "__realization__": "barsup.auth.management.create_user_role",
+        "session": "default",
+        "user:service": "UserService",
+        "role:service": "RoleService",
+        "user_role:service": "UserRoleService"
+      }
     }
 }

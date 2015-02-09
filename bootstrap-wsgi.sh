@@ -3,6 +3,7 @@
 # Поддержка utf-8
 locale-gen ru_RU.UTF-8
 update-locale LANG=ru_RU.UTF-8 LC_CTYPE="ru_RU.UTF-8" LC_NUMERIC="ru_RU.UTF-8" LC_TIME="ru_RU.UTF-8" LC_COLLATE="ru_RU.UTF-8" LC_MONETARY="ru_RU.UTF-8" LC_MESSAGES="ru_RU.UTF-8"  LC_PAPER="ru_RU.UTF-8" LC_NAME="ru_RU.UTF-8" LC_ADDRESS="ru_RU.UTF-8" LC_TELEPHONE="ru_RU.UTF-8" LC_MEASUREMENT="ru_RU.UTF-8" LC_IDENTIFICATION="ru_RU.UTF-8" LC_ALL=ru_RU.UTF-8
+export LANG="ru_RU.UTF-8" LC_CTYPE="ru_RU.UTF-8" LC_NUMERIC="ru_RU.UTF-8" LC_TIME="ru_RU.UTF-8" LC_COLLATE="ru_RU.UTF-8" LC_MONETARY="ru_RU.UTF-8" LC_MESSAGES="ru_RU.UTF-8"  LC_PAPER="ru_RU.UTF-8" LC_NAME="ru_RU.UTF-8" LC_ADDRESS="ru_RU.UTF-8" LC_TELEPHONE="ru_RU.UTF-8" LC_MEASUREMENT="ru_RU.UTF-8" LC_IDENTIFICATION="ru_RU.UTF-8" LC_ALL="ru_RU.UTF-8"
 
 # Установка python 3.4
 apt-get update
@@ -38,14 +39,16 @@ echo "complete -C \"bup_cli --complete\" bup_cli" >> $HOME/.bashrc
 echo "complete -C \"bup_manage --complete\" bup_manage" >> $HOME/.bashrc
 
 # Установка ExtJS
-if [ ! -d "/vagrant/src/barsup_demo/static/barsup/ext/ext-5.0.1" ]; then
-    cd /vagrant/src/barsup_demo/static/barsup/ext
-    echo "Downloading ExtJS 5.0.1..."
-    wget -q -o /dev/null http://cdn.sencha.com/ext/gpl/ext-5.0.1-gpl.zip
+ext_version="5.1.0"
+if [ ! -d "/vagrant/src/barsup_demo/static/barsup/ext/ext-$ext_version/" ]; then
+    cd /vagrant/src/barsup_demo/static/barsup
 
-    echo "Installing ExtJS 5.0.1..."
-    unzip -qq ext-5.0.1-gpl.zip
-    rm ext-5.0.1-gpl.zip
+    echo "Downloading ExtJS $ext_version ..."
+    wget -q -o /dev/null http://cdn.sencha.com/ext/gpl/ext-$ext_version-gpl.zip
+
+    echo "Installing ExtJS $ext_version ..."
+    unzip -qq ext-$ext_version-gpl.zip -d ext
+    rm ext-$ext_version-gpl.zip
 fi
 
 # Создание бд и пользователи
@@ -59,21 +62,10 @@ cd /vagrant/src/barsup_demo
 alembic upgrade head
 
 # Создание пользователя и роли для администратора
-sudo -u postgres psql -d barsup -c "
-BEGIN TRANSACTION;
+rm /usr/bin/python
+ln -s /usr/bin/python3.4 /usr/bin/python
+export PYTHONPATH=$PYTHONPATH:/vagrant/src/
+bup_manage create_user_role Admin admin@localhost.notfound admin admin "SuperRole" yes
 
-INSERT INTO barsup.public.user (name, email, login, password) VALUES ('Администратор', 'adm@adm.ru', 'admin', 'admin');
-INSERT INTO barsup.public.role (name, is_super) VALUES ('Может все', true);
-INSERT INTO barsup.public.user_role (user_id, role_id) VALUES (1, 1);
-
-COMMIT;
-"
-
-echo 'For access use login "admin" and password "admin"'
-echo 'Usage:
-$ vagrant ssh wsgi
-vagrant$ cd /vagrant/src/barsup_demo/
-vagrant$ uwsgi wsgi.ini
-'
-
+uwsgi wsgi.ini
 
