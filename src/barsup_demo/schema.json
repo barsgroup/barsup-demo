@@ -195,7 +195,7 @@
           "__name__": "$String",
           "length": 50
         },
-        "nullable": false
+        "nullable": true
       }
     ]
   },
