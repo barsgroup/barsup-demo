@@ -10,7 +10,7 @@
 
 ### Установка
 
-Как перестать беспокояться и начать жить - [разворачиваем demo на Vagrant'e за 5 минут](https://bitbucket.org/barsgroup/barsup-demo/wiki/vagrant)
+Как перестать беспокоиться и начать жить - [разворачиваем demo на Vagrant'e за 5 минут](https://bitbucket.org/barsgroup/barsup-demo/wiki/vagrant)
 
 ###  Описание конфигурационных файлов 
 
