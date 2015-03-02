@@ -202,11 +202,15 @@
       "$config": "$BUP_PATH/schema.json"
     }
   },
-  "api_options": {
+  "frontend": {
     "default": {
       "initware": [
         "list_actions"
-      ],
+      ]
+    }
+  },
+  "api": {
+    "default": {
       "middleware": [
         "log_errors_to_stderr",
         "transact",
@@ -252,18 +256,18 @@
       "session": "default"
     }
   },
-    "module": {
-        "message": {
-            "$config": "$BUP_PATH/message.json"
-        }
-    },
-    "management": {
-      "create_user_role": {
-        "__realization__": "barsup.auth.management.create_user_role",
-        "session": "default",
-        "user:service": "UserService",
-        "role:service": "RoleService",
-        "user_role:service": "UserRoleService"
-      }
+  "module": {
+    "message": {
+      "$config": "$BUP_PATH/message.json"
     }
+  },
+  "management": {
+    "create_user_role": {
+      "__realization__": "barsup.auth.management.create_user_role",
+      "session": "default",
+      "user:service": "UserService",
+      "role:service": "RoleService",
+      "user_role:service": "UserRoleService"
+    }
+  }
 }

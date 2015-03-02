@@ -23,7 +23,7 @@ class MsgUsers(Controller, metaclass=Injectable):
         filter: 'json'=None,
         group: 'str'=None,
         sort: 'json'=None
-    ) -> r'/read':
+    ) -> ('GET', r'/read'):
         result = self.user_service().filters(
             filter or []
         ).sorts(
@@ -48,7 +48,7 @@ class Message(DictController):
         filter: 'json'=None,
         group: 'str'=None,
         sort: 'json'=None
-    ) -> r'/read':
+    ) -> ('GET', r'/read'):
         new_filter = filter or []
         new_filter.append({'property': 'from_user_id',
                            'operator': 'eq', 'value': uid})
@@ -67,6 +67,6 @@ class Message(DictController):
         self,
         uid: 'int',
         data: "dict"
-    ) -> r"/create":
+    ) -> ("POST", r"/create"):
         data['from_user_id'] = uid
         return self.service.create(**data)
