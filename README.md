@@ -1,3 +1,4 @@
+![](http://online.swagger.io/validator/?url=https://raw.githubusercontent.com/barsgroup/barsup-demo/master/src/barsup_demo/swagger.json)
 # Demo
 
 Демо представляет собой проект с декларативном описанием набора сущностей вида:
