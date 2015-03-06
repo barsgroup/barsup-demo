@@ -16,7 +16,7 @@ apt-get update
 apt-get install -y --force-yes unzip python3.4 python3.4-dev python-pip mercurial postgresql postgresql-client postgresql-server-dev-all build-essential
 
 # installing pip
-wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
+wget -q -o https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
 python3.4 /tmp/get-pip.py
 pip3.4 install --upgrade pip
 

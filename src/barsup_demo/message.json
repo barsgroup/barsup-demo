@@ -39,8 +39,14 @@
             "initware": [
                 "../list_actions"
             ],
-            "$spec": {}
+            "spec": "default"
         }
+    },
+    "spec": {
+      "default": {
+        "__realization__": "barsup.util.load_configs",
+        "$fnames": "$BUP_PATH/swagger-message.json"
+      }
     },
     "api": {
         "default": {

@@ -1,1 +1,2872 @@
-{}
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Реализация API для demo",
+        "version": "1.0.0",
+        "title": "Demo API for Python Bars UP"
+    },
+    "paths": {
+        "/message{subroute}": {
+            "get": {
+                "operationId": "Message.call",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "subroute",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/user/create": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "User.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/user/read": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "User.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/user/read/{id}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "User.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/user/update/{id}": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "User.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/user/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "User.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/role/create": {
+            "post": {
+                "tags": [
+                    "role"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Role.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/role/read": {
+            "get": {
+                "tags": [
+                    "role"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "Role.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/role/read/{id}": {
+            "get": {
+                "tags": [
+                    "role"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "Role.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/role/update/{id}": {
+            "post": {
+                "tags": [
+                    "role"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "Role.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/role/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "role"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Role.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userrole/create": {
+            "post": {
+                "tags": [
+                    "userrole"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "UserRole.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userrole/read": {
+            "get": {
+                "tags": [
+                    "userrole"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "UserRole.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userrole/read/{id}": {
+            "get": {
+                "tags": [
+                    "userrole"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "UserRole.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userrole/update/{id}": {
+            "post": {
+                "tags": [
+                    "userrole"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "UserRole.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userrole/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "userrole"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "UserRole.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/author/create": {
+            "post": {
+                "tags": [
+                    "author"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Author.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/author/read": {
+            "get": {
+                "tags": [
+                    "author"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "Author.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/author/read/{id}": {
+            "get": {
+                "tags": [
+                    "author"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "Author.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/author/update/{id}": {
+            "post": {
+                "tags": [
+                    "author"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "Author.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/author/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "author"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Author.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/book/create": {
+            "post": {
+                "tags": [
+                    "book"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Book.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/book/read": {
+            "get": {
+                "tags": [
+                    "book"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "Book.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/book/read/{id}": {
+            "get": {
+                "tags": [
+                    "book"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "Book.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/book/update/{id}": {
+            "post": {
+                "tags": [
+                    "book"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "Book.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/book/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "book"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Book.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/authorbook/create": {
+            "post": {
+                "tags": [
+                    "authorbook"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "AuthorBook.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/authorbook/read": {
+            "get": {
+                "tags": [
+                    "authorbook"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "AuthorBook.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/authorbook/read/{id}": {
+            "get": {
+                "tags": [
+                    "authorbook"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "AuthorBook.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/authorbook/update/{id}": {
+            "post": {
+                "tags": [
+                    "authorbook"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "AuthorBook.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/authorbook/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "authorbook"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "AuthorBook.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userbook/create": {
+            "post": {
+                "tags": [
+                    "userbook"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "UserBook.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userbook/read": {
+            "get": {
+                "tags": [
+                    "userbook"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "UserBook.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userbook/read/{id}": {
+            "get": {
+                "tags": [
+                    "userbook"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "UserBook.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userbook/update/{id}": {
+            "post": {
+                "tags": [
+                    "userbook"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "UserBook.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/userbook/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "userbook"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "UserBook.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/rolepermission/create": {
+            "post": {
+                "tags": [
+                    "rolepermission"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "RolePermission.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/rolepermission/read": {
+            "get": {
+                "tags": [
+                    "rolepermission"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "RolePermission.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/rolepermission/read/{id}": {
+            "get": {
+                "tags": [
+                    "rolepermission"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "RolePermission.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/rolepermission/update/{id}": {
+            "post": {
+                "tags": [
+                    "rolepermission"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "RolePermission.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/rolepermission/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "rolepermission"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "RolePermission.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissioncontroller/create": {
+            "post": {
+                "tags": [
+                    "permissioncontroller"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "PermissionController.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissioncontroller/read": {
+            "get": {
+                "tags": [
+                    "permissioncontroller"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "PermissionController.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissioncontroller/read/{id}": {
+            "get": {
+                "tags": [
+                    "permissioncontroller"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "PermissionController.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissioncontroller/update/{id}": {
+            "post": {
+                "tags": [
+                    "permissioncontroller"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "PermissionController.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissioncontroller/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "permissioncontroller"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "PermissionController.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissionaction/create": {
+            "post": {
+                "tags": [
+                    "permissionaction"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "PermissionAction.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissionaction/read": {
+            "get": {
+                "tags": [
+                    "permissionaction"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "PermissionAction.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissionaction/read/{id}": {
+            "get": {
+                "tags": [
+                    "permissionaction"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "PermissionAction.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissionaction/update/{id}": {
+            "post": {
+                "tags": [
+                    "permissionaction"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "PermissionAction.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/permissionaction/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "permissionaction"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "PermissionAction.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/individual/create": {
+            "post": {
+                "tags": [
+                    "individual"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Individual.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/individual/read": {
+            "get": {
+                "tags": [
+                    "individual"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "Individual.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/individual/read/{id}": {
+            "get": {
+                "tags": [
+                    "individual"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "Individual.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/individual/update/{id}": {
+            "post": {
+                "tags": [
+                    "individual"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "Individual.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/individual/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "individual"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Individual.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/automobile/create": {
+            "post": {
+                "tags": [
+                    "automobile"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Automobile.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/automobile/read": {
+            "get": {
+                "tags": [
+                    "automobile"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "Automobile.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/automobile/read/{id}": {
+            "get": {
+                "tags": [
+                    "automobile"
+                ],
+                "summary": "Получение одной записи",
+                "description": "",
+                "operationId": "Automobile.get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/automobile/update/{id}": {
+            "post": {
+                "tags": [
+                    "automobile"
+                ],
+                "summary": "Обновление записи",
+                "description": "",
+                "operationId": "Automobile.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные для обновления",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/automobile/destroy/{id}": {
+            "post": {
+                "tags": [
+                    "automobile"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Automobile.destroy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Идентификатор записи",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/authentication/login": {
+            "post": {
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Логин пользователя в систему",
+                "description": "",
+                "operationId": "Authentication.login",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "login",
+                        "description": "Логин",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "password",
+                        "description": "Пароль пользователя",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "400": {
+                        "description": "Неправильный запрос"
+                    },
+                    "404": {
+                        "description": "Пользователь и/или пароль указаны неверно"
+                    }
+                }
+            }
+        }
+    }
+}

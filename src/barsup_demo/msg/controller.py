@@ -12,18 +12,8 @@ class MsgUsers(Controller, metaclass=Injectable):
         node['leaf'] = True
         return node
 
-    def read(
-        self,
-        uid: 'int',
-        node: 'int',
-        start: 'int'=None,
-        limit: 'int'=None,
-        page: 'int'=None,
-        query: 'str'=None,
-        filter: 'json'=None,
-        group: 'str'=None,
-        sort: 'json'=None
-    ) -> ('GET', r'/read'):
+    def read(self, _uid, node, start=None, limit=None, page=None, query=None,
+             filter=None, group=None, sort=None):
         result = self.user_service().filters(
             filter or []
         ).sorts(
@@ -38,20 +28,11 @@ class MsgUsers(Controller, metaclass=Injectable):
 class Message(DictController):
     depends_on = ('service', )
 
-    def read(
-        self,
-        uid: 'int',
-        start: 'int'=None,
-        limit: 'int'=None,
-        page: 'int'=None,
-        query: 'str'=None,
-        filter: 'json'=None,
-        group: 'str'=None,
-        sort: 'json'=None
-    ) -> ('GET', r'/read'):
+    def read(self, _uid, start=None, limit=None, page=None, query=None,
+             filter=None, group=None, sort=None):
         new_filter = filter or []
         new_filter.append({'property': 'from_user_id',
-                           'operator': 'eq', 'value': uid})
+                           'operator': 'eq', 'value': _uid})
 
         return super().read(
             start,
@@ -63,10 +44,6 @@ class Message(DictController):
             sort
         )
 
-    def create(
-        self,
-        uid: 'int',
-        data: "dict"
-    ) -> ("POST", r"/create"):
-        data['from_user_id'] = uid
+    def create(self, _uid, data):
+        data['from_user_id'] = _uid
         return self.service.create(**data)

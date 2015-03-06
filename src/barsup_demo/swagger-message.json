@@ -1,0 +1,214 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Реализация API для модуля message",
+        "version": "1.0.0",
+        "title": "Demo API for module \"message\""
+    },
+    "paths": {
+        "/msgusers/read": {
+            "get": {
+                "tags": [
+                    "msgusers"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "MsgUsers.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "node",
+                        "required": false,
+                        "type": "integer",
+                        "description": "???"
+                    },
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/message/create": {
+            "post": {
+                "tags": [
+                    "message"
+                ],
+                "summary": "Удаление записи",
+                "description": "",
+                "operationId": "Message.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "description": "Данные объекта",
+                        "required": true,
+                        "type": "string",
+                        "format": "as-is"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        },
+        "/message/read": {
+            "get": {
+                "tags": [
+                    "message"
+                ],
+                "summary": "Получение списка записей",
+                "description": "",
+                "operationId": "Message.read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "start",
+                        "description": "Начало отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Конец отсчета записей",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Параметры для поиска (пока не используется)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "description": "Параметры для фильтра",
+                        "required": false,
+                        "type": "string",
+                        "format": "json"
+                    },
+                    {
+                        "in": "query",
+                        "name": "group",
+                        "description": "Параметры для группировка (пока не используется)",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Параметры для сортировки",
+                        "type": "string",
+                        "format": "json",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Пользователь не авторизован"
+                    },
+                    "403": {
+                        "description": "Нет прав"
+                    }
+                }
+            }
+        }
+    }
+}

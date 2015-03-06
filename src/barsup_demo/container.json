@@ -127,7 +127,7 @@
       "session": "default"
     },
     "auto": {
-      "$auto": "auto"
+      "$name": "auto"
     },
     "individual": {
       "$name": "individual"
@@ -207,7 +207,8 @@
       "initware": [
         "list_actions"
       ],
-      "spec": "default"
+      "spec": "default",
+      "$bypass_params": ["_web_session_id"]
     }
   },
   "spec": {
@@ -243,16 +244,16 @@
       "auth:service": "AuthorizationService",
       "$white_list": [
         "Authentication"
+      ],
+      "$preserve_user": [
+        "MsgUsers",
+        "Message"
       ]
     },
     "authentication": {
       "__type__": "singleton",
       "__realization__": "barsup.auth.middleware.authentication",
       "auth:service": "AuthenticationService",
-      "$preserve_user": [
-        "MsgUsers",
-        "Message"
-      ],
       "$white_list": [
         "Authentication"
       ]
