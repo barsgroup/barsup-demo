@@ -16,7 +16,7 @@ apt-get update
 apt-get install -y --force-yes unzip python3.4 python3.4-dev python-pip mercurial postgresql postgresql-client postgresql-server-dev-all build-essential
 
 # installing pip
-wget -q -o https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
+wget -q https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
 python3.4 /tmp/get-pip.py
 pip3.4 install --upgrade pip
 
@@ -24,10 +24,12 @@ pip3.4 install --upgrade pip
 export BUP_PATH=/vagrant/src/barsup_demo
 export BUP_CONFIG=/vagrant/src/barsup_demo/container.json
 export BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json
+export PYTHONPATH=$PYTHONPATH:/vagrant/src/
 
 echo "BUP_PATH=/vagrant/src/barsup_demo" >> /etc/environment
 echo "BUP_CONFIG=/vagrant/src/barsup_demo/container.json" >> /etc/environment
 echo "BUP_SCHEMA=/vagrant/src/barsup_demo/schema.json" >> /etc/environment
+echo "PYTHONPATH=$PYTHONPATH:/vagrant/src/" >> /etc/environment
 
 # project installation
 echo "Installing project dependencies"
@@ -65,7 +67,9 @@ alembic upgrade head
 rm /usr/bin/python
 ln -s /usr/bin/python3.4 /usr/bin/python
 export PYTHONPATH=$PYTHONPATH:/vagrant/src/
-bup_manage create_user_role Admin admin@localhost.notfound admin admin "SuperRole" yes
+bup_manage create_user_role -m admin@localhost.notfound -n admin -p admin -r "SuperRole" -S admin
 
-uwsgi wsgi.ini
+echo "Server started on 8000 port..."
+echo "Go to http://localhost:8000/barsup/"
+uwsgi wsgi.ini &> wsgi.log &
 
