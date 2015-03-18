@@ -8,6 +8,9 @@
     "paths": {
         "/message{subroute}": {
             "get": {
+                "tags": [
+                    "message"
+                ],
                 "operationId": "Message.call",
                 "parameters": [
                     {

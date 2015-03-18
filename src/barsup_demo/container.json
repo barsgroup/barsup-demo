@@ -7,6 +7,10 @@
           "__realization__": "barsup.controller.ModuleController",
           "module": "message"
       },
+    "Authentication": {
+      "service": "AuthenticationService",
+      "__realization__": "barsup.auth.controller.Authentication"
+    },
     "Individual": {
       "service": "IndividualService"
     },
@@ -42,10 +46,6 @@
     },
     "AuthorBook": {
       "service": "AuthorBookService"
-    },
-    "Authentication": {
-      "service": "AuthenticationService",
-      "__realization__": "barsup.auth.controller.Authentication"
     }
   },
   "session": {
