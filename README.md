@@ -29,6 +29,10 @@
 * [Подробное описание формата](https://bitbucket.org/barsgroup/barsup-core/wiki/Home#markdown-header-description)
 * [Пример из demo](https://bitbucket.org/barsgroup/barsup-demo/src/2bf5ee34eb5ff65114d35045a4393139569145bc/src/barsup_demo/container.json?at=default)
 
+### schema.json
+* [Загрузка и редактирование схемы](http://editor.swagger.io/)
+* [Документация по формату](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md)
+
 ### Работа с миграциями
 
 Для запуска миграций:
@@ -40,3 +44,6 @@ $ alembic upgrade head
 ```bash
 $ alembic revision --autogenerate -m '<Migration message>'
 ```
+
+### Swagger UI
+После запуска в контейнере Vagrant UI будет доступен по ссылке [http://localhost:8000/swagger/](http://localhost:8000/swagger/)
