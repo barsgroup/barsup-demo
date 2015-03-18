@@ -21,17 +21,18 @@
 ### schema.json
 
 * [Подробное описание формата](https://bitbucket.org/barsgroup/barsup-core/wiki/db-schema)
-* [Пример из demo](https://bitbucket.org/barsgroup/barsup-demo/src/2bf5ee34eb5ff65114d35045a4393139569145bc/src/barsup_demo/schema.json?at=default)
+* [Пример из demo](https://github.com/barsgroup/barsup-demo/blob/master/src/barsup_demo/schema.json)
 
 
 ### container.json
 
 * [Подробное описание формата](https://bitbucket.org/barsgroup/barsup-core/wiki/Home#markdown-header-description)
-* [Пример из demo](https://bitbucket.org/barsgroup/barsup-demo/src/2bf5ee34eb5ff65114d35045a4393139569145bc/src/barsup_demo/container.json?at=default)
+* [Пример из demo](https://github.com/barsgroup/barsup-demo/blob/master/src/barsup_demo/container.json)
 
-### schema.json
+### swagger.json
 * [Загрузка и редактирование схемы](http://editor.swagger.io/)
 * [Документация по формату](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md)
+* [Пример из демо](https://github.com/barsgroup/barsup-demo/blob/master/src/barsup_demo/swagger.json)
 
 ### Работа с миграциями
 
@@ -46,4 +47,4 @@ $ alembic revision --autogenerate -m '<Migration message>'
 ```
 
 ### Swagger UI
-После запуска в контейнере Vagrant UI будет доступен по ссылке [http://localhost:8000/swagger/](http://localhost:8000/swagger/)
+После запуска в контейнере Vagrant, UI будет доступен по ссылке [http://localhost:8000/swagger/](http://localhost:8000/swagger/)
