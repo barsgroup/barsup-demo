@@ -69,6 +69,7 @@ ln -s /usr/bin/python3.4 /usr/bin/python
 export PYTHONPATH=$PYTHONPATH:/vagrant/src/
 bup_manage create_user_role -m admin@localhost.notfound -n admin -p admin -r "SuperRole" -S admin
 
+echo "Login: 'admin', password: 'admin'"
 echo "Server started on 8000 port..."
 echo "Go to http://localhost:8000/barsup/"
 uwsgi wsgi.ini &> wsgi.log &
